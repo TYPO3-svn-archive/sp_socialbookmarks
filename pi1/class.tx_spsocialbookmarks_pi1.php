@@ -76,8 +76,10 @@
 			}
 
 			// Add stylesheet
-			if (!$this->oTemplate->bAddFileToHeader($this->aConfig['stylesheetFile'], 'css')) {
-				return $this->sError('file', $this->aConfig['stylesheetFile']);
+			if (isset($this->aConfig['stylesheetFile']) && strlen($this->aConfig['stylesheetFile'])) {
+				if (!$this->oTemplate->bAddFileToHeader($this->aConfig['stylesheetFile'], 'css')) {
+					return $this->sError('file', $this->aConfig['stylesheetFile']);
+				}
 			}
 
 			// Add prototype
@@ -86,8 +88,10 @@
 			}
 
 			// Add javascript
-			if (!$this->oTemplate->bAddFileToHeader($this->aConfig['javascriptFile'], 'js')) {
-				return $this->sError('file', $this->aConfig['javascriptFile']);
+			if (isset($this->aConfig['javascriptFile']) && strlen($this->aConfig['javascriptFile'])) {
+				if (!$this->oTemplate->bAddFileToHeader($this->aConfig['javascriptFile'], 'js')) {
+					return $this->sError('file', $this->aConfig['javascriptFile']);
+				}
 			}
 
 			// Add default markers to marker array

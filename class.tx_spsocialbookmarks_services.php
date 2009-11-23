@@ -49,7 +49,7 @@
 			$iPID		= ($paConfig['row']['pid'] > 0) ? $paConfig['row']['pid'] : $iGetID;
 			$oPage	= t3lib_div::makeInstance('t3lib_pageSelect');
 
-			if ($aLine = @$oPage->getRootLine($iPID)) {
+			if ($aLine = $oPage->getRootLine($iPID)) {
 				$oTS = t3lib_div::makeInstance('t3lib_tsparser_ext');
 				$oTS->tt_track = 0;
 				$oTS->init();

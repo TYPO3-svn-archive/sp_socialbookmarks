@@ -23,7 +23,7 @@
 
   // Send ajax request if a bookmark was clicked
   function bookmark ( data ) {
-      var url = '/index.php?eID=tx_spsocialbookmarks_pi1&data=' + data;
+      var url = 'index.php?eID=tx_spsocialbookmarks_pi1&data=' + data;
       new Ajax.Request(url, {method : 'post'});
   }
 

@@ -84,6 +84,11 @@ plugin.tx_spsocialbookmarks_pi1 {
 			url		= http://digg.com/submit?phase=2&amp;url=###URL###
 			image	= EXT:sp_socialbookmarks/res/images/services/digg.png
 		}
+		facebook {
+			name	= Facebook
+			url		= http://www.facebook.com/share.php?u=###URL###&t=###TITLE###
+			image	= EXT:sp_socialbookmarks/res/images/services/facebook.png
+		}
 		fark {
 			name	= Fark.com
 			url		= http://cgi.fark.com/cgi/fark/edit.pl?new_url=###URL###&amp;new_comment=###TITLE###&amp;linktype=Misc
@@ -209,6 +214,11 @@ plugin.tx_spsocialbookmarks_pi1 {
 			url		= http://technorati.com/faves/?add=###URL###
 			image	= EXT:sp_socialbookmarks/res/images/services/technorati.png
 		}
+		twitter {
+			name	= Twitter
+			url		= http://twitter.com/home?status=###TITLE###+-+###URL###
+			image	= EXT:sp_socialbookmarks/res/images/services/twitter.png
+        }
 		webnews {
 			name	= Webnews
 			url		= http://www.webnews.de/einstellen?url=###URL###&amp;title=###TITLE###
