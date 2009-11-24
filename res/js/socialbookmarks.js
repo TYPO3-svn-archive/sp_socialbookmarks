@@ -28,16 +28,18 @@
   }
 
   // Replace ###TITLE### with page title
-  document.observe("dom:loaded", function() {
-    aLinks = $$('.tx-spsocialbookmarks-pi1 a');
+  Event.observe(window, 'load', function() {
+    var aLinks    = $$('div.tx-spsocialbookmarks-pi1 a');
+    var sOldLink  = '';
+    var sNewLink  = '';
 
     for (i = 0; i < aLinks.length; i++) {
-      sID = aLinks[i].identify();
       sOldLink = aLinks[i].readAttribute('href');
       sNewLink = sOldLink.split('###TITLE###').join(document.title);
       sNewLink = sNewLink.split(' ').join('+');
       sNewLink = sNewLink.split('"').join('+');
       sNewLink = sNewLink.split("'").join('+');
-      aLinks[i].writeAttribute('href',sNewLink);
+      
+      aLinks[i].setAttribute('href',sNewLink);
     }
   });
