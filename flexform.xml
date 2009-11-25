@@ -107,6 +107,32 @@
 							</config>
 						</TCEforms>
 					</javascriptFile>
+					<locallangFile>
+						<TCEforms>
+							<exclude>1</exclude>
+							<label>LLL:EXT:sp_socialbookmarks/locallang_db.php:tt_content.flexform_pi1.locallangFile</label>
+							<config>
+								<type>input</type>
+								<size>40</size>
+								<eval>trim</eval>
+								<default></default>
+								<wizards type="array">
+									<_PADDING>2</_PADDING>
+									<link type="array">
+										<type>popup</type>
+										<title>Link</title>
+										<icon>link_popup.gif</icon>
+										<script>browse_links.php?mode=wizard&amp;act=file</script>
+										<params type="array">
+											<blindLinkOptions>mail,page,spec,url,folder</blindLinkOptions>
+											<allowedExtensions>xml</allowedExtensions>
+										</params>
+										<JSopenParams>height=300,width=500,status=0,menubar=0,scrollbars=1</JSopenParams>
+									</link>
+								</wizards>
+							</config>
+						</TCEforms>
+					</locallangFile>
 				</el>
 			</ROOT>
 		</sDEF>
@@ -135,6 +161,24 @@
 							</config>
 						</TCEforms>
 					</useTSTitle>
+					<useTinyURL>
+						<TCEforms>
+							<label>LLL:EXT:sp_socialbookmarks/locallang_db.php:tt_content.flexform_pi1.useTinyURL</label>
+							<config>
+								<type>check</type>
+								<default>1</default>
+							</config>
+						</TCEforms>
+					</useTinyURL>
+					<forceSSL>
+						<TCEforms>
+							<label>LLL:EXT:sp_socialbookmarks/locallang_db.php:tt_content.flexform_pi1.forceSSL</label>
+							<config>
+								<type>check</type>
+								<default>0</default>
+							</config>
+						</TCEforms>
+					</forceSSL>
 					<serviceList>
 						<TCEforms>
 							<exclude>1</exclude>

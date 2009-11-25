@@ -144,23 +144,57 @@
 			}
 
 			// Get configuration
-			$sBaseURL		= $this->aConfig['baseURL']		? $this->aConfig['baseURL'] 	: $_SERVER['HTTP_HOST'];
-			$sBaseURL		= (substr($sBaseURL,-1) == '/')	? $sBaseURL				 		: $sBaseURL.'/';
-			$sLinkTitle		= $this->sGetTitle();
-			$sLinkTarget	= $this->aConfig['linkTarget'] 	? $this->aConfig['linkTarget']	: '_blank';
-			$aServices		= array();
+			$aServices   = array();
+			$sURL        = $this->sGetPageURL();
+			$sLinkTitle  = $this->sGetTitle();
+			$sLinkTarget = isset($this->aConfig['linkTarget']) ? $this->aConfig['linkTarget'] : '_blank';
 
 			// Get all links from configuration
 			foreach ($paServices as $sKey => $aService) {
 					$sImage	= $this->sGetImage($aService);
 					$aService['key'] = $sKey;
-					$aServices[] = $this->sGetLink($aService, $sBaseURL, $sLinkTitle, $sLinkTarget, $sImage);
+					$aServices[] = $this->sGetLink($aService, $sURL, $sLinkTitle, $sLinkTarget, $sImage);
 			}
 
 			// Add bookmarks to marker array
 			$this->aMarkers['###SERVICES###'] = implode(PHP_EOL, $aServices);
 
 			return true;
+		}
+
+
+		/**
+		 * Get URL to current page
+		 *
+		 * @return  String with URL to current page
+		 */
+		protected function sGetPageURL() {
+			// Get base URL
+			$sProtocol = (isset($this->aConfig['forceSSL']) && $this->aConfig['forceSSL']) ? 'https://' : 'http://';
+			$sBaseURL  = (isset($this->aConfig['baseURL.']) && is_array($this->aConfig['baseURL.'])) ? $this->cObj->cObjGetSingle($this->aConfig['baseURL'], $this->aConfig['baseURL.']) : $this->aConfig['baseURL'];
+			$sBaseURL  = strlen($sBaseURL) ? $sBaseURL : $_SERVER['HTTP_HOST'];
+			$sBaseURL  = $sProtocol . str_replace(array('https://', 'http://'), '', rtrim($sBaseURL, '/')) . '/';
+
+			// Get URL to current page
+			$sURL = $this->cObj->typolink('', array(
+				'parameter'         => $GLOBALS['TSFE']->id,
+				'addQueryString'    => 1,
+				'addQueryString.'   => array(
+						'exclude'   => 'id,cHash,no_cache',
+						'method'    => 'GET',
+				),
+				'returnLast'        => 'url',
+			));
+
+			// Get final link
+			if (isset($this->aConfig['useTinyURL']) && $this->aConfig['useTinyURL']) {
+				$sServiceURL = (isset($this->aConfig['tinyServiceURL'])) ? $this->aConfig['tinyServiceURL'] : 'http://tinyurl.com/api-create.php?url=###URL###';
+				if ($sTinyURL = t3lib_div::getURL(str_replace('###URL###', $sBaseURL . $sURL, $sServiceURL))) {
+					return $sTinyURL;
+				}
+			}
+
+			return $sBaseURL . $sURL;
 		}
 
 
@@ -180,7 +214,8 @@
 				unset($oPage);
 			}
 
-			$sTitle = $this->aConfig['useTSTitle'] ? str_replace(array("'",'"',' '), '+', $sTitle) : '';
+			// Get title (javascript will be used to get it if empty)
+			$sTitle = (isset($this->aConfig['useTSTitle']) && $this->aConfig['useTSTitle']) ? urlencode($sTitle) : '###TITLE###';
 
 			return $sTitle;
 		}
@@ -227,8 +262,8 @@
 		 *
 		 * @return Array with all link markers
 		 */
-		protected function sGetLink($paService, $psBaseURL, $psLinkTitle, $psLinkTarget='_blank', $psImage='') {
-			if (!is_array($paService) || !count($paService) || !$psBaseURL) {
+		protected function sGetLink($paService, $psURL, $psLinkTitle, $psLinkTarget='_blank', $psImage='') {
+			if (!is_array($paService) || !count($paService) || !strlen($psURL)) {
 				return '';
 			}
 
@@ -240,26 +275,12 @@
 			);
 			$sData = base64_encode(serialize($aData));
 
-			// Get url
-			$sURL = rawurlencode($psBaseURL.$this->cObj->typolink('', array(
-					'parameter'			=> $GLOBALS['TSFE']->id,
-					'addQueryString'	=> 1,
-					'addQueryString.'	=> array(
-							'exclude'	=> 'id,cHash,no_cache',
-							'method'	=> 'GET',
-					),
-					'returnLast'		=> 'url',
-			)));
-
 			// Get name
 			$sName = $paService['name'] ? $paService['name'] : md5(time());
 
-			// Get title (javascript will be used to get it if empty)
-			$psLinkTitle = strlen($psLinkTitle) ? $psLinkTitle : '###TITLE###';
-
 			// Fill markers
 			$aLinkMarkers = array(
-				'###LINK_URL###' 	=> str_replace(array('###URL###', '###TITLE###'), array($sURL, $psLinkTitle), $paService['url']),
+				'###LINK_URL###' 	=> str_replace(array('###URL###', '###TITLE###'), array($psURL, $psLinkTitle), $paService['url']),
 				'###LINK_TITLE###' 	=> $paService['name'],
 				'###LINK_ID###'		=> 'bookmark_'.$sName,
 				'###LINK_TARGET###'	=> $psLinkTarget,
