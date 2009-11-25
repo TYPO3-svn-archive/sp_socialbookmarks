@@ -30,16 +30,13 @@
   // Replace ###TITLE### with page title
   Event.observe(window, 'load', function() {
     var aLinks    = $$('div.tx-spsocialbookmarks-pi1 a');
+    var sTitle    = encodeURIComponent(document.title);
     var sOldLink  = '';
     var sNewLink  = '';
 
     for (i = 0; i < aLinks.length; i++) {
       sOldLink = aLinks[i].readAttribute('href');
-      sNewLink = sOldLink.split('###TITLE###').join(document.title);
-      sNewLink = sNewLink.split(' ').join('+');
-      sNewLink = sNewLink.split('"').join('+');
-      sNewLink = sNewLink.split("'").join('+');
-      
+      sNewLink = sOldLink.split('###TITLE###').join(sTitle);
       aLinks[i].setAttribute('href',sNewLink);
     }
   });
