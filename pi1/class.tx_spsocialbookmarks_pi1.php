@@ -1,110 +1,104 @@
 <?php
-	/***************************************************************
-	*  Copyright notice
-	*
-	*  (c) 2009 Kai Vogel  <kai.vogel(at)speedprogs.de>
-	*  All rights reserved
-	*
-	*  This script is part of the TYPO3 project. The TYPO3 project is
-	*  free software; you can redistribute it and/or modify
-	*  it under the terms of the GNU General Public License as published by
-	*  the Free Software Foundation; either version 2 of the License, or
-	*  (at your option) any later version.
-	*
-	*  The GNU General Public License can be found at
-	*  http://www.gnu.org/copyleft/gpl.html.
-	*
-	*  This script is distributed in the hope that it will be useful,
-	*  but WITHOUT ANY WARRANTY; without even the implied warranty of
-	*  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	*  GNU General Public License for more details.
-	*
-	*  This copyright notice MUST APPEAR in all copies of the script!
-	***************************************************************/
+	/*********************************************************************
+	 *  Copyright notice
+	 *
+	 *  (c) 2009 Kai Vogel  <kai.vogel(at)speedprogs.de>
+	 *  All rights reserved
+	 *
+	 *  This script is part of the TYPO3 project. The TYPO3 project is
+	 *  free software; you can redistribute it and/or modify
+	 *  it under the terms of the GNU General Public License as published
+	 *  by the Free Software Foundation; either version 2 of the License,
+	 *  or (at your option) any later version.
+	 *
+	 *  The GNU General Public License can be found at
+	 *  http://www.gnu.org/copyleft/gpl.html.
+	 *
+	 *  This script is distributed in the hope that it will be useful,
+	 *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+	 *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	 *  GNU General Public License for more details.
+	 *
+	 *  This copyright notice MUST APPEAR in all copies of the script!
+	 ********************************************************************/
 
-
-	require_once(PATH_tslib.'class.tslib_pibase.php');
-
+	require_once(PATH_tslib . 'class.tslib_pibase.php');
 
 	/**
-	 * Plugin 'Social Bookmarks' for the 'sp_socialbookmarks' extension.
-	 *
-	 * @author	Kai Vogel <kai.vogel(at)speedprogs.de>
-	 * @package	TYPO3
-	 * @subpackage	tx_spsocialbookmarks
+	 * Plugin for the sp_socialbookmarks extension
 	 */
 	class tx_spsocialbookmarks_pi1 extends tslib_pibase {
-		public $prefixId		= 'tx_spsocialbookmarks_pi1';
-		public $scriptRelPath	= 'pi1/class.tx_spsocialbookmarks_pi1.php';
-		public $extKey			= 'sp_socialbookmarks';
-		public $sPrototype		= 'typo3/contrib/prototype/prototype.js';
-		public $aLL				= array();
-		public $aConfig			= array();
-		public $oTemplate		= NULL;
-		public $cObj			= NULL;
-		public $LLkey			= 'en';
+		public $prefixId = 'tx_spsocialbookmarks_pi1';
+		public $scriptRelPath = 'pi1/class.tx_spsocialbookmarks_pi1.php';
+		public $extKey = 'sp_socialbookmarks';
+		public $sPrototype = 'typo3/contrib/prototype/prototype.js';
+		public $aLL = array();
+		public $aConfig = array();
+		public $oTemplate = NULL;
+		public $cObj = NULL;
+		public $LLkey = 'en';
 
 
 		/**
-		 * The main method of the PlugIn
+		 * The main method
 		 *
-		 * @param	string		$content: The PlugIn content
-		 * @param	array		$conf: The PlugIn configuration
-		 * @return	The content that is displayed on the website
+		 * @param string $content Default content
+		 * @param array $conf TypoScript configuration
+		 * @return string The content that is displayed on the website
 		 */
-		public function main ($psContent, $paConf) {
+		public function main($psContent, $paConf) {
 			$this->aConfig = $paConf;
 			$this->pi_setPiVarDefaults();
 			$this->pi_initPIflexForm();
 
-			// Override typoscript config with flexform values
+				// Override typoscript config with flexform values
 			$this->vFlexOverride();
 
-			// Set default templates if set
+				// Set default templates if set
 			if ($this->aConfig['useDefaultTemplate']) {
-				$this->aConfig['templateFile'] 		= 'EXT:'.$this->extKey.'/res/template/template.html';
-				$this->aConfig['stylesheetFile']	= 'EXT:'.$this->extKey.'/res/template/stylesheet.css';
-				$this->aConfig['javascriptFile']	= 'EXT:'.$this->extKey.'/res/js/socialbookmarks.js';
+				$this->aConfig['templateFile'] = 'EXT:' . $this->extKey . '/res/template/template.html';
+				$this->aConfig['stylesheetFile'] = 'EXT:' . $this->extKey . '/res/template/stylesheet.css';
+				$this->aConfig['javascriptFile'] = 'EXT:' . $this->extKey . '/res/js/socialbookmarks.js';
 			}
 
-			// Get local language labels
+				// Get local language labels
 			$this->aLL = $this->aGetLL();
 
-			// Get template instance
+				// Get template instance
 			if (!$this->oTemplate = $this->oMakeInstance('template')) {
 				return $this->sError('template');
 			}
 
-			// Add stylesheet
-			if (isset($this->aConfig['stylesheetFile']) && strlen($this->aConfig['stylesheetFile'])) {
+				// Add stylesheet
+			if (!empty($this->aConfig['stylesheetFile'])) {
 				if (!$this->oTemplate->bAddFileToHeader($this->aConfig['stylesheetFile'], 'css')) {
 					return $this->sError('file', $this->aConfig['stylesheetFile']);
 				}
 			}
 
-			// Add prototype
-			if ($this->aConfig['loadPrototype'] && !$this->oTemplate->bAddFileToHeader($this->sPrototype, 'js')) {
+				// Add prototype
+			if (!empty($this->aConfig['loadPrototype']) && !$this->oTemplate->bAddFileToHeader($this->sPrototype, 'js')) {
 				return $this->sError('file', $this->sPrototype);
 			}
 
-			// Add javascript
-			if (isset($this->aConfig['javascriptFile']) && strlen($this->aConfig['javascriptFile'])) {
+				// Add javascript
+			if (!empty($this->aConfig['javascriptFile'])) {
 				if (!$this->oTemplate->bAddFileToHeader($this->aConfig['javascriptFile'], 'js')) {
 					return $this->sError('file', $this->aConfig['javascriptFile']);
 				}
 			}
 
-			// Add default markers to marker array
+				// Add default markers to marker array
 			$this->oTemplate->vAddDefaultMarkers();
 
-			// Add bookmark services to marker array
+				// Add bookmark services to marker array
 			if ($aServices = $this->aGetServices()) {
 				$this->oTemplate->vAddServices($aServices);
 			} else {
 				return $this->sError('bookmarks');
 			}
 
-			// Return whole content
+				// Return whole content
 			if ($sContent = $this->oTemplate->sGetContent()) {
 				return $this->pi_wrapInBaseClass($sContent);
 			} else {
@@ -116,9 +110,10 @@
 		/**
 		 * Override typoscipt settings with flexform values
 		 *
+		 * @return void
 		 */
-		public function vFlexOverride () {
-			if (isset($this->cObj->data['pi_flexform']) && strlen($this->cObj->data['pi_flexform']) > 0) {
+		public function vFlexOverride() {
+			if (!empty($this->cObj->data['pi_flexform'])) {
 				$aFlexValues = $this->cObj->data['pi_flexform'];
 
 				$sDef = current($aFlexValues['data']);
@@ -128,7 +123,7 @@
 					foreach ($aData[$lDef[0]] as $sKey => $aVal) {
 						$sValue = $this->pi_getFFvalue($aFlexValues, $sKey, $sSheet, $lDef[0]);
 
-						if (strlen($sValue) > 0) {
+						if (!empty($sValue)) {
 							$this->aConfig[$sKey] = $sValue;
 						}
 					}
@@ -140,11 +135,11 @@
 		/**
 		 * Get user language array
 		 *
-		 * @return Array of user localized labels
+		 * @return array User localized labels
 		 */
-		protected function aGetUserLabels () {
-			$sFile		= t3lib_div::getFileAbsFileName($this->aConfig['locallangFile']);
-			$aOwnLabels	= array();
+		protected function aGetUserLabels() {
+			$sFile = t3lib_div::getFileAbsFileName($this->aConfig['locallangFile']);
+			$aOwnLabels = array();
 
 			if (!empty($sFile)) {
 				$aOwnLabels = t3lib_div::readLLXMLfile($sFile, $this->LLkey);
@@ -161,24 +156,24 @@
 		/**
 		 * Get whole language array
 		 *
-		 * @return Array of all localized labels
+		 * @return array All localized labels
 		 */
 		protected function aGetLL() {
 			$this->pi_loadLL();
 
-			$aLocalLang 	= $this->LOCAL_LANG[$this->LLkey];
-			$aOtherLabels	= array(
-				$this->aConfig['_LOCAL_LANG.'][$this->LLkey.'.'],
+			$aLocalLang = $this->LOCAL_LANG[$this->LLkey];
+			$aOtherLabels = array(
+				$this->aConfig['_LOCAL_LANG.'][$this->LLkey . '.'],
 				$this->aGetUserLabels(),
 			);
 
-			if (!count($this->LOCAL_LANG[$this->LLkey])) {
+			if (empty($this->LOCAL_LANG[$this->LLkey])) {
 				$aLocalLang = $this->LOCAL_LANG['default'];
 			}
 
-			// Add and override labels
+				// Add and override labels
 			foreach ($aOtherLabels as $aLabels) {
-				if (count($aLabels) > 0) {
+				if (!empty($aLabels)) {
 					foreach ($aLabels as $sKey => $sLabel) {
 						$aLocalLang[$sKey] = $sLabel;
 					}
@@ -192,17 +187,17 @@
 		/**
 		 * Make an instance of any class
 		 *
-		 * @return Instance of the new object
+		 * @return object Instance of the new object
 		 */
-		public function oMakeInstance ($psClassPostfix) {
-			if (strlen($psClassPostfix) == 0) {
+		public function oMakeInstance($psClassPostfix) {
+			if (empty($psClassPostfix)) {
 				return NULL;
 			}
 
-			$sClassName	= strtolower($this->prefixId.'_'.$psClassPostfix);
-			$sFileName	= t3lib_extMgm::extPath($this->extKey).'pi1/class.'.$sClassName.'.php';
+			$sClassName = strtolower($this->prefixId . '_' . $psClassPostfix);
+			$sFileName = t3lib_extMgm::extPath($this->extKey) . 'pi1/class.' . $sClassName . '.php';
 
-			if (file_exists($sFileName)) {
+			if (@file_exists($sFileName)) {
 				include_once($sFileName);
 
 				$oResult = t3lib_div::makeInstance($sClassName);
@@ -210,7 +205,7 @@
 
 				return $oResult;
 			} else {
-				die($this->sError('file', $sFileName));
+				throw new Exception($this->sError('file', $sFileName));
 			}
 
 			return NULL;
@@ -220,18 +215,18 @@
 		/**
 		 * Get selected bookmark services from config
 		 *
-		 * @return Array of services
+		 * @return array Services
 		 */
 		protected function aGetServices() {
-			if (!is_array($this->aConfig['services.']) || !count($this->aConfig['services.']) || !strlen($this->aConfig['serviceList'])) {
+			if (empty($this->aConfig['services.']) || empty($this->aConfig['serviceList'])) {
 				return array();
 			}
 
-			$aServiceList	= explode(',', str_replace(' ', '', $this->aConfig['serviceList']));
-			$aServices		= array();
+			$aServiceList = explode(',', str_replace(' ', '', $this->aConfig['serviceList']));
+			$aServices = array();
 
 			foreach ($aServiceList as $sName) {
-				$aServices[$sName] = $this->aConfig['services.'][$sName.'.'];
+				$aServices[$sName] = $this->aConfig['services.'][$sName . '.'];
 			}
 
 			return $aServices;
@@ -241,19 +236,19 @@
 		/**
 		 * Wrap error message for frontend rendering
 		 *
-		 * @param		string	$psError: Label name for error message
-		 * @param		string	$psInsert: Insert value to message
+		 * @param string $psError Label name for error message
+		 * @param string $psInsert Insert value to message
 		 */
-		protected function sError($psError, $psInsert='') {
-			$sMessage = $psError ? $this->aLL['error_'.strtolower(trim($psError))] : 'Error message not found!';
-			$sMessage = 'Social Bookmarks ('.$this->extKey.'): '.$sMessage;
+		protected function sError($psError, $psInsert = '') {
+			$sMessage = ($psError ? $this->aLL['error_' . strtolower(trim($psError))] : 'Error message not found!');
+			$sMessage = 'Social Bookmarks (' . $this->extKey . '): ' . $sMessage;
 
 			return $this->pi_wrapInBaseClass(sprintf($sMessage, trim($psInsert)));
 		}
 	}
 
 
-	if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1.php'])	{
+	if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1.php']) {
 		include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1.php']);
 	}
 
