@@ -15,19 +15,8 @@
 			<label index="tx_spsocialbookmarks_bookmarks.title">Title:</label>
 			<label index="moduleFunction.tx_spsocialbookmarks_modfunc1">Social Bookmarks Statistic</label>
 			<label index="tt_content.list_type_pi1">Social Bookmarks</label>
-			<label index="tt_content.flexform_pi1.s_def">General</label>
-			<label index="tt_content.flexform_pi1.useDefaultTemplate">Use default template:</label>
-			<label index="tt_content.flexform_pi1.loadPrototype">Load prototype library:</label>
-			<label index="tt_content.flexform_pi1.templateFile">Template file:</label>
-			<label index="tt_content.flexform_pi1.stylesheetFile">Style sheet file:</label>
-			<label index="tt_content.flexform_pi1.javascriptFile">Javascript file:</label>
-			<label index="tt_content.flexform_pi1.locallangFile">Additional locallang file:</label>
-			<label index="tt_content.flexform_pi1.s_services">Services</label>
+			<label index="tt_content.flexform_pi1.s_def">Services</label>
 			<label index="tt_content.flexform_pi1.serviceList">Display this services:</label>
-			<label index="tt_content.flexform_pi1.useStats">Use stats:</label>
-			<label index="tt_content.flexform_pi1.useTSTitle">Get title via TypoScript (else Javascript will be used):</label>
-			<label index="tt_content.flexform_pi1.useTinyURL">Use short URLs:</label>
-			<label index="tt_content.flexform_pi1.forceSSL">Force SSL (https) for links:</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="tx_spsocialbookmarks_bookmarks">Social Bookmark</label>
@@ -39,19 +28,8 @@
 			<label index="tx_spsocialbookmarks_bookmarks.title">Titel:</label>
 			<label index="moduleFunction.tx_spsocialbookmarks_modfunc1">Social Bookmarks Statistik</label>
 			<label index="tt_content.list_type_pi1">Social Bookmarks</label>
-			<label index="tt_content.flexform_pi1.s_def">Allgemein</label>
-			<label index="tt_content.flexform_pi1.useDefaultTemplate">Standard-Template verwenden:</label>
-			<label index="tt_content.flexform_pi1.loadPrototype">Prototype-Bibliothek laden:</label>
-			<label index="tt_content.flexform_pi1.templateFile">Template-Datei:</label>
-			<label index="tt_content.flexform_pi1.stylesheetFile">Stylesheet-Datei:</label>
-			<label index="tt_content.flexform_pi1.javascriptFile">Javascript-Datei:</label>
-			<label index="tt_content.flexform_pi1.locallangFile">Zusätzliche Sprach-Datei:</label>
-			<label index="tt_content.flexform_pi1.s_services">Dienste</label>
+			<label index="tt_content.flexform_pi1.s_def">Dienste</label>
 			<label index="tt_content.flexform_pi1.serviceList">Diese Dienste anzeigen:</label>
-			<label index="tt_content.flexform_pi1.useStats">Statistik bentuzen:</label>
-			<label index="tt_content.flexform_pi1.useTSTitle">Titel per TypoScript ermitteln (ansonsten wird Javascript benutzt):</label>
-			<label index="tt_content.flexform_pi1.useTinyURL">Kurze URLs benutzen:</label>
-			<label index="tt_content.flexform_pi1.forceSSL">Für Links SSL (https) benutzen:</label>
 		</languageKey>
 	</data>
 </T3locallang>

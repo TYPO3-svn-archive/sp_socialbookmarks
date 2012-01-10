@@ -31,7 +31,6 @@
 		public $prefixId = 'tx_spsocialbookmarks_pi1';
 		public $scriptRelPath = 'pi1/class.tx_spsocialbookmarks_pi1.php';
 		public $extKey = 'sp_socialbookmarks';
-		public $sPrototype = 'typo3/contrib/prototype/prototype.js';
 		public $aLL = array();
 		public $aConfig = array();
 		public $oTemplate = NULL;
@@ -54,38 +53,12 @@
 				// Override typoscript config with flexform values
 			$this->vFlexOverride();
 
-				// Set default templates if set
-			if ($this->aConfig['useDefaultTemplate']) {
-				$this->aConfig['templateFile'] = 'EXT:' . $this->extKey . '/res/template/template.html';
-				$this->aConfig['stylesheetFile'] = 'EXT:' . $this->extKey . '/res/template/stylesheet.css';
-				$this->aConfig['javascriptFile'] = 'EXT:' . $this->extKey . '/res/js/socialbookmarks.js';
-			}
-
 				// Get local language labels
 			$this->aLL = $this->aGetLL();
 
 				// Get template instance
 			if (!$this->oTemplate = $this->oMakeInstance('template')) {
 				return $this->sError('template');
-			}
-
-				// Add stylesheet
-			if (!empty($this->aConfig['stylesheetFile'])) {
-				if (!$this->oTemplate->bAddFileToHeader($this->aConfig['stylesheetFile'], 'css')) {
-					return $this->sError('file', $this->aConfig['stylesheetFile']);
-				}
-			}
-
-				// Add prototype
-			if (!empty($this->aConfig['loadPrototype']) && !$this->oTemplate->bAddFileToHeader($this->sPrototype, 'js')) {
-				return $this->sError('file', $this->sPrototype);
-			}
-
-				// Add javascript
-			if (!empty($this->aConfig['javascriptFile'])) {
-				if (!$this->oTemplate->bAddFileToHeader($this->aConfig['javascriptFile'], 'js')) {
-					return $this->sError('file', $this->aConfig['javascriptFile']);
-				}
 			}
 
 				// Add default markers to marker array

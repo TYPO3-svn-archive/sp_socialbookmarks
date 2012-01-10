@@ -1,38 +1,34 @@
-# ==============================================================================
+# ======================================================================
 # Default configuration for sp_socialbookmarks
-# ==============================================================================
+# ======================================================================
 plugin.tx_spsocialbookmarks_pi1 {
-	## Basic configuration (see manual for details)
-	serviceList         =
-	templateFile        =
-	stylesheetFile      =
-	locallangFile       =
-	javascriptFile      = EXT:sp_socialbookmarks/res/js/socialbookmarks.js
-	linkTarget          = _blank
-	useDefaultTemplate  =
-	loadPrototype       =
-	useStats            =
-	# useTSTitle        = 0 (Deactivate to read page title via javascript)
-	forceSSL            = 0
-	useTinyURL          = 1
-	tinyServiceURL      = http://tinyurl.com/api-create.php?url=###URL###
+	## Basic configuration
+	serviceList         = {$plugin.tx_spsocialbookmarks_pi1.serviceList}
+	templateFile        = {$plugin.tx_spsocialbookmarks_pi1.templateFile}
+	locallangFile       = {$plugin.tx_spsocialbookmarks_pi1.locallangFile}
+	linkTarget          = {$plugin.tx_spsocialbookmarks_pi1.linkTarget}
+	useStats            = {$plugin.tx_spsocialbookmarks_pi1.useStats}
+	useTSTitle          = {$plugin.tx_spsocialbookmarks_pi1.useTSTitle}
+	forceSSL            = {$plugin.tx_spsocialbookmarks_pi1.forceSSL}
+	useTinyURL          = {$plugin.tx_spsocialbookmarks_pi1.useTinyURL}
+	tinyServiceURL      = {$plugin.tx_spsocialbookmarks_pi1.tinyServiceURL}
+
+	## Backend chart configuration
+	chart {
+		imageWidth        = {$plugin.tx_spsocialbookmarks_pi1.chart.imageWidth}
+		imageHeight       = {$plugin.tx_spsocialbookmarks_pi1.chart.imageHeight}
+		spaceBetween      = {$plugin.tx_spsocialbookmarks_pi1.chart.spaceBetween}
+		barColor          = {$plugin.tx_spsocialbookmarks_pi1.chart.barColor}
+		chartColor        = {$plugin.tx_spsocialbookmarks_pi1.chart.chartColor}
+	}
 
 	## Dynamic baseURL
 	baseURL             = TEXT
 	baseURL.data        = getIndpEnv : HTTP_HOST
 
-	## Title for bookmarks (See bottom of this file for tt_news)
+	## Title for bookmarks
 	pageTitle           = TEXT
 	pageTitle.field     = subtitle // title
-
-	## Chart configuration (backend: web -> info)
-	chart {
-		imageWidth      = 14
-		imageHeight     = 14
-		spaceBetween    = 15
-		barColor        = #6F9AE3
-		chartColor      = #E6EBFA
-	}
 
 	## Bookmark services
 	services {
@@ -258,7 +254,7 @@ plugin.tx_spsocialbookmarks_pi1 {
 		}
 	}
 
-	## Browsers (backend: web -> info)
+	## Browsers
 	browsers {
 		ie {
 			name    = Internet Explorer
@@ -362,7 +358,7 @@ plugin.tx_spsocialbookmarks_pi1 {
 		}
 	}
 
-	## Systems (backend: web -> info)
+	## Systems
 	systems {
 		windows {
 			name    = Windows
@@ -491,4 +487,22 @@ plugin.tx_spsocialbookmarks_pi1 {
             stripHtml = 1
         }
     }
+[global]
+
+
+## Include Prototype library
+[globalVar = LIT:1 = {$plugin.tx_spsocialbookmarks_pi1.loadPrototype}]
+  page.javascriptLibs.Prototype = 1
+[global]
+
+
+## Include javascript
+[globalVar = LIT:1 = {$plugin.tx_spsocialbookmarks_pi1.loadJavaScript}]
+	page.includeJSlibs.socialBookmarks = EXT:sp_socialbookmarks/res/js/socialbookmarks.js
+[global]
+
+
+## Include stylesheet
+[globalVar = LIT:1 = {$plugin.tx_spsocialbookmarks_pi1.loadStylesheet}]
+  page.includeCSS.socialBookmarks = EXT:sp_socialbookmarks/res/template/stylesheet.css
 [global]

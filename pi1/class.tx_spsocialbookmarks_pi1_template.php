@@ -93,26 +93,6 @@
 
 
 		/**
-		 * Add stylesheet or JavaScript to HTML head
-		 *
-		 * @return boolean TRUE if file could be pushed into header
-		 */
-		public function bAddFileToHeader($psFileName, $psType = 'css') {
-			if (empty($psFileName) || !$psFileName = $this->sGetRelativePath($psFileName)) {
-				return FALSE;
-			}
-
-			if (strtolower($psType) == 'css') {
-				$GLOBALS['TSFE']->additionalHeaderData[md5(microtime() . $psFileName)] = '<link rel="stylesheet" href="' . $psFileName . '" type="text/css" />';
-			} else if (strtolower($psType) == 'js') {
-				$GLOBALS['TSFE']->additionalHeaderData[md5(microtime() . $psFileName)] = '<script src="' . $psFileName . '" type="text/javascript"></script>';
-			}
-
-			return TRUE;
-		}
-
-
-		/**
 		 * Check for extension relative path
 		 *
 		 * @return string Relative file path
@@ -302,7 +282,7 @@
 		 *
 		 * @return string Whole content
 		 */
-		public function sGetContent () {
+		public function sGetContent() {
 			return $this->cObj->substituteMarkerArray($this->aTemplates['main'], $this->aMarkers);
 		}
 
