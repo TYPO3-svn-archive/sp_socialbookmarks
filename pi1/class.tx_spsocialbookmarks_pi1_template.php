@@ -254,8 +254,7 @@
 
 				// Get serialized data
 			$aData = array(
-				'id' => $this->cObj->data['uid'],
-				'lang' => $this->sLLKey,
+				'pid' => $GLOBALS['TSFE']->id,
 				'service' => strtolower(trim($paService['key'])),
 			);
 			$sData = base64_encode(serialize($aData));
@@ -265,11 +264,11 @@
 
 				// Fill markers
 			$aLinkMarkers = array(
-				'###LINK_URL###' => str_replace(array('###URL###', '###TITLE###'), array($psURL, $psLinkTitle), $paService['url']),
+				'###LINK_URL###' => str_replace(array('###URL###', '###TITLE###'), array(urlencode($psURL), $psLinkTitle), $paService['url']),
 				'###LINK_TITLE###' => $paService['name'],
 				'###LINK_ID###' => 'bookmark_' . $sName,
 				'###LINK_TARGET###' => $psLinkTarget,
-				'###LINK_JS###' => "javascript:bookmark('" . $sData . "');",
+				'###LINK_JS###' => (!empty($this->aConfig['useStats']) ? "javascript:bookmark('" . $sData . "');" : ''),
 				'###IMAGE###' => $psImage,
 			);
 
@@ -289,8 +288,8 @@
 	}
 
 
-	if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_template.php']) {
-		include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_template.php']);
+	if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_template.php']) {
+		include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_template.php']);
 	}
 
 ?>

@@ -22,10 +22,6 @@
 	 *  This copyright notice MUST APPEAR in all copies of the script!
 	 ********************************************************************/
 
-	require_once(PATH_tslib . 'class.tslib_content.php');
-	require_once(PATH_tslib . 'class.tslib_fe.php');
-	require_once(PATH_t3lib . 'class.t3lib_page.php');
-	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'pi1/class.tx_spsocialbookmarks_pi1.php');
 	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'class.tx_spsocialbookmarks_db.php');
 
 	/**
@@ -44,53 +40,21 @@
 				return;
 			}
 			$aData = unserialize(base64_decode($sParams));
-			$iUID  = intval($aData['id']);
-			$sLang = (ctype_alpha($aData['lang']) ? trim(strtolower($aData['lang'])) : 'en');
+			$iPID  = intval($aData['pid']);
 			$sName = (ctype_print($aData['service']) ? $aData['service'] : 'unknown');
 
-				// Use eID tools
-			tslib_eidtools::connectDB();
-			tslib_eidtools::initFeUser();
-
-				// Get plugin data from DB
-			$GLOBALS['TYPO3_DB']->connectDB();
-			$oResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'tt_content', 'uid=' . $iUID);
-			$aPlugin = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($oResult);
-			$iPID = intval($aPlugin['pid']);
-
-				// Get TSFE
-			$sClassName = t3lib_div::makeInstanceClassName('tslib_fe');
-			$GLOBALS['TSFE'] = new $sClassName($GLOBALS['TYPO3_CONF_VARS'], $iPID, 0, TRUE);
-			$GLOBALS['TSFE']->connectToDB();
-			$GLOBALS['TSFE']->initFEuser();
-			$GLOBALS['TSFE']->determineId();
-			$GLOBALS['TSFE']->getCompressedTCarray();
-			$GLOBALS['TSFE']->initTemplate();
-			$GLOBALS['TSFE']->getConfigArray();
-
-				// Get main plugin (we need it for TS and flexform config)
-			$aConfig = $GLOBALS['TSFE']->tmpl->setup['plugin.']['tx_spsocialbookmarks_pi1.'];
-			$oMain = t3lib_div::makeInstance('tx_spsocialbookmarks_pi1');
-			$oMain->cObj = t3lib_div::makeInstance('tslib_cObj');
-			$oMain->cObj->data = $aPlugin;
-			$oMain->main('', $aConfig);
-
 				// Add click to DB
+			tslib_eidtools::connectDB();
 			$oDB = t3lib_div::makeInstance('tx_spsocialbookmarks_db');
-			if ($oMain->aConfig['useStats']) {
-				$oDB->vAddClick($iPID, $sName);
-			}
-
-				// Remove objects from memory
-			unset($oMain);
+			$oDB->vAddClick($iPID, $sName);
 			unset($oDB);
 		}
 
 	}
 
 
-	if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_ajax.php']) {
-		include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_ajax.php']);
+	if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_ajax.php']) {
+		include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_ajax.php']);
 	}
 
 

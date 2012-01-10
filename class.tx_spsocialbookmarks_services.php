@@ -22,6 +22,10 @@
 	 *  This copyright notice MUST APPEAR in all copies of the script!
 	 ********************************************************************/
 
+	require_once(PATH_t3lib . 'class.t3lib_page.php');
+	require_once(PATH_t3lib . 'class.t3lib_tstemplate.php');
+	require_once(PATH_t3lib . 'class.t3lib_tsparser_ext.php');
+
 	/**
 	 * Services handler
 	 */
@@ -34,17 +38,13 @@
 		 * @return array Select options
 		 */
 		public function aGetDefaultServices(array $paConfig) {
-			require_once(PATH_t3lib . 'class.t3lib_page.php');
-			require_once(PATH_t3lib . 'class.t3lib_tstemplate.php');
-			require_once(PATH_t3lib . 'class.t3lib_tsparser_ext.php');
-
-				// Get TypoScript setup
 			$sURL = $_GET['returnUrl'];
 			$iPID = $this->getPageId();
 			$iPID = (!empty($paConfig['row']['pid']) ? $paConfig['row']['pid'] : $iPID);
 			$oPage = t3lib_div::makeInstance('t3lib_pageSelect');
 
 			if ($aLine = $oPage->getRootLine($iPID)) {
+					// Get TypoScript setup
 				$oTS = t3lib_div::makeInstance('t3lib_tsparser_ext');
 				$oTS->tt_track = 0;
 				$oTS->init();
@@ -68,7 +68,7 @@
 
 		/**
 		 * Get current page ID within backend
-		 * 
+		 *
 		 * @return integer UID of current page
 		 */
 		public function getPageId() {
@@ -97,7 +97,7 @@
 	}
 
 
-	if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/class.tx_spsocialbookmarks_services.php']) {
-		include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/class.tx_spsocialbookmarks_services.php']);
+	if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/class.tx_spsocialbookmarks_services.php']) {
+		include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/class.tx_spsocialbookmarks_services.php']);
 	}
 ?>

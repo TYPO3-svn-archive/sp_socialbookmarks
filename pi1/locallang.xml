@@ -2,10 +2,12 @@
 <T3locallang>
 	<meta type="array">
 		<type>module</type>
-		<description>Language labels for plugin &quot;tx_spsocialbookmarks_pi1&quot;</description>
+		<description>Language labels for plugin tx_spsocialbookmarks_pi1</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="pi1_title">Social Bookmarks</label>
+			<label index="pi1_plus_wiz_description">Adds a Social Bookmars bar to this page.</label>
 			<label index="error_db">Could not create a db instance.</label>
 			<label index="error_template">Could not create a template instance.</label>
 			<label index="error_bookmarks">No bookmarks found.</label>
@@ -13,6 +15,8 @@
 			<label index="error_file">Could not open file "%s".</label>
 		</languageKey>
 		<languageKey index="de" type="array">
+			<label index="pi1_title">Social Bookmarks</label>
+			<label index="pi1_plus_wiz_description">Fügt der aktuellen Seite ein Social-Bookmarks Leiste hinzu.</label>
 			<label index="error_db">Konnte keine Datenbank-Instanz erstellen.</label>
 			<label index="error_template">Konnte keine Template-Instanz erstellen.</label>
 			<label index="error_bookmarks">Keine Bookmarks gefunden.</label>

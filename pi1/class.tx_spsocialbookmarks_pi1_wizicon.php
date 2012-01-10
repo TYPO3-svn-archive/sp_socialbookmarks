@@ -37,7 +37,7 @@
 			$LL = $this->includeLocalLang();
 
 			$wizardItems['plugins_tx_spsocialbookmarks_pi1'] = array(
-				'icon' => t3lib_extMgm::extRelPath('sp_socialbookmarks') . 'pi1/ce_wiz.gif',
+				'icon' => t3lib_extMgm::extRelPath('sp_socialbookmarks') . 'res/images/wizard.gif',
 				'title' => $GLOBALS['LANG']->getLLL('pi1_title', $LL),
 				'description' => $GLOBALS['LANG']->getLLL('pi1_plus_wiz_description', $LL),
 				'params' => '&defVals[tt_content][CType]=list&defVals[tt_content][list_type]=sp_socialbookmarks_pi1'
@@ -47,12 +47,12 @@
 		}
 
 		/**
-		 * Reads the [extDir]/locallang.xml and returns the $LOCAL_LANG array found in that file
+		 * Reads the [extDir]/pi1/locallang.xml and returns the $LOCAL_LANG array found in that file
 		 *
 		 * @return array Language labels
 		 */
 		protected function includeLocalLang() {
-			$llFile = t3lib_extMgm::extPath('sp_socialbookmarks') . 'locallang.xml';
+			$llFile = t3lib_extMgm::extPath('sp_socialbookmarks') . 'pi1/locallang.xml';
 			$GLOBALS['LOCAL_LANG'] = t3lib_div::readLLXMLfile($llFile, $GLOBALS['LANG']->lang);
 
 			return $GLOBALS['LOCAL_LANG'];
@@ -60,8 +60,8 @@
 	}
 
 
-	if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_wizicon.php']) {
-		include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_wizicon.php']);
+	if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_wizicon.php']) {
+		include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_wizicon.php']);
 	}
 
 ?>

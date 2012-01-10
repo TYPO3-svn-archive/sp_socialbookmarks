@@ -37,6 +37,11 @@ plugin.tx_spsocialbookmarks_pi1 {
 			url     = http://www.addthis.com/bookmark.php?pub=geotek&amp;url=###URL###&amp;title=###TITLE###
 			image   = EXT:sp_socialbookmarks/res/images/services/addthis.png
 		}
+		allevz {
+			name    = alleVZ
+			url     = http://www.studivz.net/Link/Selection/Url/?u=###URL###&desc=###TITLE###&prov=
+			image   = EXT:sp_socialbookmarks/res/images/services/studivz.png
+		}
 		ask {
 			name    = Ask.com
 			url     = http://myjeeves.ask.com/mysearch/BookmarkIt?v=1.2&amp;t=webpages&amp;url=###URL###&amp;title=###TITLE###
@@ -142,6 +147,11 @@ plugin.tx_spsocialbookmarks_pi1 {
 			url     = http://ma.gnolia.com/beta/bookmarklet/add?url=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
 			image   = EXT:sp_socialbookmarks/res/images/services/magnolia.png
 		}
+		meinvz {
+			name    = meinVZ
+			url     = http://www.meinvz.net/Link/ExternLink/Url/?u=###URL###&desc=###TITLE###&prov=
+			image   = EXT:sp_socialbookmarks/res/images/services/meinvz.png
+		}
 		mylinkde {
 			name    = MyLink.de
 			url     = http://www.mylink.de/qa.asp?link=###URL###&amp;bez=###TITLE###
@@ -177,6 +187,11 @@ plugin.tx_spsocialbookmarks_pi1 {
 			url     = http://reddit.com/submit?url=###URL###&amp;title=###TITLE###
 			image   = EXT:sp_socialbookmarks/res/images/services/reddit.png
 		}
+		schuelervz {
+			name    = schülerVZ
+			url     = http://www.schuelervz.net/Link/ExternLink/Url/?u=###URL###&desc=###TITLE###&prov=
+			image   = EXT:sp_socialbookmarks/res/images/services/schuelervz.png
+		}
 		scuttle {
 			name    = Scuttle
 			url     = http://www.scuttle.org/bookmarks.php/maxpower?action=add&amp;address=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
@@ -196,6 +211,11 @@ plugin.tx_spsocialbookmarks_pi1 {
 			name    = Spurl
 			url     = http://www.spurl.net/spurl.php?url=###URL###&amp;title=###TITLE###
 			image   = EXT:sp_socialbookmarks/res/images/services/spurl.png
+		}
+		studivz {
+			name    = studiVZ
+			url     = http://www.studivz.net/Link/ExternLink/Url/?u=###URL###&desc=###TITLE###&prov=
+			image   = EXT:sp_socialbookmarks/res/images/services/studivz.png
 		}
 		stumbleupon {
 			name    = stumbleupon.com
@@ -219,7 +239,7 @@ plugin.tx_spsocialbookmarks_pi1 {
 		}
 		twitter {
 			name    = Twitter
-			url     = http://twitter.com/home?status=###TITLE###+-+###URL###
+			url     = http://twitter.com/intent/tweet?text=###TITLE###+-+&url=###URL###
 			image   = EXT:sp_socialbookmarks/res/images/services/twitter.png
         }
 		webnews {
@@ -491,14 +511,17 @@ plugin.tx_spsocialbookmarks_pi1 {
 
 
 ## Include Prototype library
-[globalVar = LIT:1 = {$plugin.tx_spsocialbookmarks_pi1.loadPrototype}]
+[globalVar = LIT:prototype = {$plugin.tx_spsocialbookmarks_pi1.loadLibrary}]
   page.javascriptLibs.Prototype = 1
+  page.includeJSlibs.socialBookmarks = EXT:sp_socialbookmarks/res/js/socialbookmarks_prototype.js
 [global]
 
 
-## Include javascript
-[globalVar = LIT:1 = {$plugin.tx_spsocialbookmarks_pi1.loadJavaScript}]
-	page.includeJSlibs.socialBookmarks = EXT:sp_socialbookmarks/res/js/socialbookmarks.js
+## Include jQuery library
+[globalVar = LIT:jquery = {$plugin.tx_spsocialbookmarks_pi1.loadLibrary}]
+	page.includeJSlibs.jQuery = EXT:sp_socialbookmarks/res/js/jquery-1.7.1.min.js
+	page.includeJSlibs.jQuery.disableCompression = 1
+	page.includeJSlibs.socialBookmarks = EXT:sp_socialbookmarks/res/js/socialbookmarks_jquery.js
 [global]
 
 

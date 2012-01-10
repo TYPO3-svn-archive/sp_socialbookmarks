@@ -195,7 +195,7 @@
 				return array();
 			}
 
-			$aServiceList = explode(',', str_replace(' ', '', $this->aConfig['serviceList']));
+			$aServiceList = t3lib_div::trimExplode(',', $this->aConfig['serviceList']);
 			$aServices = array();
 
 			foreach ($aServiceList as $sName) {
@@ -221,8 +221,8 @@
 	}
 
 
-	if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1.php']) {
-		include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1.php']);
+	if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1.php']) {
+		include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1.php']);
 	}
 
 ?>
