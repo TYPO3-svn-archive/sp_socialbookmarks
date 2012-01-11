@@ -2,13 +2,14 @@
 	/*********************************************************************
 	 *  Copyright notice
 	 *
-	 *  (c) 2009 - 2012 Kai Vogel  <kai.vogel(at)speedprogs.de>
+	 *  (c) 2009-2012 Kai Vogel <kai.vogel@speedprogs.de>, Speedprogs.de
+	 *
 	 *  All rights reserved
 	 *
 	 *  This script is part of the TYPO3 project. The TYPO3 project is
 	 *  free software; you can redistribute it and/or modify
 	 *  it under the terms of the GNU General Public License as published
-	 *  by the Free Software Foundation; either version 2 of the License,
+	 *  by the Free Software Foundation; either version 3 of the License,
 	 *  or (at your option) any later version.
 	 *
 	 *  The GNU General Public License can be found at
@@ -63,25 +64,17 @@
 		 */
 		public function addDefaultMarkers() {
 				// User defined markers
-			if (!empty($this->setup['markers.']) && is_array($this->setup['markers.'])) {
-				$name = '';
-				$type = '';
-
-				foreach ($this->setup['markers.'] as $key => $value) {
-					if (substr($key, -1) !== '.' && is_string($value)) {
-						$name = $key;
-						$type = $value;
-					} else if ($name !== '' && $type !== '') {
-						$this->markers['###' . strtoupper($name) . '###'] = $this->cObj->cObjGetSingle($type, $value, $key);
-						$name = '';
-						$type = '';
-					}
+			if (!empty($this->setup['markers']) && is_array($this->setup['markers'])) {
+				foreach ($this->setup['markers'] as $key => $value) {
+					$this->markers['###' . strtoupper($key) . '###'] = $value;
 				}
 			}
 
 				// Locallang markers
-			foreach ($this->labels as $key => $value) {
-				$this->markers['###LLL:' . $key . '###'] = $value;
+			if (!empty($this->labels) && is_array($this->labels)) {
+				foreach ($this->labels as $key => $value) {
+					$this->markers['###LLL:' . $key . '###'] = $value;
+				}
 			}
 		}
 
@@ -111,7 +104,7 @@
 
 				// Get configuration
 			$url    = $this->getPageUrl();
-			$title  = $this->getTitle();
+			$title  = (!empty($this->setup['title'])      ? $this->setup['title']      : '');
 			$target = (!empty($this->setup['linkTarget']) ? $this->setup['linkTarget'] : '_blank');
 			$links  = array();
 
@@ -135,56 +128,30 @@
 		 * @return string URL to current page
 		 */
 		protected function getPageUrl() {
-				// Get baseURL
-			$protocol = (!empty($this->setup['forceSSL']) && $this->setup['forceSSL'] ? 'https://' : 'http://');
-			$baseUrl  = (!empty($this->setup['baseURL.']) ? $this->cObj->cObjGetSingle($this->setup['baseURL'], $this->setup['baseURL.']) : $this->setup['baseURL']);
-			$baseUrl  = (!empty($baseUrl) ? $baseUrl : $_SERVER['HTTP_HOST']);
-			$baseUrl  = $protocol . str_replace(array('https://', 'http://'), '', rtrim($baseUrl, '/')) . '/';
+				// Get url
+			$url = t3lib_div::getIndpEnv('TYPO3_REQUEST_HOST'); // HTTP_HOST
+			if (!empty($this->setup['url'])) {
+				$url = $this->setup['url'];
+			}
 
-				// Get URL to current page
-			$url = $this->cObj->typolink('', array(
-				'parameter'       => (int) $GLOBALS['TSFE']->id,
-				'returnLast'      => 'url',
-				'addQueryString'  => 1,
-				'addQueryString.' => array(
-						'exclude'       => 'id,cHash,no_cache',
-						'method'        => 'GET',
-				),
-			));
+				// Force SSL
+			if (!empty($this->setup['forceSSL'])) {
+				$url = 'https://' . str_replace(array('http://', 'https://'), '', $url);
+			}
 
-				// Get final link
+				// Get tiny url
 			if (!empty($this->setup['useTinyURL'])) {
-				$serviceUrl = (!empty($this->setup['tinyServiceURL']) ? $this->setup['tinyServiceURL'] : 'http://tinyurl.com/api-create.php?url=###URL###');
-				$tinyUrl    = t3lib_div::getURL(str_replace('###URL###', $baseUrl . $url, $serviceUrl));
+				$serviceUrl = 'http://tinyurl.com/api-create.php?url=###URL###';
+				if (!empty($this->setup['tinyServiceURL'])) {
+					$serviceUrl = $this->setup['tinyServiceURL'];
+				}
+				$tinyUrl = t3lib_div::getURL(str_replace('###URL###', $url, $serviceUrl));
 				if (!empty($tinyUrl)) {
 					return $tinyUrl;
 				}
 			}
 
-			return $baseUrl . $url;
-		}
-
-
-		/**
-		 * Get page title or news title if any
-		 *
-		 * @return string Title
-		 */
-		protected function getTitle() {
-			$title = '';
-
-			$result = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'pages', 'uid=' . (int) $GLOBALS['TSFE']->id, '', '', '1');
-			if (!empty($result)) {
-				$cObj = clone($this->cObj);
-				$cObj->start(reset($result), 'pages');
-				$title = $cObj->cObjGetSingle($this->setup['pageTitle'], $this->setup['pageTitle.']);
-				unset($cObj);
-			}
-
-				// Get title (javascript will be used to get it if empty)
-			$title = (!empty($this->setup['useTSTitle']) ? urlencode($title) : '###TITLE###');
-
-			return $title;
+			return $url;
 		}
 
 
@@ -244,9 +211,19 @@
 			);
 			$data = base64_encode(serialize($data));
 
+				// Set url
+			if (!empty($url)) {
+				$service['url'] = str_replace('###URL###', urlencode($url), $service['url']);
+			}
+
+				// Set title
+			if (!empty($title) && !empty($this->setup['useTSTitle'])) {
+				$service['url'] = str_replace('###TITLE###', $title, $service['url']);
+			}
+
 				// Fill markers
 			$linkMarkers = array(
-				'###LINK_URL###'    => str_replace(array('###URL###', '###TITLE###'), array(urlencode($url), $title), $service['url']),
+				'###LINK_URL###'    => $service['url'],
 				'###LINK_TITLE###'  => $service['name'],
 				'###LINK_ID###'     => 'bookmark_' . (!empty($service['name']) ? $service['name'] : md5($GLOBALS['EXEC_TIME'])),
 				'###LINK_TARGET###' => $target,

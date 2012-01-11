@@ -2,13 +2,14 @@
 	/*********************************************************************
 	 *  Copyright notice
 	 *
-	 *  (c) 2009 - 2012 Kai Vogel  <kai.vogel(at)speedprogs.de>
+	 *  (c) 2009-2012 Kai Vogel <kai.vogel@speedprogs.de>, Speedprogs.de
+	 *
 	 *  All rights reserved
 	 *
 	 *  This script is part of the TYPO3 project. The TYPO3 project is
 	 *  free software; you can redistribute it and/or modify
 	 *  it under the terms of the GNU General Public License as published
-	 *  by the Free Software Foundation; either version 2 of the License,
+	 *  by the Free Software Foundation; either version 3 of the License,
 	 *  or (at your option) any later version.
 	 *
 	 *  The GNU General Public License can be found at
@@ -22,7 +23,7 @@
 	 *  This copyright notice MUST APPEAR in all copies of the script!
 	 ********************************************************************/
 
-	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'class.tx_spsocialbookmarks_backend.php');
+	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'class.tx_spsocialbookmarks_typoscript.php');
 
 	/**
 	 * Services handler
@@ -36,11 +37,20 @@
 		 * @return array Select options
 		 */
 		public function getServices(array $configuration) {
+				// Get current page id
+			if (!empty($configuration['row']['pid'])) {
+				$pid = (int) $configuration['row']['pid'];
+			} else {
+				$pid = $this->getPageId();
+			}
+
 				// Get TypoScript configuration
-			$backend = t3lib_div::makeInstance('tx_spsocialbookmarks_backend');
-			$pid     = $backend->getPageId();
-			$pid     = (!empty($configuration['row']['pid']) ? $configuration['row']['pid'] : $pid);
-			$setup   = $backend->getTypoScriptSetup($pid);
+			$parser = t3lib_div::makeInstance('tx_spsocialbookmarks_typoscript');
+			$parser->initializeContentObject($pid);
+			$setup  = $parser->parse($parser->getSetup($pid));
+			if (empty($setup)) {
+				return $configuration;
+			}
 
 				// Get services
 			if (!empty($setup['services.']) && is_array($setup['services.'])) {
@@ -52,6 +62,35 @@
 			}
 
 			return $configuration;
+		}
+
+
+		/**
+		 * Get current page ID within backend
+		 *
+		 * @return integer UID of current page
+		 */
+		public function getPageId() {
+			if (!empty($GLOBALS['SOBE']) && !empty($GLOBALS['SOBE']->viewId)) {
+				return (int) $GLOBALS['SOBE']->viewId;
+			}
+
+				// Find UID in "id" param
+			$pageId = t3lib_div::_GP('id');
+			if (!empty($pageId)) {
+				return (int) $pageId;
+			}
+
+				// Find UID in "returnUrl" param
+			$url = urldecode(t3lib_div::_GP('returnUrl'));
+			if ($url) {
+				preg_match('/id=([0-9]*)/', $url, $parts);
+				if (!empty($parts[1])) {
+					return (int) $parts[1];
+				}
+			}
+
+			return 0;
 		}
 
 	}

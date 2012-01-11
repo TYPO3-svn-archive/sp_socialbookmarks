@@ -2,13 +2,14 @@
 	/*********************************************************************
 	 *  Copyright notice
 	 *
-	 *  (c) 2009 - 2012 Kai Vogel  <kai.vogel(at)speedprogs.de>
+	 *  (c) 2009-2012 Kai Vogel <kai.vogel@speedprogs.de>, Speedprogs.de
+	 *
 	 *  All rights reserved
 	 *
 	 *  This script is part of the TYPO3 project. The TYPO3 project is
 	 *  free software; you can redistribute it and/or modify
 	 *  it under the terms of the GNU General Public License as published
-	 *  by the Free Software Foundation; either version 2 of the License,
+	 *  by the Free Software Foundation; either version 3 of the License,
 	 *  or (at your option) any later version.
 	 *
 	 *  The GNU General Public License can be found at
@@ -24,6 +25,7 @@
 
 	require_once(PATH_tslib . 'class.tslib_pibase.php');
 	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'pi1/class.tx_spsocialbookmarks_pi1_template.php');
+	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'class.tx_spsocialbookmarks_typoscript.php');
 
 	/**
 	 * Plugin for the sp_socialbookmarks extension
@@ -82,8 +84,12 @@
 		 * @return array TypoScript array merged with FlexForm values
 		 */
 		public function getSetup(array $setup) {
-			$this->pi_initPIflexForm();
+				// Parse setup first
+			$parser = t3lib_div::makeInstance('tx_spsocialbookmarks_typoscript', $this->cObj);
+			$setup = $parser->parse($setup);
 
+				// Overrride with flexform values
+			$this->pi_initPIflexForm();
 			if (!empty($this->cObj->data['pi_flexform'])) {
 				$flexform = $this->cObj->data['pi_flexform'];
 				$sDef = current($flexform['data']);
@@ -98,7 +104,7 @@
 					}
 				}
 			}
-			
+
 			return $setup;
 		}
 
@@ -162,7 +168,7 @@
 		 * @return array Services
 		 */
 		protected function getServices() {
-			if (empty($this->setup['services.']) || empty($this->setup['serviceList'])) {
+			if (empty($this->setup['services']) || empty($this->setup['serviceList'])) {
 				return array();
 			}
 
@@ -170,7 +176,7 @@
 			$services = array();
 
 			foreach ($serviceList as $name) {
-				$services[$name] = $this->setup['services.'][$name . '.'];
+				$services[$name] = $this->setup['services'][$name];
 			}
 
 			return $services;

@@ -1,5 +1,5 @@
 # ======================================================================
-# Default configuration for sp_socialbookmarks
+# Default configuration
 # ======================================================================
 plugin.tx_spsocialbookmarks_pi1 {
 	## Basic configuration
@@ -22,474 +22,32 @@ plugin.tx_spsocialbookmarks_pi1 {
 		chartColor        = {$plugin.tx_spsocialbookmarks_pi1.chart.chartColor}
 	}
 
-	## Dynamic baseURL
-	baseURL             = TEXT
-	baseURL.data        = getIndpEnv : HTTP_HOST
-
-	## Title for bookmarks
-	pageTitle           = TEXT
-	pageTitle.field     = subtitle // title
-
-	## Bookmark services
-	services {
-		addthis {
-			name    = Add This
-			url     = http://www.addthis.com/bookmark.php?pub=geotek&amp;url=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/addthis.png
-		}
-		allevz {
-			name    = alleVZ
-			url     = http://www.studivz.net/Link/Selection/Url/?u=###URL###&desc=###TITLE###&prov=
-			image   = EXT:sp_socialbookmarks/res/images/services/studivz.png
-		}
-		ask {
-			name    = Ask.com
-			url     = http://myjeeves.ask.com/mysearch/BookmarkIt?v=1.2&amp;t=webpages&amp;url=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/ask.png
-		}
-		backflip {
-			name    = Backflip
-			url     = http://www.backflip.com/add_page_pop.ihtml?url=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/backflip.png
-		}
-		blinkbits {
-			name    = BlinkBits
-			url     = http://www.blinkbits.com/bookmarklets/save.php?v=1&amp;source_url=###URL###&amp;title=###TITLE###&amp;body=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/blinkbits.png
-		}
-		blinklist {
-			name    = blinklist
-			url     = http://www.blinklist.com/index.php?Action=Blink/addblink.php&amp;Description=&amp;Url=###URL###&amp;Title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/blinklist.png
-		}
-		blogmarks {
-			name    = BlogMarks
-			url     = http://blogmarks.net/my/new.php?mini=1&amp;simple=1&amp;url=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/blogmarks.png
-		}
-		bluedot {
-			name    = Bluedot
-			url     = http://bluedot.us/Authoring.aspx?u=###URL###&amp;t=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/bluedot.png
-		}
-		connotea {
-			name    = Connotea
-			url     = http://www.connotea.org/addpopup?continue=confirm&amp;uri=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/connotea.png
-		}
-		delicious {
-			name    = del.icio.us
-			url     = http://del.icio.us/post?url=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/delicious.png
-		}
-		delirious {
-			name    = de.lirio.us
-			url     = http://de.lirio.us/rubric/post?uri=###URL###;title=###TITLE###;when_done=go_back
-			image   = EXT:sp_socialbookmarks/res/images/services/delirious.png
-		}
-		digg {
-			name    = digg.com
-			url     = http://digg.com/submit?phase=2&amp;url=###URL###
-			image   = EXT:sp_socialbookmarks/res/images/services/digg.png
-		}
-		facebook {
-			name    = Facebook
-			url     = http://www.facebook.com/share.php?u=###URL###&t=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/facebook.png
-		}
-		fark {
-			name    = Fark.com
-			url     = http://cgi.fark.com/cgi/fark/edit.pl?new_url=###URL###&amp;new_comment=###TITLE###&amp;linktype=Misc
-			image   = EXT:sp_socialbookmarks/res/images/services/fark.png
-		}
-		feedmelinks {
-			name    = Feed me links
-			url     = http://feedmelinks.com/categorize?from=toolbar&amp;op=submit&amp;url=###URL###name=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/feedmelinks.png
-		}
-		folkd {
-			name    = Folkd
-			url     = http://www.folkd.com/submit/###URL###
-			image   = EXT:sp_socialbookmarks/res/images/services/folkd.png
-		}
-		furl {
-			name    = Furl
-			url     = http://www.furl.net/storeIt.jsp?u=###URL###&amp;t=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/furl.png
-		}
-		google {
-			name    = google.com
-			url     = http://www.google.com/bookmarks/mark?op=add&amp;bkmk=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/google.png
-		}
-		hype {
-			name    = hype it!
-			url     = http://hype.yeebase.com/submit/###URL###
-			image   = EXT:sp_socialbookmarks/res/images/services/hype.png
-		}
-		linkagogo {
-			name    = LinkaGoGo
-			url     = http://www.linkagogo.com/go/AddNoPopup?url=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/linkagogo.png
-		}
-		linkarena {
-			name    = LinkaARENA
-			url     = http://linkarena.com/bookmarks/addlink/?url=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/linkarena.png
-		}
-		live {
-			name    = live.com
-			url     = https://favorites.live.com/quickadd.aspx?marklet=1&amp;mkt=en-us&amp;url=###URL###&amp;title=###TITLE###&amp;top=1
-			image   = EXT:sp_socialbookmarks/res/images/services/live.png
-		}
-		magnolia {
-			name    = Ma.gnolia
-			url     = http://ma.gnolia.com/beta/bookmarklet/add?url=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/magnolia.png
-		}
-		meinvz {
-			name    = meinVZ
-			url     = http://www.meinvz.net/Link/ExternLink/Url/?u=###URL###&desc=###TITLE###&prov=
-			image   = EXT:sp_socialbookmarks/res/images/services/meinvz.png
-		}
-		mylinkde {
-			name    = MyLink.de
-			url     = http://www.mylink.de/qa.asp?link=###URL###&amp;bez=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/mylinkde.png
-		}
-		netscape {
-			name    = Netscape
-			url     = http://www.netscape.com/submit/?U=###URL###&amp;T=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/netscape.png
-		}
-		netvouz {
-			name    = netvouz
-			url     = http://www.netvouz.com/action/submitBookmark?url=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/netvouz.png
-		}
-		newsvine {
-			name    = newsvine.com
-			url     = http://www.newsvine.com/_tools/seed&amp;save?u=###URL###&amp;h=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/newsvine.png
-		}
-		oneview {
-			name    = oneview
-			url     = http://www.oneview.de/quickadd/neu/addBookmark.jsf?URL=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/oneview.png
-		}
-		rawsugar {
-			name    = RawSugar
-			url     = http://www.rawsugar.com/tagger/?turl=###URL###&amp;tttl=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/rawsugar.png
-		}
-		reddit {
-			name    = Reddit
-			url     = http://reddit.com/submit?url=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/reddit.png
-		}
-		schuelervz {
-			name    = schülerVZ
-			url     = http://www.schuelervz.net/Link/ExternLink/Url/?u=###URL###&desc=###TITLE###&prov=
-			image   = EXT:sp_socialbookmarks/res/images/services/schuelervz.png
-		}
-		scuttle {
-			name    = Scuttle
-			url     = http://www.scuttle.org/bookmarks.php/maxpower?action=add&amp;address=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/scuttle.png
-		}
-		simpy {
-			name    = Simpy
-			url     = http://www.simpy.com/simpy/LinkAdd.do?href=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/simpy.png
-		}
-		smarking {
-			name    = Smarking
-			url     = http://smarking.com/editbookmark/?url=###URL###&amp;description=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/smarking.png
-		}
-		spurl {
-			name    = Spurl
-			url     = http://www.spurl.net/spurl.php?url=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/spurl.png
-		}
-		studivz {
-			name    = studiVZ
-			url     = http://www.studivz.net/Link/ExternLink/Url/?u=###URL###&desc=###TITLE###&prov=
-			image   = EXT:sp_socialbookmarks/res/images/services/studivz.png
-		}
-		stumbleupon {
-			name    = stumbleupon.com
-			url     = http://www.stumbleupon.com/submit?url=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/su.png
-		}
-		tagthat {
-			name    = TagThat
-			url     = http://www.tagthat.de/bookmarken.php?action=neu&amp;url=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/tagthat.png
-		}
-		tailrank {
-			name    = TailRank
-			url     = http://tailrank.com/share/?text=&amp;link_href=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/tailrank.png
-		}
-		technorati {
-			name    = Technorati
-			url     = http://technorati.com/faves/?add=###URL###
-			image   = EXT:sp_socialbookmarks/res/images/services/technorati.png
-		}
-		twitter {
-			name    = Twitter
-			url     = http://twitter.com/intent/tweet?text=###TITLE###+-+&url=###URL###
-			image   = EXT:sp_socialbookmarks/res/images/services/twitter.png
-        }
-		webnews {
-			name    = Webnews
-			url     = http://www.webnews.de/einstellen?url=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/webnews.png
-		}
-		wink {
-			name    = Wink
-			url     = http://www.wink.com/_/tag?url=###URL###&amp;doctitle=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/wink.png
-		}
-		wists {
-			name    = Wists
-			url     = http://wists.com/r.php?c=&amp;r=###URL###&amp;title=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/wists.png
-		}
-		wong {
-			name    = Mister Wong
-			url     = http://www.mister-wong.de/index.php?action=addurl&amp;bm_url=###URL###&amp;bm_description=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/wong.png
-		}
-		yahoomyweb {
-			name    = YahooMyWeb
-			url     = http://myweb.yahoo.com/myresults/bookmarklet?t=###TITLE###&amp;u=###URL###&amp;ei=UTF-8
-			image   = EXT:sp_socialbookmarks/res/images/services/yahoomyweb.png
-		}
-		yiggde {
-			name    = YiggIt
-			url     = http://yigg.de/neu?exturl=###URL###&amp;exttitle=###TITLE###&amp;extdesc=###TITLE###
-			image   = EXT:sp_socialbookmarks/res/images/services/yiggit.png
+	## Generate url
+	url = TEXT
+	url.typolink {
+		parameter.data = TSFE : id
+		returnLast     = url
+		addQueryString = 1
+    addQueryString  {
+			exclude = id,cHash,no_cache
+			method  = GET
 		}
 	}
 
-	## Browsers
-	browsers {
-		ie {
-			name    = Internet Explorer
-			ident   = MSIE
-			image   = EXT:sp_socialbookmarks/res/images/browsers/ie.png
-		}
-		ie4 {
-			name    = Internet Explorer 4
-			ident   = (MSIE 4\.[0-9]+)
-			image   = EXT:sp_socialbookmarks/res/images/browsers/ie4.png
-		}
-		ie5 {
-			name    = Internet Explorer 5
-			ident   = (MSIE 5\.[0-9]+)
-			image   = EXT:sp_socialbookmarks/res/images/browsers/ie5.png
-		}
-		ie6 {
-			name    = Internet Explorer 6
-			ident   = (MSIE 6\.[0-9]+)
-			image   = EXT:sp_socialbookmarks/res/images/browsers/ie6.png
-		}
-		ie7 {
-			name    = Internet Explorer 7
-			ident   = (MSIE 7\.[0-9]+)
-			image   = EXT:sp_socialbookmarks/res/images/browsers/ie7.png
-		}
-		ie8 {
-			name    = Internet Explorer 8
-			ident   = (MSIE 8\.[0-9]+)
-			image   = EXT:sp_socialbookmarks/res/images/browsers/ie8.png
-		}
-		mozilla {
-			name    = Mozilla
-			ident   = Gecko
-			image   = EXT:sp_socialbookmarks/res/images/browsers/mozilla.png
-		}
-		firefox {
-			name    = Mozilla Firefox
-			ident   = (Firebird)|(Firefox)
-			image   = EXT:sp_socialbookmarks/res/images/browsers/firefox.png
-		}
-		firefox2 {
-			name    = Mozilla Firefox 2
-			ident   = Firefox/2
-			image   = EXT:sp_socialbookmarks/res/images/browsers/firefox2.png
-		}
-		firefox30 {
-			name    = Mozilla Firefox 3.0
-			ident   = Firefox/3.0
-			image   = EXT:sp_socialbookmarks/res/images/browsers/firefox3.png
-		}
-		firefox35 {
-			name    = Mozilla Firefox 3.5
-			ident   = (Firefox/3.1)|(Firefox/3.5)
-			image   = EXT:sp_socialbookmarks/res/images/browsers/firefox3.png
-		}
-		firefox4 {
-			name    = Mozilla Firefox 4
-			ident   = Firefox/4
-			image   = EXT:sp_socialbookmarks/res/images/browsers/firefox4.png
-		}
-		galeon {
-			name    = Galeon
-			ident   = Galeon
-			image   = EXT:sp_socialbookmarks/res/images/browsers/galeon.png
-		}
-		opera {
-			name    = Opera
-			ident   = Opera
-			image   = EXT:sp_socialbookmarks/res/images/browsers/opera.png
-		}
-		myie {
-			name    = MyIE
-			ident   = MyIE
-			image   = EXT:sp_socialbookmarks/res/images/browsers/myie.png
-		}
-		lynx {
-			name    = Lynx
-			ident   = Lynx
-			image   = EXT:sp_socialbookmarks/res/images/browsers/lynx.png
-		}
-		konqueror {
-			name    = Konqueror
-			ident   = Konqueror
-			image   = EXT:sp_socialbookmarks/res/images/browsers/konqueror.png
-		}
-		safari {
-			name    = Safari
-			ident   = Safari
-			image   = EXT:sp_socialbookmarks/res/images/browsers/safari.png
-		}
-		chrome {
-			name    = Google Chrome
-			ident   = Chrome
-			image   = EXT:sp_socialbookmarks/res/images/browsers/chrome.png
-		}
-		crawler {
-			name    = Crawler
-			ident   = (nuhk)|(Googlebot)|(Yammybot)|(Openbot)|(Slurp/cat)|(msnbot)|(ia_archiver)|(bot)|(crawl)
-			image   = EXT:sp_socialbookmarks/res/images/browsers/crawler.png
-		}
-	}
-
-	## Systems
-	systems {
-		windows {
-			name    = Windows
-			ident   = Win
-			image   = EXT:sp_socialbookmarks/res/images/systems/windows.png
-		}
-		windows95 {
-			name    = Windows 95
-			ident   = (Win95)|(Windows 95)
-			image   = EXT:sp_socialbookmarks/res/images/systems/windows98.png
-		}
-		windows98 {
-			name    = Windows 98
-			ident   = (Win98)|(Windows 98)
-			image   = EXT:sp_socialbookmarks/res/images/systems/windows98.png
-		}
-		windowsnt {
-			name    = Windows NT
-			ident   = (WinNT)|(Windows NT)
-			image   = EXT:sp_socialbookmarks/res/images/systems/windowsnt.png
-		}
-		windows2000 {
-			name    = Windows 2000
-			ident   = (WinNT 5.0)|(Windows NT 5.0)
-			image   = EXT:sp_socialbookmarks/res/images/systems/windows5.png
-		}
-		windowsxp {
-			name    = Windows XP
-			ident   = (WinNT 5.1)|(Windows NT 5.1)
-			image   = EXT:sp_socialbookmarks/res/images/systems/windows5.png
-		}
-		windowsvista {
-			name    = Windows Vista
-			ident   = (WinNT 6.0)|(Windows NT 6.0)
-			image   = EXT:sp_socialbookmarks/res/images/systems/windowsvista.png
-		}
-		windows7 {
-			name    = Windows 7
-			ident   = (WinNT 7.0)|(Windows NT 7.0)
-			image   = EXT:sp_socialbookmarks/res/images/systems/windows7.png
-		}
-		linux {
-			name    = Linux
-			ident   = Linux
-			image   = EXT:sp_socialbookmarks/res/images/systems/linux.png
-		}
-		ubuntu {
-			name    = Ubuntu
-			ident   = Ubuntu
-			image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu.png
-		}
-		ubuntu610 {
-			name    = Ubuntu 6.10 (Edgy Eft)
-			ident   = Ubuntu/6\.10
-			image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu6.png
-		}
-		ubuntu704 {
-			name    = Ubuntu 7.04 (Feisty Fawn)
-			ident   = Ubuntu/7\.04
-			image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu7.png
-		}
-		ubuntu710 {
-			name    = Ubuntu 7.10 (Gutsy Gibbon)
-			ident   = Ubuntu/7\.10
-			image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu7.png
-		}
-		ubuntu804 {
-			name    = Ubuntu 8.04 (Hardy Heron)
-			ident   = Ubuntu/8\.04
-			image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu8.png
-		}
-		ubuntu810 {
-			name    = Ubuntu 8.10 (Intrepid Ibex)
-			ident   = Ubuntu/8\.10
-			image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu8.png
-		}
-		ubuntu904 {
-			name    = Ubuntu 9.04 (Jaunty Jackalope)
-			ident   = Ubuntu/9\.04
-			image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu9.png
-		}
-		ubuntu910 {
-			name    = Ubuntu 9.10 (Karmic Koala)
-			ident   = Ubuntu/9\.10
-			image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu9.png
-		}
-		ubuntu1004 {
-			name    = Ubuntu 10.04
-			ident   = Ubuntu/10\.04
-			image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu10.png
-		}
-		ubuntu1010 {
-			name    = Ubuntu 10.10
-			ident   = Ubuntu/10\.10
-			image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu10.png
-		}
-		macos {
-			name    = Mac OS
-			ident   = (Macintosh)|(Mac_PowerPC)|(Mac)
-			image   = EXT:sp_socialbookmarks/res/images/systems/macos.png
-		}
-		sunos {
-			name    = Sun OS
-			ident   = Sun
-			image   = EXT:sp_socialbookmarks/res/images/systems/sunos.png
+	## Generate title
+	title = TEXT
+	title {
+		data = page : subtitle // page : title
+		stdWrap {
+			stripHtml = 1
 		}
 	}
 }
 
 
-## Use tt_news title if we are in news detail view
+# ======================================================================
+# Use tt_news title if we are in news detail view
+# ======================================================================
 [globalVar = GP:tx_ttnews|tt_news > 0]
     plugin.tx_spsocialbookmarks_pi1.pageTitle >
     plugin.tx_spsocialbookmarks_pi1.pageTitle = RECORDS
@@ -510,14 +68,18 @@ plugin.tx_spsocialbookmarks_pi1 {
 [global]
 
 
-## Include Prototype library
+# ======================================================================
+# Include Prototype library
+# ======================================================================
 [globalVar = LIT:prototype = {$plugin.tx_spsocialbookmarks_pi1.loadLibrary}]
   page.javascriptLibs.Prototype = 1
   page.includeJSlibs.socialBookmarks = EXT:sp_socialbookmarks/res/js/socialbookmarks_prototype.js
 [global]
 
 
-## Include jQuery library
+# ======================================================================
+# Include jQuery library
+# ======================================================================
 [globalVar = LIT:jquery = {$plugin.tx_spsocialbookmarks_pi1.loadLibrary}]
 	page.includeJSlibs.jQuery = EXT:sp_socialbookmarks/res/js/jquery-1.7.1.min.js
 	page.includeJSlibs.jQuery.disableCompression = 1
@@ -525,7 +87,18 @@ plugin.tx_spsocialbookmarks_pi1 {
 [global]
 
 
-## Include stylesheet
+# ======================================================================
+# Include stylesheet
+# ======================================================================
 [globalVar = LIT:1 = {$plugin.tx_spsocialbookmarks_pi1.loadStylesheet}]
   page.includeCSS.socialBookmarks = EXT:sp_socialbookmarks/res/template/stylesheet.css
 [global]
+
+
+
+# ======================================================================
+# Include TypoScript libraries
+# ======================================================================
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sp_socialbookmarks/res/ts/Services.txt">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sp_socialbookmarks/res/ts/Browsers.txt">
+<INCLUDE_TYPOSCRIPT: source="FILE:EXT:sp_socialbookmarks/res/ts/Systems.txt">

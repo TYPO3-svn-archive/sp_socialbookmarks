@@ -2,13 +2,14 @@
 	/*********************************************************************
 	 *  Copyright notice
 	 *
-	 *  (c) 2009 - 2012 Kai Vogel  <kai.vogel(at)speedprogs.de>
+	 *  (c) 2009-2012 Kai Vogel <kai.vogel@speedprogs.de>, Speedprogs.de
+	 *
 	 *  All rights reserved
 	 *
 	 *  This script is part of the TYPO3 project. The TYPO3 project is
 	 *  free software; you can redistribute it and/or modify
 	 *  it under the terms of the GNU General Public License as published
-	 *  by the Free Software Foundation; either version 2 of the License,
+	 *  by the Free Software Foundation; either version 3 of the License,
 	 *  or (at your option) any later version.
 	 *
 	 *  The GNU General Public License can be found at
@@ -25,7 +26,7 @@
 	require_once(PATH_t3lib . 'class.t3lib_extobjbase.php');
 	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'modfunc1/class.tx_spsocialbookmarks_modfunc1_chart.php');
 	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'class.tx_spsocialbookmarks_db.php');
-	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'class.tx_spsocialbookmarks_backend.php');
+	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'class.tx_spsocialbookmarks_typoscript.php');
 
 	/**
 	 * Module extension
@@ -66,8 +67,9 @@
 			$pid = (int) $this->pObj->id;
 
 				// Get TyopScript configuration
-			$backend = t3lib_div::makeInstance('tx_spsocialbookmarks_backend');
-			$this->setup = $backend->getTypoScriptSetup($pid);
+			$parser = t3lib_div::makeInstance('tx_spsocialbookmarks_typoscript');
+			$parser->initializeContentObject($pid);
+			$this->setup = $parser->parse($parser->getSetup($pid));
 
 				// Load environment
 			$menus    = $this->getFuncMenus($pid);
@@ -181,7 +183,7 @@
 		protected function getCounts(array $data, $type = 'services') {
 			$type = strtolower(trim($type));
 
-			if (empty($data) || empty($this->setup[$type . '.']) || !is_array($this->setup[$type . '.'])) {
+			if (empty($data) || empty($this->setup[$type]) || !is_array($this->setup[$type])) {
 				return array();
 			}
 
@@ -189,7 +191,7 @@
 
 			if ($type == 'services') {
 				foreach ($data as $key => $service) {
-					if (array_key_exists(trim($key) . '.', $this->setup[$type . '.'])) {
+					if (array_key_exists(trim($key) . '.', $this->setup[$type])) {
 						$counts[$key] = count($service);
 					}
 				}
@@ -198,7 +200,7 @@
 					foreach ($elements as $element) {
 						$name = 'unknown';
 
-						foreach($this->setup[$type.'.'] as $key => $setup) {
+						foreach($this->setup[$type] as $key => $setup) {
 							if (preg_match('/' . addcslashes($setup['ident'], '/') . '/i', $element['agent'])) {
 								$name = substr($key, 0 , -1);
 							}
@@ -224,7 +226,7 @@
 		public function getImages($type = 'services') {
 			$type = strtolower(trim($type));
 
-			if (empty($this->setup[$type . '.']) || !is_array($this->setup[$type . '.'])) {
+			if (empty($this->setup[$type]) || !is_array($this->setup[$type])) {
 				return array();
 			}
 
@@ -233,7 +235,7 @@
 			$images = array();
 
 				// Get images
-			foreach ($this->setup[$type . '.'] as $key => $value) {
+			foreach ($this->setup[$type] as $key => $value) {
 				$fileName = t3lib_div::getFileAbsFileName($value['image']);
 				$fileType = strtolower(substr($fileName, strrpos($fileName, '.') + 1));
 				if (!t3lib_div::inList($allowedTypes, $fileType) || !is_readable($fileName)) {
