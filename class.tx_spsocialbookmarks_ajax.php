@@ -27,7 +27,7 @@
 	/**
 	 * Ajax handler
 	 */
-	class tx_spsocialbookmarks_ajax {
+	class tx_spsocialbookmarks_ajax implements t3lib_Singleton {
 
 		/**
 		 * The main method for the ajax call

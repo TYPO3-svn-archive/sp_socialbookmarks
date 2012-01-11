@@ -22,14 +22,12 @@
 	 *  This copyright notice MUST APPEAR in all copies of the script!
 	 ********************************************************************/
 
-	require_once(PATH_t3lib . 'class.t3lib_page.php');
-	require_once(PATH_t3lib . 'class.t3lib_tstemplate.php');
-	require_once(PATH_t3lib . 'class.t3lib_tsparser_ext.php');
+	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'class.tx_spsocialbookmarks_backend.php');
 
 	/**
 	 * Services handler
 	 */
-	class tx_spsocialbookmarks_services {
+	class tx_spsocialbookmarks_services implements t3lib_Singleton {
 
 		/**
 		 * Get services for flexform
@@ -38,60 +36,22 @@
 		 * @return array Select options
 		 */
 		public function aGetDefaultServices(array $paConfig) {
-			$sURL = $_GET['returnUrl'];
-			$iPID = $this->getPageId();
+				// Get TypoScript configuration
+			$oBackend = t3lib_div::makeInstance('tx_spsocialbookmarks_backend');
+			$iPID = $oBackend->getPageId();
 			$iPID = (!empty($paConfig['row']['pid']) ? $paConfig['row']['pid'] : $iPID);
-			$oPage = t3lib_div::makeInstance('t3lib_pageSelect');
+			$aTS  = $oBackend->aGetTS($iPID);
 
-			if ($aLine = $oPage->getRootLine($iPID)) {
-					// Get TypoScript setup
-				$oTS = t3lib_div::makeInstance('t3lib_tsparser_ext');
-				$oTS->tt_track = 0;
-				$oTS->init();
-				$oTS->runThroughTemplates($aLine);
-				$oTS->generateConfig();
-
-					// Get services
-				$aServices = $oTS->setup['plugin.']['tx_spsocialbookmarks_pi1.']['services.'];
-				if (!empty($aServices) && is_array($aServices)) {
-					foreach($aServices as $sKey => $aService) {
-						$sKey = strtolower(substr($sKey, 0, -1));
-						$sName = $aService['name'] ? $aService['name'] : $sKey;
-						$paConfig['items'][] = array($sName, $sKey);
-					}
+				// Get services
+			if (!empty($aTS['services.']) && is_array($aTS['services.'])) {
+				foreach($aTS['services.'] as $sKey => $aService) {
+					$sKey = strtolower(substr($sKey, 0, -1));
+					$sName = $aService['name'] ? $aService['name'] : $sKey;
+					$paConfig['items'][] = array($sName, $sKey);
 				}
 			}
 
 			return $paConfig;
-		}
-
-
-		/**
-		 * Get current page ID within backend
-		 *
-		 * @return integer UID of current page
-		 */
-		public function getPageId() {
-			if (isset($GLOBALS['SOBE'])) {
-				return (int) $GLOBALS['SOBE']->viewId;
-			}
-
-				// Find UID in "id" param
-			$pageId = t3lib_div::_GP('id');
-			if ($pageId) {
-				return (int) $pageId;
-			}
-
-				// Find UID in "returnUrl" param
-			$url = urldecode(t3lib_div::_GP('returnUrl'));
-			if ($url) {
-				preg_match('/id=([0-9]*)/', $url, $parts);
-				if (!empty($parts[1])) {
-					return (int) $parts[1];
-				}
-			}
-
-			return 0;
 		}
 
 	}

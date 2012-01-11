@@ -23,19 +23,16 @@
 	 ********************************************************************/
 
 	require_once(PATH_t3lib . 'class.t3lib_extobjbase.php');
-	require_once(PATH_t3lib . 'class.t3lib_tsfebeuserauth.php');
-	require_once(PATH_t3lib . 'class.t3lib_page.php');
-	require_once(PATH_t3lib . 'class.t3lib_tstemplate.php');
-	require_once(PATH_t3lib . 'class.t3lib_tsparser_ext.php');
 	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'modfunc1/class.tx_spsocialbookmarks_modfunc1_chart.php');
 	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'class.tx_spsocialbookmarks_db.php');
+	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'class.tx_spsocialbookmarks_backend.php');
 
 	/**
 	 * Module extension
 	 */
 	class tx_spsocialbookmarks_modfunc1 extends t3lib_extobjbase {
 		public $aConfig = array();
-		public $oLL = NULL;
+		public $oLL     = NULL;
 
 		/**
 		 * Returns the module menu
@@ -44,19 +41,19 @@
 		 */
 		public function modMenu() {
 			return array (
-				'mode' => array (
-					'all' => $GLOBALS['LANG']->getLL('mode_all'),
-					'page' => $GLOBALS['LANG']->getLL('mode_this'),
+				'mode'   => array (
+					'all'    => $GLOBALS['LANG']->getLL('mode_all'),
+					'page'   => $GLOBALS['LANG']->getLL('mode_this'),
 				),
 				'period' => array (
-					'all' => $GLOBALS['LANG']->getLL('period_all'),
-					'year' => $GLOBALS['LANG']->getLL('period_year'),
-					'month' => $GLOBALS['LANG']->getLL('period_month'),
-					'week' => $GLOBALS['LANG']->getLL('period_week'),
-					'day' => $GLOBALS['LANG']->getLL('period_day'),
+					'all'    => $GLOBALS['LANG']->getLL('period_all'),
+					'year'   => $GLOBALS['LANG']->getLL('period_year'),
+					'month'  => $GLOBALS['LANG']->getLL('period_month'),
+					'week'   => $GLOBALS['LANG']->getLL('period_week'),
+					'day'    => $GLOBALS['LANG']->getLL('period_day'),
 				),
 				'showBrowsers' => '',
-				'showSystems' => '',
+				'showSystems'  => '',
 			);
 		}
 
@@ -67,24 +64,26 @@
 		 * @return string HTML content
 		 */
 		public function main() {
-				// Get configuration
-			$this->aConfig = $this->aGetTS();
-			$this->oLL = $GLOBALS['LANG'];
-			$sMenus = $this->sGetFuncMenus();
-			$iUID = $this->iGetUid();
-			$sPeriod = $this->sGetPeriod();
-			$oDoc = $this->pObj->doc;
+			$iPID = (int) $this->pObj->id;
+
+				// Get TyopScript configuration
+			$oBackend = t3lib_div::makeInstance('tx_spsocialbookmarks_backend');
+			$this->aConfig = $oBackend->aGetTS($iPID);
+
+				// Load environment
+			$sMenus  = $this->sGetFuncMenus();
+			$oDoc    = $this->pObj->doc;
 			$aCharts = $this->aGetActiveCharts();
 
 				// Get data from db
-			$oDB = t3lib_div::makeInstance('tx_spsocialbookmarks_db');
-			$oDB->aConfig = $this->aConfig;
-			$aData = $oDB->aGetData($iUID, $sPeriod);
-			unset($oDB);
+			$oDB     = t3lib_div::makeInstance('tx_spsocialbookmarks_db');
+			$iUID    = ($this->pObj->MOD_SETTINGS['mode'] == 'page' ? $iPID : 0);
+			$iPeriod = $this->iGetPeriod();
+			$aData   = $oDB->aGetData($iUID, $iPeriod);
 
 				// Begin document
 			$sContent  = $oDoc->spacer(5);
-			$sContent .= $oDoc->section($this->oLL->getLL('title'), $sMenus, 0, 1, 0, 0);
+			$sContent .= $oDoc->section($GLOBALS['LANG']->getLL('title'), $sMenus, 0, 1, 0, 0);
 			$sContent .= $oDoc->sectionEnd();
 
 				// Get charts
@@ -92,13 +91,12 @@
 			foreach ($aCharts as $sType) {
 				$aCounts = $this->aGetCounts($aData, $sType);
 				$aImages = $this->aGetImages($sType);
-				$sChart = $oChart->sGetChart($this->aConfig, $sType, $this->oLL->getLL('clicks'), $aCounts, $aImages);
+				$sChart  = $oChart->sGetChart($this->aConfig, $sType, $GLOBALS['LANG']->getLL('clicks'), $aCounts, $aImages);
 
 				$sContent .= $oDoc->spacer(10);
-				$sContent .= $oDoc->section($this->oLL->getLL('title_chart_'.$sType), $sChart, 1, 1, 1, 0);
+				$sContent .= $oDoc->section($GLOBALS['LANG']->getLL('title_chart_'.$sType), $sChart, 1, 1, 1, 0);
 				$sContent .= $oDoc->sectionEnd();
 			}
-			unset($oChart);
 
 				// Return document
 			return $sContent;
@@ -121,61 +119,31 @@
 
 
 		/**
-		 * Get TypoScript array
-		 *
-		 * @return array TypoScript configuration
-		 */
-		protected function aGetTS() {
-			list($aPage) = t3lib_BEfunc::getRecordsByField('pages', 'pid', 0);
-			$iUID = intval($aPage['uid']);
-			$oPage = t3lib_div::makeInstance('t3lib_pageSelect');
-			$sLine = $oPage->getRootLine($iUID);
-			$oTS = t3lib_div::makeInstance('t3lib_tsparser_ext');
-			$oTS->tt_track = 0;
-			$oTS->init();
-			$oTS->runThroughTemplates($sLine);
-			$oTS->generateConfig();
-
-			return $oTS->setup['plugin.']['tx_spsocialbookmarks_pi1.'];
-		}
-
-
-		/**
-		 * Get current view mode
-		 *
-		 * @return integer Current Uid
-		 */
-		protected function iGetUid() {
-			return ($this->pObj->MOD_SETTINGS['mode'] == 'page') ? $this->pObj->id : 0;
-		}
-
-
-		/**
 		 * Get current period
 		 *
-		 * @return string Time period
+		 * @return integer Time period
 		 */
-		protected function sGetPeriod() {
+		protected function iGetPeriod() {
 			switch (strtolower($this->pObj->MOD_SETTINGS['period'])) {
 				case 'day' :
-					$sPeriod = (time() - 24*60*60);
+					$iPeriod = ((int) $GLOBALS['EXEC_TIME'] - 24*60*60);
 				break;
 				case 'week' :
-					$sPeriod = (time() - 7*24*60*60);
+					$iPeriod = ((int) $GLOBALS['EXEC_TIME'] - 7*24*60*60);
 				break;
 				case 'month' :
-					$sPeriod = (time() - 30*24*60*60);
+					$iPeriod = ((int) $GLOBALS['EXEC_TIME'] - 30*24*60*60);
 				break;
 				case 'year' :
-					$sPeriod = (time() - 356*24*60*60);
+					$iPeriod = ((int) $GLOBALS['EXEC_TIME'] - 356*24*60*60);
 				break;
 				case 'all' :
 				default :
-					$sPeriod = '';
+					$iPeriod = 0;
 				break;
 			}
 
-			return $sPeriod;
+			return $iPeriod;
 		}
 
 
@@ -263,8 +231,8 @@
 				// Get images
 			foreach ($this->aConfig[$psType . '.'] as $sKey => $aValue) {
 				$aFileNameParts = explode('.', $aValue['image']);
-				$sFileType = strtolower(end($aFileNameParts));
-				$sFileName = t3lib_div::getFileAbsFileName($aValue['image']);
+				$sFileType      = strtolower(end($aFileNameParts));
+				$sFileName      = t3lib_div::getFileAbsFileName($aValue['image']);
 
 				if (!in_array($sFileType, $aAllowedTypes) || !is_readable($sFileName)) {
 					continue;

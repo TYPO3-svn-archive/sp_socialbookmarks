@@ -29,61 +29,61 @@
 		public $sContent = '';
 		public $aStyles = array(
 			'grid' => array(
-				'width' => '100%',
-				'height' => '20px',
-				'left' => '35px',
-				'border-top' => '1px solid #B5B5C9',
-				'margin' => '0',
-				'padding' => '0',
-				'position' => 'absolute',
-				'z-index' => '0',
+				'width'        => '100%',
+				'height'       => '20px',
+				'left'         => '35px',
+				'border-top'   => '1px solid #B5B5C9',
+				'margin'       => '0',
+				'padding'      => '0',
+				'position'     => 'absolute',
+				'z-index'      => '0',
 			),
 			'scale' => array(
-				'width' => '25px',
-				'height' => '20px',
-				'left' => '5px',
-				'line-height' => '20px',
-				'font-size' => '8px',
-				'text-align' => 'right',
-				'color' => '#000000',
-				'margin' => '0',
-				'padding' => '0',
-				'position' => 'absolute',
-				'z-index' => '1',
+				'width'        => '25px',
+				'height'       => '20px',
+				'left'         => '5px',
+				'line-height'  => '20px',
+				'font-size'    => '8px',
+				'text-align'   => 'right',
+				'color'        => '#000000',
+				'margin'       => '0',
+				'padding'      => '0',
+				'position'     => 'absolute',
+				'z-index'      => '1',
 			),
 			'bar' => array(
-				'bottom' => '20px',
-				'border' => '1px solid #666666',
+				'bottom'       => '20px',
+				'border'       => '1px solid #666666',
 				'border-right' => '2px solid #666666',
-				'margin' => '0',
-				'padding' => '0',
-				'position' => 'absolute',
-				'z-index' => '2',
+				'margin'       => '0',
+				'padding'      => '0',
+				'position'     => 'absolute',
+				'z-index'      => '2',
 			),
 			'chart' => array(
-				'width' => '99%',
-				'height' => '200px',
-				'border' => '1px solid #8E9395',
-				'margin' => '0',
-				'padding' => '0',
-				'position' => 'relative',
-				'overflow' => 'hidden',
+				'width'        => '99%',
+				'height'       => '200px',
+				'border'       => '1px solid #8E9395',
+				'margin'       => '0',
+				'padding'      => '0',
+				'position'     => 'relative',
+				'overflow'     => 'hidden',
 			),
 			'image' => array(
-				'margin' => '0',
-				'padding' => '0',
-				'border' => '1px solid #AAAAAA',
-				'position' => 'relative',
-				'z-index' => '2',
-				'cursor' => 'help',
+				'margin'       => '0',
+				'padding'      => '0',
+				'border'       => '1px solid #AAAAAA',
+				'position'     => 'relative',
+				'z-index'      => '2',
+				'cursor'       => 'help',
 			),
 			'image_wrap' => array(
-				'bottom' => '2px',
-				'margin' => '0',
-				'padding' => '0 auto',
-				'text-align' => 'center',
-				'position' => 'absolute',
-				'z-index' => '2',
+				'bottom'       => '2px',
+				'margin'       => '0',
+				'padding'      => '0 auto',
+				'text-align'   => 'center',
+				'position'     => 'absolute',
+				'z-index'      => '2',
 			),
 		);
 
@@ -105,23 +105,23 @@
 
 				// Get configuration
 			$this->sContent = '';
-			$iLastLeft = 50;
-			$aChart = $paConfig['chart.'];
-			$iImageWidth = ($aChart['imageWidth'] ? $aChart['imageWidth'] : 14);
-			$iImageHeight = ($aChart['imageHeight'] ? $aChart['imageHeight'] : 14);
-			$iSpace = ($aChart['spaceBetween'] ? $aChart['spaceBetween'] : 15);
-			$sBarColor = ($aChart['barColor'] ? $aChart['barColor'] : '#6F9AE3');
-			$sChartColor = ($aChart['chartColor'] ? $aChart['chartColor'] : '#E6EBFA');
-			$iBarWidth = ($aChart['barWidth'] ? ($aChart['barWidth'] -3) : 17); // substract 3px border
-			$sBarColor = ((substr($sBarColor,0,1) == '#') ? $sBarColor : '#'.$sBarColor);
-			$sChartColor = ((substr($sChartColor,0,1) == '#') ? $sChartColor : '#'.$sChartColor);
-			$iChartHeight = str_replace(array('px', '%', ' '), '', strtolower($this->aStyles['chart']['height'])) - 40;
+			$iLastLeft    = 50;
+			$aChart       = $paConfig['chart.'];
+			$iImageWidth  = ($aChart['imageWidth']             ? $aChart['imageWidth']    : 14);
+			$iImageHeight = ($aChart['imageHeight']            ? $aChart['imageHeight']   : 14);
+			$iSpace       = ($aChart['spaceBetween']           ? $aChart['spaceBetween']  : 15);
+			$sBarColor    = ($aChart['barColor']               ? $aChart['barColor']      : '#6F9AE3');
+			$sChartColor  = ($aChart['chartColor']             ? $aChart['chartColor']    : '#E6EBFA');
+			$iBarWidth    = ($aChart['barWidth']               ? ($aChart['barWidth'] -3) : 17); // substract 3px border
+			$sBarColor    = ((substr($sBarColor,0,1) == '#')   ? $sBarColor               : '#'.$sBarColor);
+			$sChartColor  = ((substr($sChartColor,0,1) == '#') ? $sChartColor             : '#'.$sChartColor);
+			$iChartHeight = ((int) str_replace(array('px', '%', ' '), '', strtolower($this->aStyles['chart']['height'])) - 40);
 
 				// Get styles
-			$sBarStyle = $this->sGetStyle('bar');
+			$sBarStyle   = $this->sGetStyle('bar');
 			$sChartStyle = $this->sGetStyle('chart');
 			$sImageStyle = $this->sGetStyle('image');
-			$sWrapStyle = $this->sGetStyle('image_wrap');
+			$sWrapStyle  = $this->sGetStyle('image_wrap');
 
 				// Add grid and scale
 			$this->vAddGrid();
@@ -133,13 +133,13 @@
 
 					// Walk through the bars
 				foreach ($paBars as $sKey => $iCount) {
-					$iPercent = round(($iCount / ($iMax / 100)));
+					$iPercent   = round(($iCount / ($iMax / 100)));
 					$iBarHeight = floor(($iChartHeight / 100) * $iPercent) - 1; // substract 1px border
-					$iBarHeight = ($iBarHeight > 0) ? $iBarHeight : 0;
-					$sImage = ($paImages[$sKey]['image'] ? $paImages[$sKey]['image'] : '');
-					$sAlt = ($paImages[$sKey]['alt'] ? $paImages[$sKey]['alt'] : $paConfig[$psType.'.'][$sKey.'.']['name']);
-					$sTitle  = ($paImages[$sKey]['title'] ? $paImages[$sKey]['title'] : $paConfig[$psType.'.'][$sKey.'.']['name']);
-					$sTitle .= ' [ ' . $iPercent . ' %' . ($psLabel ? ' / ' . $iCount . ' ' . $psLabel : '') . ' ]';
+					$iBarHeight = ($iBarHeight > 0           ? $iBarHeight               : 0);
+					$sImage     = ($paImages[$sKey]['image'] ? $paImages[$sKey]['image'] : '');
+					$sAlt       = ($paImages[$sKey]['alt']   ? $paImages[$sKey]['alt']   : $paConfig[$psType.'.'][$sKey.'.']['name']);
+					$sTitle     = ($paImages[$sKey]['title'] ? $paImages[$sKey]['title'] : $paConfig[$psType.'.'][$sKey.'.']['name']);
+					$sTitle    .= ' [ ' . $iPercent . ' %' . ($psLabel ? ' / ' . $iCount . ' ' . $psLabel : '') . ' ]';
 
 						// Add image
 					if ($sImage) {
@@ -170,7 +170,7 @@
 		 * @return void
 		 */
 		protected function vAddGrid() {
-			$sGridStyle = $this->sGetStyle('grid');
+			$sGridStyle  = $this->sGetStyle('grid');
 			$sScaleStyle = $this->sGetStyle('scale');
 
 			// Add grid

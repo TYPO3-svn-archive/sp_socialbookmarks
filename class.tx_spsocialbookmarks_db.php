@@ -25,7 +25,7 @@
 	/**
 	 * Database handler
 	 */
-	class tx_spsocialbookmarks_db {
+	class tx_spsocialbookmarks_db implements t3lib_Singleton {
 		public $sTable = 'tx_spsocialbookmarks';
 
 		/**
@@ -46,12 +46,10 @@
 			if ($oResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $this->sTable, $sWhere)) {
 				while ($aService = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($oResult)) {
 					$sName = strtolower($aService['name']);
-
 					if (!empty($aServices[$sName])) {
 						$aServices[$sName][] = $aService;
 					} else {
-						$aServices[$sName] = array();
-						$aServices[$sName][] = $aService;
+						$aServices[$sName] = array($aService);
 					}
 				}
 			}
@@ -73,15 +71,13 @@
 
 				// Insert into table
 			$GLOBALS['TYPO3_DB']->exec_INSERTquery($this->sTable, array(
-				'pid' => (int) $piPID,
-				'name' => $GLOBALS['TYPO3_DB']->quoteStr(strtolower(trim($psService)), $this->sTable),
+				'pid'    => (int) $piPID,
+				'name'   => $GLOBALS['TYPO3_DB']->quoteStr(strtolower(trim($psService)), $this->sTable),
 				'tstamp' => (int) $GLOBALS['EXEC_TIME'],
 				'crdate' => (int) $GLOBALS['EXEC_TIME'],
-				'ip' => $GLOBALS['TYPO3_DB']->quoteStr(strip_tags($_SERVER['REMOTE_ADDR']), $this->sTable),
-				'agent' => $GLOBALS['TYPO3_DB']->quoteStr(strip_tags(t3lib_div::getIndpEnv('HTTP_USER_AGENT')), $this->sTable),
+				'ip'     => $GLOBALS['TYPO3_DB']->quoteStr(strip_tags($_SERVER['REMOTE_ADDR']), $this->sTable),
+				'agent'  => $GLOBALS['TYPO3_DB']->quoteStr(strip_tags(t3lib_div::getIndpEnv('HTTP_USER_AGENT')), $this->sTable),
 			));
-
-			return;
 		}
 
 	}

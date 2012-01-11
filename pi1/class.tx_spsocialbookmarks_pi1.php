@@ -28,14 +28,13 @@
 	 * Plugin for the sp_socialbookmarks extension
 	 */
 	class tx_spsocialbookmarks_pi1 extends tslib_pibase {
-		public $prefixId = 'tx_spsocialbookmarks_pi1';
+		public $prefixId      = 'tx_spsocialbookmarks_pi1';
 		public $scriptRelPath = 'pi1/class.tx_spsocialbookmarks_pi1.php';
-		public $extKey = 'sp_socialbookmarks';
-		public $aLL = array();
-		public $aConfig = array();
-		public $oTemplate = NULL;
-		public $cObj = NULL;
-		public $LLkey = 'en';
+		public $extKey        = 'sp_socialbookmarks';
+		public $aLL           = array();
+		public $aConfig       = array();
+		public $cObj          = NULL;
+		public $LLkey         = 'en';
 
 
 		/**
@@ -57,26 +56,26 @@
 			$this->aLL = $this->aGetLL();
 
 				// Get template instance
-			if (!$this->oTemplate = $this->oMakeInstance('template')) {
+			$oTemplate = $this->oMakeInstance('template');
+			if (empty($oTemplate)) {
 				return $this->sError('template');
 			}
 
-				// Add default markers to marker array
-			$this->oTemplate->vAddDefaultMarkers();
-
-				// Add bookmark services to marker array
-			if ($aServices = $this->aGetServices()) {
-				$this->oTemplate->vAddServices($aServices);
-			} else {
+				// Get bookmark services
+			$aServices = $this->aGetServices();
+			if (empty($aServices)) {
 				return $this->sError('bookmarks');
 			}
 
-				// Return whole content
-			if ($sContent = $this->oTemplate->sGetContent()) {
-				return $this->pi_wrapInBaseClass($sContent);
-			} else {
+				// Add markers and generate content
+			$oTemplate->vAddDefaultMarkers();
+			$oTemplate->vAddServices($aServices);
+			$sContent = $oTemplate->sGetContent();
+			if (empty($sContent)) {
 				return $this->sError('content');
 			}
+
+			return $this->pi_wrapInBaseClass($sContent);
 		}
 
 
@@ -211,6 +210,7 @@
 		 *
 		 * @param string $psError Label name for error message
 		 * @param string $psInsert Insert value to message
+		 * @return string The error message
 		 */
 		protected function sError($psError, $psInsert = '') {
 			$sMessage = ($psError ? $this->aLL['error_' . strtolower(trim($psError))] : 'Error message not found!');
