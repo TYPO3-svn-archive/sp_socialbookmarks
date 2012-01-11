@@ -2,7 +2,7 @@
 	/*********************************************************************
 	 *  Copyright notice
 	 *
-	 *  (c) 2009 Kai Vogel  <kai.vogel(at)speedprogs.de>
+	 *  (c) 2009 - 2012 Kai Vogel  <kai.vogel(at)speedprogs.de>
 	 *  All rights reserved
 	 *
 	 *  This script is part of the TYPO3 project. The TYPO3 project is
@@ -27,7 +27,7 @@
 	/**
 	 * Ajax handler
 	 */
-	class tx_spsocialbookmarks_pi1_ajax {
+	class tx_spsocialbookmarks_ajax {
 
 		/**
 		 * The main method for the ajax call
@@ -53,16 +53,16 @@
 	}
 
 
-	if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_ajax.php']) {
-		include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/pi1/class.tx_spsocialbookmarks_pi1_ajax.php']);
+	if (defined('TYPO3_MODE') && $GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/class.tx_spsocialbookmarks_ajax.php']) {
+		include_once($GLOBALS['TYPO3_CONF_VARS'][TYPO3_MODE]['XCLASS']['ext/sp_socialbookmarks/class.tx_spsocialbookmarks_ajax.php']);
 	}
 
 
 	/**
-	 * Make an instance of the sp_bettercontact-ajax class
+	 * Make an instance of the ajax class
 	 * We need to do that because its called without a relation to the frontent process
 	 */
-	$oSPSocialBookmarksAJAX = t3lib_div::makeInstance('tx_spsocialbookmarks_pi1_ajax');
+	$oSPSocialBookmarksAJAX = t3lib_div::makeInstance('tx_spsocialbookmarks_ajax');
 	$oSPSocialBookmarksAJAX->main();
 
 ?>

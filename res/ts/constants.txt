@@ -23,7 +23,7 @@ plugin.tx_spsocialbookmarks_pi1 {
 	# cat=Social Bookmarks: General/settings/1060; type=boolean; label=Use Stats: Record all clicks in frontend for the backend stats
 	useStats = 1
 
-	# cat=Social Bookmarks: General/settings/1070; type=boolean; label=Use TypoScript Title: Generate the page title via TypoScript (alternativ use JavaScript to read it in frontend)
+	# cat=Social Bookmarks: General/settings/1070; type=boolean; label=Use TypoScript Title: Generate the page title via TypoScript (alternative use JavaScript to read it in frontend)
 	useTSTitle = 1
 
 	# cat=Social Bookmarks: General/settings/1080; type=boolean; label=Force SSL: Force SSL for the links

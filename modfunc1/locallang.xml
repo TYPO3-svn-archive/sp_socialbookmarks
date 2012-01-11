@@ -2,10 +2,11 @@
 <T3locallang>
 	<meta type="array">
 		<type>module</type>
-		<description>Language labels for module &quot;&quot;</description>
+		<description>Language labels for module tx_spsocialbookmarks_modfunc1</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
+			<label index="module.title">Social Bookmarks Statistic</label>
 			<label index="title">Social Bookmarks Statistic</label>
 			<label index="title_chart_services">Services:</label>
 			<label index="title_chart_browsers">Browsers:</label>
@@ -28,6 +29,7 @@
 			<label index="showSystems">Show systems</label>
 		</languageKey>
 		<languageKey index="de" type="array">
+			<label index="module.title">Social Bookmarks Statistik</label>
 			<label index="title">Social Bookmarks Statistik</label>
 			<label index="title_chart_services">Dienste:</label>
 			<label index="title_chart_browsers">Browser:</label>

@@ -2,7 +2,7 @@
 <T3locallang>
 	<meta type="array">
 		<type>database</type>
-		<description>Language labels for database tables/fields belonging to extension 'sp_socialbookmarks'</description>
+		<description>Language labels for database fields of the extension sp_socialbookmarks</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
@@ -13,8 +13,6 @@
 			<label index="tx_spsocialbookmarks_bookmarks.image">Or new image:</label>
 			<label index="tx_spsocialbookmarks_bookmarks.alt">Alternative text:</label>
 			<label index="tx_spsocialbookmarks_bookmarks.title">Title:</label>
-			<label index="moduleFunction.tx_spsocialbookmarks_modfunc1">Social Bookmarks Statistic</label>
-			<label index="tt_content.list_type_pi1">Social Bookmarks</label>
 			<label index="tt_content.flexform_pi1.s_def">Services</label>
 			<label index="tt_content.flexform_pi1.serviceList">Display this services:</label>
 		</languageKey>
@@ -26,8 +24,6 @@
 			<label index="tx_spsocialbookmarks_bookmarks.image">Oder neues Bild:</label>
 			<label index="tx_spsocialbookmarks_bookmarks.alt">Alternativer Text:</label>
 			<label index="tx_spsocialbookmarks_bookmarks.title">Titel:</label>
-			<label index="moduleFunction.tx_spsocialbookmarks_modfunc1">Social Bookmarks Statistik</label>
-			<label index="tt_content.list_type_pi1">Social Bookmarks</label>
 			<label index="tt_content.flexform_pi1.s_def">Dienste</label>
 			<label index="tt_content.flexform_pi1.serviceList">Diese Dienste anzeigen:</label>
 		</languageKey>
