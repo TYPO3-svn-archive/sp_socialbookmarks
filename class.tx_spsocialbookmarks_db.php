@@ -26,57 +26,60 @@
 	 * Database handler
 	 */
 	class tx_spsocialbookmarks_db implements t3lib_Singleton {
-		public $sTable = 'tx_spsocialbookmarks';
+		public $table = 'tx_spsocialbookmarks';
 
 		/**
 		 * Get data for all services form db
 		 *
-		 * @param integer $piPID The PID
-		 * @param integer $piPeriod Time period
+		 * @param integer $pid The PID
+		 * @param integer $period Time period
 		 * @return array Services
 		 */
-		public function aGetData($piPID = 0, $piPeriod = 0) {
-			$aServices = array();
-
+		public function getData($pid = 0, $period = 0) {
 				// Get WHERE clause
-			$sWhere  = ($piPID ? 'pid=' . intval($piPID) : '1=1');
-			$sWhere .= (!empty($piPeriod) ? ' AND tstamp > ' . intval($piPeriod) : '');
+			$where  = ($pid ? 'pid=' . (int) $pid : '1=1');
+			$where .= (!empty($period) ? ' AND tstamp > ' . (int) $period : '');
 
-				// Get services from table
-			if ($oResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', $this->sTable, $sWhere)) {
-				while ($aService = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($oResult)) {
-					$sName = strtolower($aService['name']);
-					if (!empty($aServices[$sName])) {
-						$aServices[$sName][] = $aService;
-					} else {
-						$aServices[$sName] = array($aService);
-					}
+				// Get services from db
+			$result = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', $this->table, $where);
+			if (empty($result)) {
+				return array();
+			}
+
+				// Build services
+			$services = array();
+			foreach ($result as $service) {
+				$name = strtolower($service['name']);
+				if (!empty($services[$name])) {
+					$services[$name][] = $service;
+				} else {
+					$services[$name] = array($service);
 				}
 			}
 
-			return $aServices;
+			return $services;
 		}
 
 		/**
 		 * Add a click to stats table
 		 *
-		 * @param integer $piPID The PID
-		 * @param string $psService Service name
+		 * @param integer $pid The PID
+		 * @param string $service Service name
 		 * @return void
 		 */
-		public function vAddClick($piPID, $psService) {
-			if (empty($piPID) || empty($psService)) {
+		public function addClick($pid, $service) {
+			if (empty($pid) || empty($service)) {
 				return;
 			}
 
 				// Insert into table
-			$GLOBALS['TYPO3_DB']->exec_INSERTquery($this->sTable, array(
-				'pid'    => (int) $piPID,
-				'name'   => $GLOBALS['TYPO3_DB']->quoteStr(strtolower(trim($psService)), $this->sTable),
+			$GLOBALS['TYPO3_DB']->exec_INSERTquery($this->table, array(
+				'pid'    => (int) $pid,
+				'name'   => $GLOBALS['TYPO3_DB']->quoteStr(strtolower(trim($service)), $this->table),
 				'tstamp' => (int) $GLOBALS['EXEC_TIME'],
 				'crdate' => (int) $GLOBALS['EXEC_TIME'],
-				'ip'     => $GLOBALS['TYPO3_DB']->quoteStr(strip_tags($_SERVER['REMOTE_ADDR']), $this->sTable),
-				'agent'  => $GLOBALS['TYPO3_DB']->quoteStr(strip_tags(t3lib_div::getIndpEnv('HTTP_USER_AGENT')), $this->sTable),
+				'ip'     => $GLOBALS['TYPO3_DB']->quoteStr(strip_tags($_SERVER['REMOTE_ADDR']), $this->table),
+				'agent'  => $GLOBALS['TYPO3_DB']->quoteStr(strip_tags(t3lib_div::getIndpEnv('HTTP_USER_AGENT')), $this->table),
 			));
 		}
 

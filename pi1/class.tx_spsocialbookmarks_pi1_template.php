@@ -27,12 +27,12 @@
 	 */
 	class tx_spsocialbookmarks_pi1_template {
 		protected $cObj       = NULL;
-		protected $aLL        = array();
-		protected $aConfig    = array();
-		protected $aMarkers   = array();
-		protected $aTemplates = array();
+		protected $labels     = array();
+		protected $setup      = array();
+		protected $markers    = array();
+		protected $templates  = array();
 		protected $extKey     = '';
-		protected $sLLkey     = 'en';
+		protected $LLkey      = 'en';
 
 
 		/**
@@ -40,18 +40,18 @@
 		 *
 		 * @return void
 		 */
-		public function vConstruct($poParent) {
-			$this->cObj    = $poParent->cObj;
-			$this->aLL     = $poParent->aLL;
-			$this->aConfig = $poParent->aConfig;
-			$this->extKey  = $poParent->extKey;
-			$this->sLLKey  = $poParent->LLkey;
+		public function initialize($parent) {
+			$this->cObj    = $parent->cObj;
+			$this->labels  = $parent->labels;
+			$this->setup   = $parent->setup;
+			$this->extKey  = $parent->extKey;
+			$this->LLKey   = $parent->LLkey;
 
-			$sRessource = $this->cObj->fileResource($this->aConfig['templateFile']);
-			$this->aTemplates = array(
-				'main'  => $this->cObj->getSubpart($sRessource, '###TEMPLATE###'),
-				'image' => $this->cObj->getSubpart($sRessource, '###IMAGE###'),
-				'link'  => $this->cObj->getSubpart($sRessource, '###SERVICE###'),
+			$ressource = $this->cObj->fileResource($this->setup['templateFile']);
+			$this->templates = array(
+				'main'  => $this->cObj->getSubpart($ressource, '###TEMPLATE###'),
+				'image' => $this->cObj->getSubpart($ressource, '###IMAGE###'),
+				'link'  => $this->cObj->getSubpart($ressource, '###SERVICE###'),
 			);
 		}
 
@@ -61,33 +61,27 @@
 		 *
 		 * @return void
 		 */
-		public function vAddDefaultMarkers() {
-				// Get current url
-			$sLink = $this->cObj->typoLink('', array(
-				'parameter'  => (int) $GLOBALS['TSFE']->id,
-				'returnLast' => 'url',
-			));
-
+		public function addDefaultMarkers() {
 				// User defined markers
-			if (!empty($this->aConfig['markers.']) && is_array($this->aConfig['markers.'])) {
-				$sName = '';
-				$sType = '';
+			if (!empty($this->setup['markers.']) && is_array($this->setup['markers.'])) {
+				$name = '';
+				$type = '';
 
-				foreach ($this->aConfig['markers.'] as $sKey => $mValue) {
-					if (substr($sKey, -1) !== '.' && is_string($mValue)) {
-						$sName = $sKey;
-						$sType = $mValue;
-					} else if ($sName !== '' && $sType !== '') {
-						$this->aMarkers['###' . strtoupper($sName) . '###'] = $this->cObj->cObjGetSingle($sType, $mValue, $sKey);
-						$sName = '';
-						$sType = '';
+				foreach ($this->setup['markers.'] as $key => $value) {
+					if (substr($key, -1) !== '.' && is_string($value)) {
+						$name = $key;
+						$type = $value;
+					} else if ($name !== '' && $type !== '') {
+						$this->markers['###' . strtoupper($name) . '###'] = $this->cObj->cObjGetSingle($type, $value, $key);
+						$name = '';
+						$type = '';
 					}
 				}
 			}
 
 				// Locallang markers
-			foreach ($this->aLL as $sKey => $sValue) {
-				$this->aMarkers['###LLL:' . $sKey . '###'] = $sValue;
+			foreach ($this->labels as $key => $value) {
+				$this->markers['###LLL:' . $key . '###'] = $value;
 			}
 		}
 
@@ -95,48 +89,41 @@
 		/**
 		 * Check for extension relative path
 		 *
+		 * @param string $fileName Path to the file
 		 * @return string Relative file path
 		 */
-		protected function sGetRelativePath($psFileName) {
-			if (!empty($psFileName) && substr($psFileName, 0, 4) == 'EXT:') {
-				list($sExtKey, $sFilePath) = explode('/', substr($psFileName, 4), 2);
-				$sExtKey = strtolower($sExtKey);
-
-				if ($sExtKey == $this->extKey || t3lib_extMgm::isLoaded($sExtKey)) {
-					$psFileName = t3lib_extMgm::siteRelPath($sExtKey) . $sFilePath;
-				}
-			}
-
-			return $psFileName;
+		protected function getRelativePath($fileName) {
+			$fileName = t3lib_div::getFileAbsFileName($fileName);
+			return str_replace(PATH_site, '', $fileName);
 		}
 
 
 		/**
 		 * Add bookmark services to marker array
 		 *
-		 * @param array $paServices The services array
+		 * @param array $services The services array
 		 * @return void
 		 */
-		public function vAddServices(array $paServices) {
-			if (empty($paServices)) {
+		public function addServices(array $services) {
+			if (empty($services)) {
 				return FALSE;
 			}
 
 				// Get configuration
-			$aServices   = array();
-			$sURL        = $this->sGetPageURL();
-			$sLinkTitle  = $this->sGetTitle();
-			$sLinkTarget = (!empty($this->aConfig['linkTarget']) ? $this->aConfig['linkTarget'] : '_blank');
+			$url    = $this->getPageUrl();
+			$title  = $this->getTitle();
+			$target = (!empty($this->setup['linkTarget']) ? $this->setup['linkTarget'] : '_blank');
+			$links  = array();
 
 				// Get all links from configuration
-			foreach ($paServices as $sKey => $aService) {
-					$sImage = $this->sGetImage($aService);
-					$aService['key'] = $sKey;
-					$aServices[] = $this->sGetLink($aService, $sURL, $sLinkTitle, $sLinkTarget, $sImage);
+			foreach ($services as $key => $service) {
+					$image = $this->getImage($service);
+					$service['key'] = $key;
+					$links[] = $this->getLink($service, $url, $title, $target, $image);
 			}
 
 				// Add bookmarks to marker array
-			$this->aMarkers['###SERVICES###'] = implode(PHP_EOL, $aServices);
+			$this->markers['###SERVICES###'] = implode(PHP_EOL, $links);
 
 			return TRUE;
 		}
@@ -147,15 +134,15 @@
 		 *
 		 * @return string URL to current page
 		 */
-		protected function sGetPageURL() {
-				// Get base URL
-			$sProtocol = (!empty($this->aConfig['forceSSL']) && $this->aConfig['forceSSL'] ? 'https://' : 'http://');
-			$sBaseURL  = (!empty($this->aConfig['baseURL.']) ? $this->cObj->cObjGetSingle($this->aConfig['baseURL'], $this->aConfig['baseURL.']) : $this->aConfig['baseURL']);
-			$sBaseURL  = (!empty($sBaseURL) ? $sBaseURL : $_SERVER['HTTP_HOST']);
-			$sBaseURL  = $sProtocol . str_replace(array('https://', 'http://'), '', rtrim($sBaseURL, '/')) . '/';
+		protected function getPageUrl() {
+				// Get baseURL
+			$protocol = (!empty($this->setup['forceSSL']) && $this->setup['forceSSL'] ? 'https://' : 'http://');
+			$baseUrl  = (!empty($this->setup['baseURL.']) ? $this->cObj->cObjGetSingle($this->setup['baseURL'], $this->setup['baseURL.']) : $this->setup['baseURL']);
+			$baseUrl  = (!empty($baseUrl) ? $baseUrl : $_SERVER['HTTP_HOST']);
+			$baseUrl  = $protocol . str_replace(array('https://', 'http://'), '', rtrim($baseUrl, '/')) . '/';
 
 				// Get URL to current page
-			$sURL = $this->cObj->typolink('', array(
+			$url = $this->cObj->typolink('', array(
 				'parameter'       => (int) $GLOBALS['TSFE']->id,
 				'returnLast'      => 'url',
 				'addQueryString'  => 1,
@@ -166,14 +153,15 @@
 			));
 
 				// Get final link
-			if (!empty($this->aConfig['useTinyURL'])) {
-				$sServiceURL = (!empty($this->aConfig['tinyServiceURL']) ? $this->aConfig['tinyServiceURL'] : 'http://tinyurl.com/api-create.php?url=###URL###');
-				if ($sTinyURL = t3lib_div::getURL(str_replace('###URL###', $sBaseURL . $sURL, $sServiceURL))) {
-					return $sTinyURL;
+			if (!empty($this->setup['useTinyURL'])) {
+				$serviceUrl = (!empty($this->setup['tinyServiceURL']) ? $this->setup['tinyServiceURL'] : 'http://tinyurl.com/api-create.php?url=###URL###');
+				$tinyUrl    = t3lib_div::getURL(str_replace('###URL###', $baseUrl . $url, $serviceUrl));
+				if (!empty($tinyUrl)) {
+					return $tinyUrl;
 				}
 			}
 
-			return $sBaseURL . $sURL;
+			return $baseUrl . $url;
 		}
 
 
@@ -182,97 +170,91 @@
 		 *
 		 * @return string Title
 		 */
-		protected function sGetTitle() {
-			$sTitle = '';
-			$oResult = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'pages', 'uid=' . (int) $GLOBALS['TSFE']->id);
+		protected function getTitle() {
+			$title = '';
 
-			if ($oResult && $aPage = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($oResult)) {
-				$oPage = clone($this->cObj);
-				$oPage->start($aPage, 'pages');
-				$sTitle = $oPage->cObjGetSingle($this->aConfig['pageTitle'], $this->aConfig['pageTitle.']);
-				unset($oPage);
+			$result = $GLOBALS['TYPO3_DB']->exec_SELECTgetRows('*', 'pages', 'uid=' . (int) $GLOBALS['TSFE']->id, '', '', '1');
+			if (!empty($result)) {
+				$cObj = clone($this->cObj);
+				$cObj->start(reset($result), 'pages');
+				$title = $cObj->cObjGetSingle($this->setup['pageTitle'], $this->setup['pageTitle.']);
+				unset($cObj);
 			}
 
 				// Get title (javascript will be used to get it if empty)
-			$sTitle = (!empty($this->aConfig['useTSTitle']) ? urlencode($sTitle) : '###TITLE###');
+			$title = (!empty($this->setup['useTSTitle']) ? urlencode($title) : '###TITLE###');
 
-			return $sTitle;
+			return $title;
 		}
 
 
 		/**
 		 * Get substituted image
 		 *
-		 * @param array $paService Service information
+		 * @param array $service Service information
 		 * @return string Image
 		 */
-		protected function sGetImage(array $paService) {
-			if (empty($paService)) {
+		protected function getImage(array $service) {
+			if (empty($service)) {
 				return '';
 			}
 
 				// Get configuration
-			$sFileName    = (!empty($paService['image']) ? $paService['image'] : 'EXT:sp_socialbookmarks/res/images/default.png');
-			$sRelFileName = $this->sGetRelativePath($sFileName);
-			$sAbsFileName = t3lib_div::getFileAbsFileName($sFileName);
-			$sTitle       = (!empty($paService['name']) ? $paService['name'] : '');
-			$sAlt         = (!empty($paService['alt']) ? $paService['alt'] : $sTitle);
-			$iHeight      = 16;
-			$iWidth       = 16;
+			$fileName = (!empty($service['image']) ? $service['image'] : 'EXT:sp_socialbookmarks/res/images/default.png');
+			$fileName = t3lib_div::getFileAbsFileName($fileName);
+			$height   = 16;
+			$width    = 16;
 
 				// Get image size
-			if (@file_exists($sAbsFileName)) {
-				list($iWidth, $iHeight) = @getimagesize($sAbsFileName);
+			if (@file_exists($fileName)) {
+				list($width, $height) = @getimagesize($fileName);
 			}
 
-			$aImageMarkers = array(
-				'###IMAGE_URL###'    => $sRelFileName,
-				'###IMAGE_HEIGHT###' => $iHeight,
-				'###IMAGE_WIDTH###'  => $iWidth,
-				'###IMAGE_ALT###'    => $sAlt,
-				'###IMAGE_TITLE###'  => $sTitle,
+			$imageMarkers = array(
+				'###IMAGE_URL###'    => $this->getRelativePath($fileName),
+				'###IMAGE_HEIGHT###' => $height,
+				'###IMAGE_WIDTH###'  => $width,
+				'###IMAGE_ALT###'    => (!empty($service['alt'])  ? $service['alt']  : ''),
+				'###IMAGE_TITLE###'  => (!empty($service['name']) ? $service['name'] : ''),
 			);
 
-			return $this->cObj->substituteMarkerArray($this->aTemplates['image'], $aImageMarkers);
+			return $this->cObj->substituteMarkerArray($this->templates['image'], $imageMarkers);
 		}
 
 
 		/**
 		 * Get all markers for a link
 		 *
-		 * @param array $paService Service information
-		 * @param string $psURL The URL
-		 * @param string $psLinkTitle Title of the link
-		 * @param string $psLinkTarget Target for the link
-		 * @param string $psImage An optional image
+		 * @param array $service Service information
+		 * @param string $url The URL
+		 * @param string $title Title of the link
+		 * @param string $target Target for the link
+		 * @param string $image An optional image
 		 * @return array All link markers
 		 */
-		protected function sGetLink(array $paService, $psURL, $psLinkTitle, $psLinkTarget = '_blank', $psImage = '') {
-			if (empty($paService) || empty($psURL)) {
+		protected function getLink(array $service, $url, $title, $target = '_blank', $image = '') {
+			if (empty($service) || empty($url)) {
 				return '';
 			}
 
 				// Get serialized data
-			$aData = array(
+			$data = array(
 				'pid'     => (int) $GLOBALS['TSFE']->id,
-				'service' => strtolower(trim($paService['key'])),
+				'service' => strtolower(trim($service['key'])),
 			);
-			$sData = base64_encode(serialize($aData));
-
-				// Get name
-			$sName = (!empty($paService['name']) ? $paService['name'] : md5(time()));
+			$data = base64_encode(serialize($data));
 
 				// Fill markers
-			$aLinkMarkers = array(
-				'###LINK_URL###'    => str_replace(array('###URL###', '###TITLE###'), array(urlencode($psURL), $psLinkTitle), $paService['url']),
-				'###LINK_TITLE###'  => $paService['name'],
-				'###LINK_ID###'     => 'bookmark_' . $sName,
-				'###LINK_TARGET###' => $psLinkTarget,
-				'###LINK_JS###'     => (!empty($this->aConfig['useStats']) ? "javascript:bookmark('" . $sData . "');" : ''),
-				'###IMAGE###'       => $psImage,
+			$linkMarkers = array(
+				'###LINK_URL###'    => str_replace(array('###URL###', '###TITLE###'), array(urlencode($url), $title), $service['url']),
+				'###LINK_TITLE###'  => $service['name'],
+				'###LINK_ID###'     => 'bookmark_' . (!empty($service['name']) ? $service['name'] : md5($GLOBALS['EXEC_TIME'])),
+				'###LINK_TARGET###' => $target,
+				'###LINK_JS###'     => (!empty($this->setup['useStats']) ? "javascript:bookmark('" . $data . "');" : ''),
+				'###IMAGE###'       => $image,
 			);
 
-			return $this->cObj->substituteMarkerArray($this->aTemplates['link'], $aLinkMarkers);
+			return $this->cObj->substituteMarkerArray($this->templates['link'], $linkMarkers);
 		}
 
 
@@ -281,8 +263,8 @@
 		 *
 		 * @return string Whole content
 		 */
-		public function sGetContent() {
-			return $this->cObj->substituteMarkerArray($this->aTemplates['main'], $this->aMarkers);
+		public function getContent() {
+			return $this->cObj->substituteMarkerArray($this->templates['main'], $this->markers);
 		}
 
 	}

@@ -32,26 +32,26 @@
 		/**
 		 * Get services for flexform
 		 *
-		 * @param array $paConfig The configuration array
+		 * @param array $configuration The configuration array
 		 * @return array Select options
 		 */
-		public function aGetDefaultServices(array $paConfig) {
+		public function getServices(array $configuration) {
 				// Get TypoScript configuration
-			$oBackend = t3lib_div::makeInstance('tx_spsocialbookmarks_backend');
-			$iPID = $oBackend->getPageId();
-			$iPID = (!empty($paConfig['row']['pid']) ? $paConfig['row']['pid'] : $iPID);
-			$aTS  = $oBackend->aGetTS($iPID);
+			$backend = t3lib_div::makeInstance('tx_spsocialbookmarks_backend');
+			$pid     = $backend->getPageId();
+			$pid     = (!empty($configuration['row']['pid']) ? $configuration['row']['pid'] : $pid);
+			$setup   = $backend->getTypoScriptSetup($pid);
 
 				// Get services
-			if (!empty($aTS['services.']) && is_array($aTS['services.'])) {
-				foreach($aTS['services.'] as $sKey => $aService) {
-					$sKey = strtolower(substr($sKey, 0, -1));
-					$sName = $aService['name'] ? $aService['name'] : $sKey;
-					$paConfig['items'][] = array($sName, $sKey);
+			if (!empty($setup['services.']) && is_array($setup['services.'])) {
+				foreach($setup['services.'] as $key => $service) {
+					$key  = strtolower(rtrim($key, '. '));
+					$name = ($service['name'] ? $service['name'] : $key);
+					$configuration['items'][] = array($name, $key);
 				}
 			}
 
-			return $paConfig;
+			return $configuration;
 		}
 
 	}

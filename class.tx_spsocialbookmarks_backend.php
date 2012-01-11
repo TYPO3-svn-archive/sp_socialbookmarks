@@ -63,20 +63,20 @@
 		/**
 		 * Get TypoScript array
 		 *
-		 * @param integer $piPID The ID of current page
+		 * @param integer $pid The ID of current page
 		 * @return array TypoScript configuration
 		 */
-		public function aGetTS($piPID) {
-			$oPage = t3lib_div::makeInstance('t3lib_pageSelect');
-			$sLine = $oPage->getRootLine((int) $piPID);
-			$oTS = t3lib_div::makeInstance('t3lib_tsparser_ext');
-			$oTS->tt_track = 0;
-			$oTS->init();
-			$oTS->runThroughTemplates($sLine);
-			$oTS->generateConfig();
+		public function getTypoScriptSetup($pid) {
+			$page = t3lib_div::makeInstance('t3lib_pageSelect');
+			$line = $page->getRootLine((int) $pid);
+			$parser = t3lib_div::makeInstance('t3lib_tsparser_ext');
+			$parser->tt_track = 0;
+			$parser->init();
+			$parser->runThroughTemplates($line);
+			$parser->generateConfig();
 
-			if (!empty($oTS->setup['plugin.']['tx_spsocialbookmarks_pi1.'])) {
-				return $oTS->setup['plugin.']['tx_spsocialbookmarks_pi1.'];
+			if (!empty($parser->setup['plugin.']['tx_spsocialbookmarks_pi1.'])) {
+				return $parser->setup['plugin.']['tx_spsocialbookmarks_pi1.'];
 			}
 
 			return array();

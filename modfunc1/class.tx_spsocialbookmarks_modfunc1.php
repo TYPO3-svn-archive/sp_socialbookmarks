@@ -31,8 +31,7 @@
 	 * Module extension
 	 */
 	class tx_spsocialbookmarks_modfunc1 extends t3lib_extobjbase {
-		public $aConfig = array();
-		public $oLL     = NULL;
+		public $setup = array();
 
 		/**
 		 * Returns the module menu
@@ -64,57 +63,62 @@
 		 * @return string HTML content
 		 */
 		public function main() {
-			$iPID = (int) $this->pObj->id;
+			$pid = (int) $this->pObj->id;
 
 				// Get TyopScript configuration
-			$oBackend = t3lib_div::makeInstance('tx_spsocialbookmarks_backend');
-			$this->aConfig = $oBackend->aGetTS($iPID);
+			$backend = t3lib_div::makeInstance('tx_spsocialbookmarks_backend');
+			$this->setup = $backend->getTypoScriptSetup($pid);
 
 				// Load environment
-			$sMenus  = $this->sGetFuncMenus();
-			$oDoc    = $this->pObj->doc;
-			$aCharts = $this->aGetActiveCharts();
+			$menus    = $this->getFuncMenus($pid);
+			$document = $this->pObj->doc;
+			$charts   = $this->getActiveCharts();
 
 				// Get data from db
-			$oDB     = t3lib_div::makeInstance('tx_spsocialbookmarks_db');
-			$iUID    = ($this->pObj->MOD_SETTINGS['mode'] == 'page' ? $iPID : 0);
-			$iPeriod = $this->iGetPeriod();
-			$aData   = $oDB->aGetData($iUID, $iPeriod);
+			$database = t3lib_div::makeInstance('tx_spsocialbookmarks_db');
+			$uid      = ($this->pObj->MOD_SETTINGS['mode'] == 'page' ? $pid : 0);
+			$data     = $database->getData($uid, $this->getPeriod());
 
 				// Begin document
-			$sContent  = $oDoc->spacer(5);
-			$sContent .= $oDoc->section($GLOBALS['LANG']->getLL('title'), $sMenus, 0, 1, 0, 0);
-			$sContent .= $oDoc->sectionEnd();
+			$content  = $document->spacer(5);
+			$content .= $document->section($GLOBALS['LANG']->getLL('title'), $menus, 0, 1, 0, 0);
+			$content .= $document->sectionEnd();
 
 				// Get charts
-			$oChart = t3lib_div::makeInstance('tx_spsocialbookmarks_modfunc1_chart');
-			foreach ($aCharts as $sType) {
-				$aCounts = $this->aGetCounts($aData, $sType);
-				$aImages = $this->aGetImages($sType);
-				$sChart  = $oChart->sGetChart($this->aConfig, $sType, $GLOBALS['LANG']->getLL('clicks'), $aCounts, $aImages);
+			$chartService = t3lib_div::makeInstance('tx_spsocialbookmarks_modfunc1_chart');
+			foreach ($charts as $type) {
+				$counts = $this->getCounts($data, $type);
+				$images = $this->getImages($type);
+				$chart  = $chartService->getChart($this->setup, $type, $GLOBALS['LANG']->getLL('clicks'), $counts, $images);
 
-				$sContent .= $oDoc->spacer(10);
-				$sContent .= $oDoc->section($GLOBALS['LANG']->getLL('title_chart_'.$sType), $sChart, 1, 1, 1, 0);
-				$sContent .= $oDoc->sectionEnd();
+				$content .= $document->spacer(10);
+				$content .= $document->section($GLOBALS['LANG']->getLL('title_chart_' . $type), $chart, 1, 1, 1, 0);
+				$content .= $document->sectionEnd();
 			}
 
 				// Return document
-			return $sContent;
+			return $content;
 		}
 
 
 		/**
 		 * Get selector for view mode and period
 		 *
+		 * @param integer $pid Current page id
 		 * @return string Menu
 		 */
-		protected function sGetFuncMenus() {
-			return t3lib_BEfunc::getFuncMenu($this->pObj->id,'SET[mode]', $this->pObj->MOD_SETTINGS['mode'], $this->pObj->MOD_MENU['mode'], 'index.php') .
-					t3lib_BEfunc::getFuncMenu($this->pObj->id,'SET[period]', $this->pObj->MOD_SETTINGS['period'], $this->pObj->MOD_MENU['period'], 'index.php') .
-					'&nbsp;&nbsp;' . t3lib_BEfunc::getFuncCheck($this->pObj->id, 'SET[showBrowsers]', $this->pObj->MOD_SETTINGS['showBrowsers'], 'index.php') .
-					$GLOBALS['LANG']->getLL('showBrowsers') . '&nbsp;' .
-					'&nbsp;&nbsp;' . t3lib_BEfunc::getFuncCheck($this->pObj->id, 'SET[showSystems]', $this->pObj->MOD_SETTINGS['showSystems'], 'index.php') .
-					$GLOBALS['LANG']->getLL('showSystems');
+		protected function getFuncMenus($pid) {
+			$settings = $this->pObj->MOD_SETTINGS;
+			$menu = $this->pObj->MOD_MENU;
+
+			return '
+				' . t3lib_BEfunc::getFuncMenu($pid, 'SET[mode]', $settings['mode'], $menu['mode'], 'index.php') . '
+				' . t3lib_BEfunc::getFuncMenu($pid, 'SET[period]', $settings['period'], $menu['period'], 'index.php') . '&nbsp;&nbsp;
+				' . t3lib_BEfunc::getFuncCheck($pid, 'SET[showBrowsers]', $settings['showBrowsers'], 'index.php') . '
+				' . $GLOBALS['LANG']->getLL('showBrowsers') . '&nbsp;&nbsp;&nbsp;
+				' . t3lib_BEfunc::getFuncCheck($pid, 'SET[showSystems]', $settings['showSystems'], 'index.php') . '
+				' . $GLOBALS['LANG']->getLL('showSystems') . '
+			';
 		}
 
 
@@ -123,27 +127,27 @@
 		 *
 		 * @return integer Time period
 		 */
-		protected function iGetPeriod() {
+		protected function getPeriod() {
 			switch (strtolower($this->pObj->MOD_SETTINGS['period'])) {
 				case 'day' :
-					$iPeriod = ((int) $GLOBALS['EXEC_TIME'] - 24*60*60);
+					$period = ((int) $GLOBALS['EXEC_TIME'] - 24*60*60);
 				break;
 				case 'week' :
-					$iPeriod = ((int) $GLOBALS['EXEC_TIME'] - 7*24*60*60);
+					$period = ((int) $GLOBALS['EXEC_TIME'] - 7*24*60*60);
 				break;
 				case 'month' :
-					$iPeriod = ((int) $GLOBALS['EXEC_TIME'] - 30*24*60*60);
+					$period = ((int) $GLOBALS['EXEC_TIME'] - 30*24*60*60);
 				break;
 				case 'year' :
-					$iPeriod = ((int) $GLOBALS['EXEC_TIME'] - 356*24*60*60);
+					$period = ((int) $GLOBALS['EXEC_TIME'] - 356*24*60*60);
 				break;
 				case 'all' :
 				default :
-					$iPeriod = 0;
+					$period = 0;
 				break;
 			}
 
-			return $iPeriod;
+			return $period;
 		}
 
 
@@ -152,118 +156,109 @@
 		 *
 		 * @return array Active chart names
 		 */
-		protected function aGetActiveCharts() {
-			$aAvailable = array('browsers', 'systems');
-			$aResult = array('services');
+		protected function getActiveCharts() {
+			$available = array('browsers', 'systems');
+			$result = array('services');
 
-			foreach ($aAvailable as $sChartName) {
-				$sName = 'show' . ucfirst(strtolower($sChartName));
-				if ($this->pObj->MOD_SETTINGS[$sName]) {
-					$aResult[] = strtolower($sChartName);
+			foreach ($available as $chartName) {
+				$name = 'show' . ucfirst(strtolower($chartName));
+				if (!empty($this->pObj->MOD_SETTINGS[$name])) {
+					$result[] = strtolower($chartName);
 				}
 			}
 
-			return $aResult;
+			return $result;
 		}
 
 
 		/**
 		 * Get the counts for each service
 		 *
-		 * @param array $paData Services
-		 * @param string $psType Count type
+		 * @param array $data Services
+		 * @param string $type Count type
 		 * @return array  All counts
 		 */
-		protected function aGetCounts(array $paData, $psType = 'services') {
-			$psType = strtolower(trim($psType));
+		protected function getCounts(array $data, $type = 'services') {
+			$type = strtolower(trim($type));
 
-			if (empty($paData) || empty($this->aConfig[$psType . '.']) || !is_array($this->aConfig[$psType . '.'])) {
+			if (empty($data) || empty($this->setup[$type . '.']) || !is_array($this->setup[$type . '.'])) {
 				return array();
 			}
 
-			$aCounts = array();
+			$counts = array();
 
-			if ($psType == 'services') {
-				foreach ($paData as $sKey => $aService) {
-					if (array_key_exists(trim($sKey) . '.', $this->aConfig[$psType . '.'])) {
-						$aCounts[$sKey] = count($aService);
+			if ($type == 'services') {
+				foreach ($data as $key => $service) {
+					if (array_key_exists(trim($key) . '.', $this->setup[$type . '.'])) {
+						$counts[$key] = count($service);
 					}
 				}
 			} else {
-				foreach ($paData as $aElements) {
-					foreach ($aElements as $aElement) {
-						$sName = 'unknown';
+				foreach ($data as $elements) {
+					foreach ($elements as $element) {
+						$name = 'unknown';
 
-						foreach($this->aConfig[$psType.'.'] as $sKey => $aConfig) {
-							if (preg_match('/' . addcslashes($aConfig['ident'], '/') . '/i', $aElement['agent'])) {
-								$sName = substr($sKey, 0 , -1);
+						foreach($this->setup[$type.'.'] as $key => $setup) {
+							if (preg_match('/' . addcslashes($setup['ident'], '/') . '/i', $element['agent'])) {
+								$name = substr($key, 0 , -1);
 							}
 						}
-						$aCounts[$sName] = (isset($aCounts[$sName]) ? $aCounts[$sName] + 1 : 1);
+						$counts[$name] = (isset($counts[$name]) ? $counts[$name] + 1 : 1);
 					}
 				}
 			}
 
-				// Sort for display
-			arsort($aCounts);
+				// Sort for output
+			arsort($counts);
 
-			return $aCounts;
+			return $counts;
 		}
 
 
 		/**
 		 * Get images to all services
 		 *
-		 * @param $psType Image type
+		 * @param $type Image type
 		 * @return array Service images
 		 */
-		public function aGetImages($psType = 'services') {
-			$psType = strtolower(trim($psType));
+		public function getImages($type = 'services') {
+			$type = strtolower(trim($type));
 
-			if (empty($this->aConfig[$psType . '.']) || !is_array($this->aConfig[$psType . '.'])) {
+			if (empty($this->setup[$type . '.']) || !is_array($this->setup[$type . '.'])) {
 				return array();
 			}
 
 				// Get configuration
-			$aAllowedTypes = explode(',', str_replace(' ', '', strtolower($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext'])));
-			$aImages = array();
+			$allowedTypes = strtolower($GLOBALS['TYPO3_CONF_VARS']['GFX']['imagefile_ext']);
+			$images = array();
 
 				// Get images
-			foreach ($this->aConfig[$psType . '.'] as $sKey => $aValue) {
-				$aFileNameParts = explode('.', $aValue['image']);
-				$sFileType      = strtolower(end($aFileNameParts));
-				$sFileName      = t3lib_div::getFileAbsFileName($aValue['image']);
-
-				if (!in_array($sFileType, $aAllowedTypes) || !is_readable($sFileName)) {
+			foreach ($this->setup[$type . '.'] as $key => $value) {
+				$fileName = t3lib_div::getFileAbsFileName($value['image']);
+				$fileType = strtolower(substr($fileName, strrpos($fileName, '.') + 1));
+				if (!t3lib_div::inList($allowedTypes, $fileType) || !is_readable($fileName)) {
 					continue;
 				}
 
-				$aValue['image'] = '../' . $GLOBALS['BACK_PATH'] . $this->sGetRelativePath($aValue['image']);
-				$aImages[substr($sKey, 0, -1)] = $aValue;
+				$value['image'] = '../' . $GLOBALS['BACK_PATH'] . $this->getRelativePath($fileName);
+				$images[substr($key, 0, -1)] = $value;
 			}
 
-			return $aImages;
+			return $images;
 		}
 
 
 		/**
 		 * Check for extension relative path
 		 *
-		 * @param string $psFileName The file name
-		 * @return String with relative file path
+		 * @param string $fileName Path to the file
+		 * @return string Relative file path
 		 */
-		protected function sGetRelativePath($psFileName) {
-			if ($psFileName && substr($psFileName, 0, 4) == 'EXT:') {
-				list($sExtKey, $sFilePath) = explode('/', substr($psFileName, 4), 2);
-				$sExtKey = strtolower($sExtKey);
-
-				if ($sExtKey == $this->extKey || t3lib_extMgm::isLoaded($sExtKey)) {
-					$psFileName = t3lib_extMgm::siteRelPath($sExtKey).$sFilePath;
-				}
-			}
-
-			return $psFileName;
+		protected function getRelativePath($fileName) {
+			$fileName = t3lib_div::getFileAbsFileName($fileName);
+			return str_replace(PATH_site, '', $fileName);
 		}
+
 	}
 
 

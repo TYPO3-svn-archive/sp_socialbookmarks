@@ -23,6 +23,7 @@
 	 ********************************************************************/
 
 	require_once(PATH_tslib . 'class.tslib_pibase.php');
+	require_once(t3lib_extMgm::extPath('sp_socialbookmarks') . 'pi1/class.tx_spsocialbookmarks_pi1_template.php');
 
 	/**
 	 * Plugin for the sp_socialbookmarks extension
@@ -31,8 +32,8 @@
 		public $prefixId      = 'tx_spsocialbookmarks_pi1';
 		public $scriptRelPath = 'pi1/class.tx_spsocialbookmarks_pi1.php';
 		public $extKey        = 'sp_socialbookmarks';
-		public $aLL           = array();
-		public $aConfig       = array();
+		public $labels        = array();
+		public $setup         = array();
 		public $cObj          = NULL;
 		public $LLkey         = 'en';
 
@@ -41,87 +42,64 @@
 		 * The main method
 		 *
 		 * @param string $content Default content
-		 * @param array $conf TypoScript configuration
+		 * @param array $setup TypoScript configuration
 		 * @return string The content that is displayed on the website
 		 */
-		public function main($psContent, $paConf) {
-			$this->aConfig = $paConf;
+		public function main($content, array $setup) {
 			$this->pi_setPiVarDefaults();
-			$this->pi_initPIflexForm();
-
-				// Override typoscript config with flexform values
-			$this->vFlexOverride();
-
-				// Get local language labels
-			$this->aLL = $this->aGetLL();
+			$this->setup  = $this->getSetup($setup);
+			$this->labels = $this->getLabels();
 
 				// Get template instance
-			$oTemplate = $this->oMakeInstance('template');
-			if (empty($oTemplate)) {
-				return $this->sError('template');
+			$template = t3lib_div::makeInstance('tx_spsocialbookmarks_pi1_template');
+			if (empty($template)) {
+				return $this->getError('template');
 			}
 
 				// Get bookmark services
-			$aServices = $this->aGetServices();
-			if (empty($aServices)) {
-				return $this->sError('bookmarks');
+			$services = $this->getServices();
+			if (empty($services)) {
+				return $this->getError('bookmarks');
 			}
 
 				// Add markers and generate content
-			$oTemplate->vAddDefaultMarkers();
-			$oTemplate->vAddServices($aServices);
-			$sContent = $oTemplate->sGetContent();
-			if (empty($sContent)) {
-				return $this->sError('content');
+			$template->initialize($this);
+			$template->addDefaultMarkers();
+			$template->addServices($services);
+			$content = $template->getContent();
+			if (empty($content)) {
+				return $this->getError('content');
 			}
 
-			return $this->pi_wrapInBaseClass($sContent);
+			return $this->pi_wrapInBaseClass($content);
 		}
 
 
 		/**
 		 * Override typoscipt settings with flexform values
 		 *
-		 * @return void
+		 * @param array $setup TypoScript configuration
+		 * @return array TypoScript array merged with FlexForm values
 		 */
-		public function vFlexOverride() {
-			if (!empty($this->cObj->data['pi_flexform'])) {
-				$aFlexValues = $this->cObj->data['pi_flexform'];
+		public function getSetup(array $setup) {
+			$this->pi_initPIflexForm();
 
-				$sDef = current($aFlexValues['data']);
+			if (!empty($this->cObj->data['pi_flexform'])) {
+				$flexform = $this->cObj->data['pi_flexform'];
+				$sDef = current($flexform['data']);
 				$lDef = array_keys($sDef);
 
-				foreach ($aFlexValues['data'] as $sSheet => $aData) {
-					foreach ($aData[$lDef[0]] as $sKey => $aVal) {
-						$sValue = $this->pi_getFFvalue($aFlexValues, $sKey, $sSheet, $lDef[0]);
-
-						if (!empty($sValue)) {
-							$this->aConfig[$sKey] = $sValue;
+				foreach ($flexform['data'] as $sheet => $content) {
+					foreach ($content[$lDef[0]] as $key => $value) {
+						$value = $this->pi_getFFvalue($flexform, $key, $sheet, $lDef[0]);
+						if (!empty($value)) {
+							$setup[$key] = $value;
 						}
 					}
 				}
 			}
-		}
-
-
-		/**
-		 * Get user language array
-		 *
-		 * @return array User localized labels
-		 */
-		protected function aGetUserLabels() {
-			$sFile = t3lib_div::getFileAbsFileName($this->aConfig['locallangFile']);
-			$aOwnLabels = array();
-
-			if (!empty($sFile)) {
-				$aOwnLabels = t3lib_div::readLLXMLfile($sFile, $this->LLkey);
-
-				if (is_array($aOwnLabels[$this->LLkey])) {
-					$aOwnLabels = $aOwnLabels[$this->LLkey];
-				}
-			}
-
-			return $aOwnLabels;
+			
+			return $setup;
 		}
 
 
@@ -130,57 +108,51 @@
 		 *
 		 * @return array All localized labels
 		 */
-		protected function aGetLL() {
+		protected function getLabels() {
 			$this->pi_loadLL();
 
-			$aLocalLang = $this->LOCAL_LANG[$this->LLkey];
-			$aOtherLabels = array(
-				$this->aConfig['_LOCAL_LANG.'][$this->LLkey . '.'],
-				$this->aGetUserLabels(),
-			);
-
+				// Get default labels
+			$locallang = $this->LOCAL_LANG[$this->LLkey];
 			if (empty($this->LOCAL_LANG[$this->LLkey])) {
-				$aLocalLang = $this->LOCAL_LANG['default'];
+				$locallang = $this->LOCAL_LANG['default'];
 			}
 
+				// Get iser labels
+			$userLabels = array(
+				$this->setup['_LOCAL_LANG.'][$this->LLkey . '.'],
+				$this->getUserLabels(),
+			);
+
 				// Add and override labels
-			foreach ($aOtherLabels as $aLabels) {
-				if (!empty($aLabels)) {
-					foreach ($aLabels as $sKey => $sLabel) {
-						$aLocalLang[$sKey] = $sLabel;
+			foreach ($userLabels as $labels) {
+				if (!empty($labels)) {
+					foreach ($labels as $key => $label) {
+						$locallang[$key] = $label;
 					}
 				}
 			}
 
-			return $aLocalLang;
+			return $locallang;
 		}
 
 
 		/**
-		 * Make an instance of any class
+		 * Get user language array
 		 *
-		 * @return object Instance of the new object
+		 * @return array User localized labels
 		 */
-		public function oMakeInstance($psClassPostfix) {
-			if (empty($psClassPostfix)) {
-				return NULL;
+		protected function getUserLabels() {
+			$file = t3lib_div::getFileAbsFileName($this->setup['locallangFile']);
+			$userLabels = array();
+
+			if (!empty($file)) {
+				$userLabels = t3lib_div::readLLXMLfile($file, $this->LLkey);
+				if (is_array($userLabels[$this->LLkey])) {
+					$userLabels = $userLabels[$this->LLkey];
+				}
 			}
 
-			$sClassName = strtolower($this->prefixId . '_' . $psClassPostfix);
-			$sFileName = t3lib_extMgm::extPath($this->extKey) . 'pi1/class.' . $sClassName . '.php';
-
-			if (@file_exists($sFileName)) {
-				include_once($sFileName);
-
-				$oResult = t3lib_div::makeInstance($sClassName);
-				$oResult->vConstruct($this);
-
-				return $oResult;
-			} else {
-				throw new Exception($this->sError('file', $sFileName));
-			}
-
-			return NULL;
+			return $userLabels;
 		}
 
 
@@ -189,34 +161,34 @@
 		 *
 		 * @return array Services
 		 */
-		protected function aGetServices() {
-			if (empty($this->aConfig['services.']) || empty($this->aConfig['serviceList'])) {
+		protected function getServices() {
+			if (empty($this->setup['services.']) || empty($this->setup['serviceList'])) {
 				return array();
 			}
 
-			$aServiceList = t3lib_div::trimExplode(',', $this->aConfig['serviceList']);
-			$aServices = array();
+			$serviceList = t3lib_div::trimExplode(',', $this->setup['serviceList']);
+			$services = array();
 
-			foreach ($aServiceList as $sName) {
-				$aServices[$sName] = $this->aConfig['services.'][$sName . '.'];
+			foreach ($serviceList as $name) {
+				$services[$name] = $this->setup['services.'][$name . '.'];
 			}
 
-			return $aServices;
+			return $services;
 		}
 
 
 		/**
 		 * Wrap error message for frontend rendering
 		 *
-		 * @param string $psError Label name for error message
-		 * @param string $psInsert Insert value to message
+		 * @param string $message Label name for error message
+		 * @param string $param Param for the message
 		 * @return string The error message
 		 */
-		protected function sError($psError, $psInsert = '') {
-			$sMessage = ($psError ? $this->aLL['error_' . strtolower(trim($psError))] : 'Error message not found!');
-			$sMessage = 'Social Bookmarks (' . $this->extKey . '): ' . $sMessage;
+		protected function getError($message, $param = '') {
+			$message = ($message ? $this->labels['error_' . strtolower(trim($message))] : 'Error message not found!');
+			$message = 'Social Bookmarks (' . $this->extKey . '): ' . $message;
 
-			return $this->pi_wrapInBaseClass(sprintf($sMessage, trim($psInsert)));
+			return $this->pi_wrapInBaseClass(sprintf($message, trim($param)));
 		}
 	}
 

@@ -36,18 +36,18 @@
 		 */
 		public function main() {
 				// Get submitted data
-			if (!$sParams = t3lib_div::_GP('data')) {
+			if (!$data = t3lib_div::_GP('data')) {
 				return;
 			}
-			$aData = unserialize(base64_decode($sParams));
-			$iPID  = intval($aData['pid']);
-			$sName = (ctype_print($aData['service']) ? $aData['service'] : 'unknown');
+
+			$data = unserialize(base64_decode($data));
+			$pid  = intval($data['pid']);
+			$name = (ctype_print($data['service']) ? $data['service'] : 'unknown');
 
 				// Add click to DB
 			tslib_eidtools::connectDB();
-			$oDB = t3lib_div::makeInstance('tx_spsocialbookmarks_db');
-			$oDB->vAddClick($iPID, $sName);
-			unset($oDB);
+			$database = t3lib_div::makeInstance('tx_spsocialbookmarks_db');
+			$database->addClick($pid, $name);
 		}
 
 	}
@@ -59,10 +59,10 @@
 
 
 	/**
-	 * Make an instance of the ajax class
-	 * We need to do that because its called without a relation to the frontent process
+	 * Make an instance of the ajax class, it is called without
+	 * a relation to the frontent process
 	 */
-	$oSPSocialBookmarksAJAX = t3lib_div::makeInstance('tx_spsocialbookmarks_ajax');
-	$oSPSocialBookmarksAJAX->main();
+	$socialBookmarksAjax = t3lib_div::makeInstance('tx_spsocialbookmarks_ajax');
+	$socialBookmarksAjax->main();
 
 ?>

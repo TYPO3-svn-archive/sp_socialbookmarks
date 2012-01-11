@@ -25,7 +25,7 @@
 								<selectedListStyle>width:200px</selectedListStyle>
 								<itemListStyle>width:200px</itemListStyle>
 								<items type="array"></items>
-								<itemsProcFunc>tx_spsocialbookmarks_services->aGetDefaultServices</itemsProcFunc>
+								<itemsProcFunc>tx_spsocialbookmarks_services->getServices</itemsProcFunc>
 							</config>
 						</TCEforms>
 					</serviceList>

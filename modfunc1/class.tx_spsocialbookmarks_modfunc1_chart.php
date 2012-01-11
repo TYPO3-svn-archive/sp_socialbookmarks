@@ -26,8 +26,8 @@
 	 * Chart module
 	 */
 	class tx_spsocialbookmarks_modfunc1_chart {
-		public $sContent = '';
-		public $aStyles = array(
+		public $content = '';
+		public $styles = array(
 			'grid' => array(
 				'width'        => '100%',
 				'height'       => '20px',
@@ -91,76 +91,76 @@
 		/**
 		 * Create an chart for a list of values
 		 *
-		 * @param array $paConfig Configuration array
-		 * @param $psType The type
-		 * @param $psLabel Chart label
-		 * @param array $paBars The bars to show
-		 * @param array $paImages Images
+		 * @param array $setup Configuration array
+		 * @param $type The type
+		 * @param $label Chart label
+		 * @param array $bars The bars to show
+		 * @param array $images Images
 		 * @return String with complete chart
 		 */
-		public function sGetChart(array $paConfig, $psType = 'services', $psLabel = '', array $paBars = array(), array $paImages = array()) {
-			if (empty($paConfig)) {
+		public function getChart(array $setup, $type = 'services', $label = '', array $bars = array(), array $images = array()) {
+			if (empty($setup)) {
 				return '';
 			}
 
 				// Get configuration
-			$this->sContent = '';
-			$iLastLeft    = 50;
-			$aChart       = $paConfig['chart.'];
-			$iImageWidth  = ($aChart['imageWidth']             ? $aChart['imageWidth']    : 14);
-			$iImageHeight = ($aChart['imageHeight']            ? $aChart['imageHeight']   : 14);
-			$iSpace       = ($aChart['spaceBetween']           ? $aChart['spaceBetween']  : 15);
-			$sBarColor    = ($aChart['barColor']               ? $aChart['barColor']      : '#6F9AE3');
-			$sChartColor  = ($aChart['chartColor']             ? $aChart['chartColor']    : '#E6EBFA');
-			$iBarWidth    = ($aChart['barWidth']               ? ($aChart['barWidth'] -3) : 17); // substract 3px border
-			$sBarColor    = ((substr($sBarColor,0,1) == '#')   ? $sBarColor               : '#'.$sBarColor);
-			$sChartColor  = ((substr($sChartColor,0,1) == '#') ? $sChartColor             : '#'.$sChartColor);
-			$iChartHeight = ((int) str_replace(array('px', '%', ' '), '', strtolower($this->aStyles['chart']['height'])) - 40);
+			$this->content = '';
+			$lastLeft    = 50;
+			$chart       = (!empty($setup['chart.']) ? $setup['chart.']        : array());
+			$imageWidth  = ($chart['imageWidth']     ? $chart['imageWidth']    : 14);
+			$imageHeight = ($chart['imageHeight']    ? $chart['imageHeight']   : 14);
+			$space       = ($chart['spaceBetween']   ? $chart['spaceBetween']  : 15);
+			$barColor    = ($chart['barColor']       ? $chart['barColor']      : '#6F9AE3');
+			$chartColor  = ($chart['chartColor']     ? $chart['chartColor']    : '#E6EBFA');
+			$barWidth    = ($chart['barWidth']       ? ($chart['barWidth'] -3) : 17); // substract 3px border
+			$barColor    = '#' . ltrim($barColor, '#');
+			$chartColor  = '#' . ltrim($chartColor);
+			$chartHeight = ((int) $this->styles['chart']['height'] - 40);
 
 				// Get styles
-			$sBarStyle   = $this->sGetStyle('bar');
-			$sChartStyle = $this->sGetStyle('chart');
-			$sImageStyle = $this->sGetStyle('image');
-			$sWrapStyle  = $this->sGetStyle('image_wrap');
+			$barStyle   = $this->getStyle('bar');
+			$chartStyle = $this->getStyle('chart');
+			$imageStyle = $this->getStyle('image');
+			$wrapStyle  = $this->getStyle('image_wrap');
 
 				// Add grid and scale
-			$this->vAddGrid();
+			$this->addGrid();
 
 				// Add bars and images
-			if (!empty($paBars) && is_array($paBars)) {
+			if (!empty($bars) && is_array($bars)) {
 					// Get 100%
-				$iMax = array_sum($paBars);
+				$max = array_sum($bars);
 
 					// Walk through the bars
-				foreach ($paBars as $sKey => $iCount) {
-					$iPercent   = round(($iCount / ($iMax / 100)));
-					$iBarHeight = floor(($iChartHeight / 100) * $iPercent) - 1; // substract 1px border
-					$iBarHeight = ($iBarHeight > 0           ? $iBarHeight               : 0);
-					$sImage     = ($paImages[$sKey]['image'] ? $paImages[$sKey]['image'] : '');
-					$sAlt       = ($paImages[$sKey]['alt']   ? $paImages[$sKey]['alt']   : $paConfig[$psType.'.'][$sKey.'.']['name']);
-					$sTitle     = ($paImages[$sKey]['title'] ? $paImages[$sKey]['title'] : $paConfig[$psType.'.'][$sKey.'.']['name']);
-					$sTitle    .= ' [ ' . $iPercent . ' %' . ($psLabel ? ' / ' . $iCount . ' ' . $psLabel : '') . ' ]';
+				foreach ($bars as $key => $count) {
+					$percent   = round(($count / ($max / 100)));
+					$barHeight = floor(($chartHeight / 100) * $percent) - 1; // substract 1px border
+					$barHeight = ($barHeight > 0 ? $barHeight : 0);
+					$image     = (!empty($images[$key]['image']) ? $images[$key]['image'] : '');
+					$alt       = (!empty($images[$key]['alt'])   ? $images[$key]['alt']   : $setup[$type . '.'][$key . '.']['name']);
+					$title     = (!empty($images[$key]['title']) ? $images[$key]['title'] : $setup[$type  .'.'][$key . '.']['name']);
+					$title    .= ' [ ' . $percent . ' %' . (!empty($label) ? ' / ' . $count . ' ' . $label : '') . ' ]';
 
 						// Add image
-					if ($sImage) {
-						$this->sContent .= '
-							<div style="' . $sWrapStyle . ' left:' . $iLastLeft . 'px; width:' . ($iBarWidth + 3) . 'px;">
-								<img src="' . $sImage.'" style="' . $sImageStyle . '" height="' . $iImageHeight . '" width="' . $iImageWidth . '" alt="' . $sAlt . '" title="' . $sTitle . '" />
+					if ($image) {
+						$this->content .= '
+							<div style="' . $wrapStyle . ' left:' . $lastLeft . 'px; width:' . ($barWidth + 3) . 'px;">
+								<img src="' . $image . '" style="' . $imageStyle . '" height="' . $imageHeight . '" width="' . $imageWidth . '" alt="' . $alt . '" title="' . $title . '" />
 							</div>
 						';
 					}
 
 						// Add bar
-					$this->sContent .= '
-						<div style="' . $sBarStyle . ' width:' . $iBarWidth . 'px; height:' . $iBarHeight . 'px; left:' . $iLastLeft . 'px; background:' . $sBarColor . ';" title="' . $sTitle . '">
+					$this->content .= '
+						<div style="' . $barStyle . ' width:' . $barWidth . 'px; height:' . $barHeight . 'px; left:' . $lastLeft . 'px; background:' . $barColor . ';" title="' . $title . '">
 						</div>
 					';
-					$iLastLeft += ($iBarWidth + $iSpace);
+					$lastLeft += ($barWidth + $space);
 				}
 			}
 
 				// Return complete diagram
-			return '<div style="' . $sChartStyle . ' background:' . $sChartColor . ';">' . $this->sContent . '</div>';
+			return '<div style="' . $chartStyle . ' background:' . $chartColor . ';">' . $this->content . '</div>';
 		}
 
 
@@ -169,30 +169,30 @@
 		 *
 		 * @return void
 		 */
-		protected function vAddGrid() {
-			$sGridStyle  = $this->sGetStyle('grid');
-			$sScaleStyle = $this->sGetStyle('scale');
+		protected function addGrid() {
+			$gridStyle  = $this->getStyle('grid');
+			$scaleStyle = $this->getStyle('scale');
 
 			// Add grid
-			$this->sContent .= '
-				<div style="' . $sGridStyle . ' bottom:0px; border-top:1px solid #7A7A89;"></div>
-				<div style="' . $sGridStyle . ' bottom:20px;"></div>
-				<div style="' . $sGridStyle . ' bottom:40px;"></div>
-				<div style="' . $sGridStyle . ' bottom:60px;"></div>
-				<div style="' . $sGridStyle . ' bottom:80px;"></div>
-				<div style="' . $sGridStyle . ' bottom:100px;"></div>
-				<div style="' . $sGridStyle . ' bottom:120px;"></div>
-				<div style="' . $sGridStyle . ' bottom:140px;"></div>
-				<div style="' . $sGridStyle . ' bottom:160px; border-top:1px solid #7A7A89;"></div>
+			$this->content .= '
+				<div style="' . $gridStyle . ' bottom:0px; border-top:1px solid #7A7A89;"></div>
+				<div style="' . $gridStyle . ' bottom:20px;"></div>
+				<div style="' . $gridStyle . ' bottom:40px;"></div>
+				<div style="' . $gridStyle . ' bottom:60px;"></div>
+				<div style="' . $gridStyle . ' bottom:80px;"></div>
+				<div style="' . $gridStyle . ' bottom:100px;"></div>
+				<div style="' . $gridStyle . ' bottom:120px;"></div>
+				<div style="' . $gridStyle . ' bottom:140px;"></div>
+				<div style="' . $gridStyle . ' bottom:160px; border-top:1px solid #7A7A89;"></div>
 			';
 
 				// Add scale
-			$this->sContent .= '
-				<div style="' . $sScaleStyle . ' bottom:10px;">0%</div>
-				<div style="' . $sScaleStyle . ' bottom:50px;">25%</div>
-				<div style="' . $sScaleStyle . ' bottom:90px;">50%</div>
-				<div style="' . $sScaleStyle . ' bottom:130px;">75%</div>
-				<div style="' . $sScaleStyle . ' bottom:170px;">100%</div>
+			$this->content .= '
+				<div style="' . $scaleStyle . ' bottom:10px;">0%</div>
+				<div style="' . $scaleStyle . ' bottom:50px;">25%</div>
+				<div style="' . $scaleStyle . ' bottom:90px;">50%</div>
+				<div style="' . $scaleStyle . ' bottom:130px;">75%</div>
+				<div style="' . $scaleStyle . ' bottom:170px;">100%</div>
 			';
 		}
 
@@ -200,27 +200,27 @@
 		/**
 		 * Get style from configuration
 		 *
-		 * @param string $psType The type
+		 * @param string $type The type
 		 * @return string Complete style information
 		 */
-		protected function sGetStyle($psType) {
-			if (empty($psType)) {
+		protected function getStyle($type) {
+			if (empty($type)) {
 				return '';
 			}
 
 				// Get configuration
-			$aStyle = $this->aStyles[strtolower(trim($psType))];
-			$sResult = '';
+			$style = $this->styles[strtolower(trim($type))];
+			$result = '';
 
 				// Combine all attributes
-			if (!empty($aStyle) && is_array($aStyle)) {
-				foreach ($aStyle as $sKey => $sValue) {
-					$sResult .= $sKey . ':' . $sValue . '; ';
+			if (!empty($style) && is_array($style)) {
+				foreach ($style as $key => $value) {
+					$result .= $key . ':' . $value . '; ';
 				}
 			}
 
 				// Return style information
-			return trim($sResult);
+			return trim($result);
 		}
 	}
 
