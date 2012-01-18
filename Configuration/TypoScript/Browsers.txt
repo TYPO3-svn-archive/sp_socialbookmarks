@@ -1,0 +1,105 @@
+# ======================================================================
+# Browser configuration
+# ======================================================================
+plugin.tx_spsocialbookmarks.settings.browsers {
+	ie {
+		name    = Internet Explorer
+		ident   = MSIE
+		image   = EXT:sp_socialbookmarks/res/images/browsers/ie.png
+	}
+	ie4 {
+		name    = Internet Explorer 4
+		ident   = (MSIE 4\.[0-9]+)
+		image   = EXT:sp_socialbookmarks/res/images/browsers/ie4.png
+	}
+	ie5 {
+		name    = Internet Explorer 5
+		ident   = (MSIE 5\.[0-9]+)
+		image   = EXT:sp_socialbookmarks/res/images/browsers/ie5.png
+	}
+	ie6 {
+		name    = Internet Explorer 6
+		ident   = (MSIE 6\.[0-9]+)
+		image   = EXT:sp_socialbookmarks/res/images/browsers/ie6.png
+	}
+	ie7 {
+		name    = Internet Explorer 7
+		ident   = (MSIE 7\.[0-9]+)
+		image   = EXT:sp_socialbookmarks/res/images/browsers/ie7.png
+	}
+	ie8 {
+		name    = Internet Explorer 8
+		ident   = (MSIE 8\.[0-9]+)
+		image   = EXT:sp_socialbookmarks/res/images/browsers/ie8.png
+	}
+	mozilla {
+		name    = Mozilla
+		ident   = Gecko
+		image   = EXT:sp_socialbookmarks/res/images/browsers/mozilla.png
+	}
+	firefox {
+		name    = Mozilla Firefox
+		ident   = (Firebird)|(Firefox)
+		image   = EXT:sp_socialbookmarks/res/images/browsers/firefox.png
+	}
+	firefox2 {
+		name    = Mozilla Firefox 2
+		ident   = Firefox/2
+		image   = EXT:sp_socialbookmarks/res/images/browsers/firefox2.png
+	}
+	firefox30 {
+		name    = Mozilla Firefox 3.0
+		ident   = Firefox/3.0
+		image   = EXT:sp_socialbookmarks/res/images/browsers/firefox3.png
+	}
+	firefox35 {
+		name    = Mozilla Firefox 3.5
+		ident   = (Firefox/3.1)|(Firefox/3.5)
+		image   = EXT:sp_socialbookmarks/res/images/browsers/firefox3.png
+	}
+	firefox4 {
+		name    = Mozilla Firefox 4
+		ident   = Firefox/4
+		image   = EXT:sp_socialbookmarks/res/images/browsers/firefox4.png
+	}
+	galeon {
+		name    = Galeon
+		ident   = Galeon
+		image   = EXT:sp_socialbookmarks/res/images/browsers/galeon.png
+	}
+	opera {
+		name    = Opera
+		ident   = Opera
+		image   = EXT:sp_socialbookmarks/res/images/browsers/opera.png
+	}
+	myie {
+		name    = MyIE
+		ident   = MyIE
+		image   = EXT:sp_socialbookmarks/res/images/browsers/myie.png
+	}
+	lynx {
+		name    = Lynx
+		ident   = Lynx
+		image   = EXT:sp_socialbookmarks/res/images/browsers/lynx.png
+	}
+	konqueror {
+		name    = Konqueror
+		ident   = Konqueror
+		image   = EXT:sp_socialbookmarks/res/images/browsers/konqueror.png
+	}
+	safari {
+		name    = Safari
+		ident   = Safari
+		image   = EXT:sp_socialbookmarks/res/images/browsers/safari.png
+	}
+	chrome {
+		name    = Google Chrome
+		ident   = Chrome
+		image   = EXT:sp_socialbookmarks/res/images/browsers/chrome.png
+	}
+	crawler {
+		name    = Crawler
+		ident   = (nuhk)|(Googlebot)|(Yammybot)|(Openbot)|(Slurp/cat)|(msnbot)|(ia_archiver)|(bot)|(crawl)
+		image   = EXT:sp_socialbookmarks/res/images/browsers/crawler.png
+	}
+}

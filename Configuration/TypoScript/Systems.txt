@@ -1,0 +1,110 @@
+# ======================================================================
+# System configuration
+# ======================================================================
+plugin.tx_spsocialbookmarks.settings.systems {
+	windows {
+		name    = Windows
+		ident   = Win
+		image   = EXT:sp_socialbookmarks/res/images/systems/windows.png
+	}
+	windows95 {
+		name    = Windows 95
+		ident   = (Win95)|(Windows 95)
+		image   = EXT:sp_socialbookmarks/res/images/systems/windows98.png
+	}
+	windows98 {
+		name    = Windows 98
+		ident   = (Win98)|(Windows 98)
+		image   = EXT:sp_socialbookmarks/res/images/systems/windows98.png
+	}
+	windowsnt {
+		name    = Windows NT
+		ident   = (WinNT)|(Windows NT)
+		image   = EXT:sp_socialbookmarks/res/images/systems/windowsnt.png
+	}
+	windows2000 {
+		name    = Windows 2000
+		ident   = (WinNT 5.0)|(Windows NT 5.0)
+		image   = EXT:sp_socialbookmarks/res/images/systems/windows5.png
+	}
+	windowsxp {
+		name    = Windows XP
+		ident   = (WinNT 5.1)|(Windows NT 5.1)
+		image   = EXT:sp_socialbookmarks/res/images/systems/windows5.png
+	}
+	windowsvista {
+		name    = Windows Vista
+		ident   = (WinNT 6.0)|(Windows NT 6.0)
+		image   = EXT:sp_socialbookmarks/res/images/systems/windowsvista.png
+	}
+	windows7 {
+		name    = Windows 7
+		ident   = (WinNT 7.0)|(Windows NT 7.0)
+		image   = EXT:sp_socialbookmarks/res/images/systems/windows7.png
+	}
+	linux {
+		name    = Linux
+		ident   = Linux
+		image   = EXT:sp_socialbookmarks/res/images/systems/linux.png
+	}
+	ubuntu {
+		name    = Ubuntu
+		ident   = Ubuntu
+		image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu.png
+	}
+	ubuntu610 {
+		name    = Ubuntu 6.10 (Edgy Eft)
+		ident   = Ubuntu/6\.10
+		image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu6.png
+	}
+	ubuntu704 {
+		name    = Ubuntu 7.04 (Feisty Fawn)
+		ident   = Ubuntu/7\.04
+		image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu7.png
+	}
+	ubuntu710 {
+		name    = Ubuntu 7.10 (Gutsy Gibbon)
+		ident   = Ubuntu/7\.10
+		image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu7.png
+	}
+	ubuntu804 {
+		name    = Ubuntu 8.04 (Hardy Heron)
+		ident   = Ubuntu/8\.04
+		image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu8.png
+	}
+	ubuntu810 {
+		name    = Ubuntu 8.10 (Intrepid Ibex)
+		ident   = Ubuntu/8\.10
+		image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu8.png
+	}
+	ubuntu904 {
+		name    = Ubuntu 9.04 (Jaunty Jackalope)
+		ident   = Ubuntu/9\.04
+		image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu9.png
+	}
+	ubuntu910 {
+		name    = Ubuntu 9.10 (Karmic Koala)
+		ident   = Ubuntu/9\.10
+		image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu9.png
+	}
+	ubuntu1004 {
+		name    = Ubuntu 10.04
+		ident   = Ubuntu/10\.04
+		image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu10.png
+	}
+	ubuntu1010 {
+		name    = Ubuntu 10.10
+		ident   = Ubuntu/10\.10
+		image   = EXT:sp_socialbookmarks/res/images/systems/ubuntu10.png
+	}
+	macos {
+		name    = Mac OS
+		ident   = (Macintosh)|(Mac_PowerPC)|(Mac)
+		image   = EXT:sp_socialbookmarks/res/images/systems/macos.png
+	}
+	sunos {
+		name    = Sun OS
+		ident   = Sun
+		image   = EXT:sp_socialbookmarks/res/images/systems/sunos.png
+	}
+}
