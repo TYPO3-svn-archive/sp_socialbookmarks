@@ -1,7 +1,17 @@
-{namespace bookmarks=Tx_SpSocialbookmarks_ViewHelpers}
-
 <f:layout name="Default" />
 
 <f:section name="main">
-  blub
+  <f:flashMessages />
+  <f:if condition="{services}">
+    <f:then>
+      <f:for each="{services}" as="service" key="serviceId">
+        <f:link.action action="click" arguments="{service:serviceId}">
+          <f:image src="{service.image}" alt="{service.name}" title="{service.name}" height="{settings.imageHeight}" width="{settings.imageWidth}" />
+        </f:link.action>
+      </f:for>
+    </f:then>
+    <f:else>
+      <p><f:translate key="no_services_found" /></p>
+    </f:else>
+  </f:if>
 </f:section>

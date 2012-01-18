@@ -1,46 +1,56 @@
 # ======================================================================
 # Default configuration
 # ======================================================================
-plugin.tx_spsocialbookmarks.settings {
-	## Basic configuration
-	serviceList         = {$plugin.tx_spsocialbookmarks.settings.serviceList}
-	templateFile        = {$plugin.tx_spsocialbookmarks.settings.templateFile}
-	locallangFile       = {$plugin.tx_spsocialbookmarks.settings.locallangFile}
-	linkTarget          = {$plugin.tx_spsocialbookmarks.settings.linkTarget}
-	useStats            = {$plugin.tx_spsocialbookmarks.settings.useStats}
-	useTSTitle          = {$plugin.tx_spsocialbookmarks.settings.useTSTitle}
-	forceSSL            = {$plugin.tx_spsocialbookmarks.settings.forceSSL}
-	useTinyURL          = {$plugin.tx_spsocialbookmarks.settings.useTinyURL}
-	tinyServiceURL      = {$plugin.tx_spsocialbookmarks.settings.tinyServiceURL}
+plugin.tx_spsocialbookmarks {
+	## General settings
+	settings {
+		serviceList      = {$plugin.tx_spsocialbookmarks.settings.serviceList}
+		useStats         = {$plugin.tx_spsocialbookmarks.settings.useStats}
+		forceSSL         = {$plugin.tx_spsocialbookmarks.settings.forceSSL}
+		useTinyURL       = {$plugin.tx_spsocialbookmarks.settings.useTinyURL}
+		tinyServiceURL   = {$plugin.tx_spsocialbookmarks.settings.tinyServiceURL}
 
-	## Backend chart configuration
-	chart {
-		imageWidth        = {$plugin.tx_spsocialbookmarks.settings.chart.imageWidth}
-		imageHeight       = {$plugin.tx_spsocialbookmarks.settings.chart.imageHeight}
-		spaceBetween      = {$plugin.tx_spsocialbookmarks.settings.chart.spaceBetween}
-		barColor          = {$plugin.tx_spsocialbookmarks.settings.chart.barColor}
-		chartColor        = {$plugin.tx_spsocialbookmarks.settings.chart.chartColor}
-	}
+		## Backend chart configuration
+		chart {
+			imageWidth     = {$plugin.tx_spsocialbookmarks.settings.chart.imageWidth}
+			imageHeight    = {$plugin.tx_spsocialbookmarks.settings.chart.imageHeight}
+			spaceBetween   = {$plugin.tx_spsocialbookmarks.settings.chart.spaceBetween}
+			barColor       = {$plugin.tx_spsocialbookmarks.settings.chart.barColor}
+			chartColor     = {$plugin.tx_spsocialbookmarks.settings.chart.chartColor}
+		}
 
-	## Generate url
-	pageUrl = TEXT
-	pageUrl.typolink {
-		parameter.data = TSFE : id
-		returnLast     = url
-		addQueryString = 1
-    addQueryString  {
-			exclude = id,cHash,no_cache
-			method  = GET
+		## Generate url
+		pageUrl = TEXT
+		pageUrl.typolink {
+			parameter.data = TSFE : id
+			returnLast     = url
+			addQueryString = 1
+			addQueryString  {
+				exclude = id,cHash,no_cache
+				method  = GET
+			}
+		}
+
+		## Generate title
+		pageTitle = TEXT
+		pageTitle {
+			data = page : subtitle // page : title
+			stdWrap {
+				stripHtml = 1
+			}
 		}
 	}
 
-	## Generate title
-	pageTitle = TEXT
-	pageTitle {
-		data = page : subtitle // page : title
-		stdWrap {
-			stripHtml = 1
-		}
+	## Storage settings
+	persistence {
+		storagePid       = {$plugin.tx_spsocialbookmarks.persistence.storagePid}
+	}
+
+	## View specific settings
+	view {
+		templateRootPath = {$plugin.tx_spsocialbookmarks.view.templateRootPath}
+		partialRootPath  = {$plugin.tx_spsocialbookmarks.view.partialRootPath}
+		layoutRootPath   = {$plugin.tx_spsocialbookmarks.view.layoutRootPath}
 	}
 }
 
@@ -49,22 +59,22 @@ plugin.tx_spsocialbookmarks.settings {
 # Use tt_news title if we are in news detail view
 # ======================================================================
 [globalVar = GP:tx_ttnews|tt_news > 0]
-    plugin.tx_spsocialbookmarks.settings.pageTitle >
-    plugin.tx_spsocialbookmarks.settings.pageTitle = RECORDS
-    plugin.tx_spsocialbookmarks.settings.pageTitle {
-        tables = tt_news
-        source.data = GPvar:tx_ttnews|tt_news
-        conf {
-            tt_news = TEXT
-            tt_news.field = title
-        }
-        htmlSpecialChars = 1
-        stdWrap {
-            wrap      = |
-            required  = 1
-            stripHtml = 1
-        }
-    }
+	plugin.tx_spsocialbookmarks.settings.pageTitle >
+	plugin.tx_spsocialbookmarks.settings.pageTitle = RECORDS
+	plugin.tx_spsocialbookmarks.settings.pageTitle {
+		tables = tt_news
+		source.data = GPvar:tx_ttnews|tt_news
+		conf {
+			tt_news = TEXT
+			tt_news.field = title
+		}
+		htmlSpecialChars = 1
+		stdWrap {
+			wrap      = |
+			required  = 1
+			stripHtml = 1
+		}
+	}
 [global]
 
 

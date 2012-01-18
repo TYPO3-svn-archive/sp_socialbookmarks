@@ -29,9 +29,24 @@
 	class Tx_SpSocialbookmarks_Domain_Repository_ServiceRepository implements t3lib_Singleton {
 
 		/**
+		 * @var string
+		 */
+		protected $modelClass = 'Tx_SpSocialbookmarks_Domain_Model_Service';
+
+		/**
 		 * @var array
 		 */
 		protected $services = array();
+
+		/**
+		 * @var array
+		 */
+		protected $objects = array();
+
+		/**
+		 * @var Tx_SpSocialbookmarks_Object_ObjectBuilder
+		 */
+		protected $objectBuilder = NULL;
 
 
 		/**
@@ -49,16 +64,29 @@
 
 
 		/**
+		 * @param Tx_SpSocialbookmarks_Object_ObjectBuilder $objectBuilder
+		 * @return void
+		 */
+		public function injectObjectBuilder(Tx_SpSocialbookmarks_Object_ObjectBuilder $objectBuilder) {
+			$this->objectBuilder = $objectBuilder;
+		}
+
+
+		/**
 		 * Get service by id
 		 *
-		 * @param string $serviceId The id of the service
-		 * @return array Service
+		 * @param string $id The id of the service
+		 * @return Tx_SpSocialbookmarks_Domain_Model_Service
 		 */
-		public function getById($serviceId) {
-			if (!empty($this->services[$serviceId]) && is_array($this->services[$serviceId])) {
-				return $this->services[$serviceId];
+		public function getById($id) {
+			if (!empty($this->objects[$id])) {
+				return $this->objects[$id];
 			}
-			return array();
+			if (!empty($this->services[$id]) && is_array($this->services[$id])) {
+				$this->objects[$id] = $this->objectBuilder->create($this->modelClass, $this->services[$id]);
+				return $this->objects[$id];
+			}
+			return NULL;
 		}
 
 
@@ -68,10 +96,13 @@
 		 * @return array All services
 		 */
 		public function getAll() {
+			$services = array();
 			if (!empty($this->services) && is_array($this->services)) {
-				return $this->services;
+				foreach ($this->services as $id => $service) {
+					$services[$id] = $this->getById($id);
+				}
 			}
-			return array();
+			return $services;
 		}
 
 	}

@@ -13,6 +13,5 @@
 		'tx_spsocialbookmarks_utility_backend'                     => $extensionClassesPath . 'Utility/Backend.php',
 		'tx_spsocialbookmarks_utility_typoscript'                  => $extensionClassesPath . 'Utility/TypoScript.php',
 		'tx_spsocialbookmarks_viewhelpers_backend_chartviewhelper' => $extensionClassesPath . 'ViewHelpers/Backend/ChartViewHelper.php',
-		'tx_spsocialbookmarks_viewhelpers_bookmarkviewhelper'      => $extensionClassesPath . 'ViewHelpers/BookmarkViewHelper.php',
 	);
 ?>

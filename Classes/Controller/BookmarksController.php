@@ -103,8 +103,8 @@
 				$serviceIds = t3lib_div::trimExplode(',', $this->settings['serviceList'], TRUE);
 			}
 			$services = array();
-			foreach ($serviceIds as $serviceId) {
-				$services[$id] = $this->serviceRepository->getById($serviceId);
+			foreach ($serviceIds as $id) {
+				$services[$id] = $this->serviceRepository->getById($id);
 			}
 
 			$this->view->assign('services', $services);
@@ -116,16 +116,16 @@
 		/**
 		 * Handle a click
 		 *
-		 * @param string $serviceId The id of the service
+		 * @param string $service The id of the service
 		 * @return void
 		 */
-		public function clickAction($serviceId) {
-			if (empty($serviceId) || !ctype_alnum($serviceId)) {
+		public function clickAction($service) {
+			if (empty($service) || !ctype_alnum($service)) {
 				return;
 			}
 
 				// Get service information
-			$service = $this->serviceRepository->getById($serviceId);
+			$service = $this->serviceRepository->getById($service);
 			if (empty($service)) {
 				return;
 			}

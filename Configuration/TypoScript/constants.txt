@@ -1,54 +1,54 @@
 # ======================================================================
 # Default configuration for sp_socialbookmarks
 # ======================================================================
-plugin.tx_spsocialbookmarks.settings {
-	# cat=Social Bookmarks: General/settings/1000; type=string; label=Service List: List of services to show
-	serviceList =
+plugin.tx_spsocialbookmarks {
+	settings {
+		# cat=Social Bookmarks/settings/1000; type=string; label=Service List: List of services to show
+		serviceList =
 
-	# cat=Social Bookmarks: General/settings/1010; type=string; label=Template File: Default template file
-	templateFile = EXT:sp_socialbookmarks/res/template/template.html
+		# cat=Social Bookmarks/settings/1010; type=boolean; label=Use Stats: Record all clicks in frontend for the backend stats
+		useStats = 1
 
-	# cat=Social Bookmarks: General/settings/1020; type=string; label=Locallang File: Default language file
-	locallangFile = EXT:sp_socialbookmarks/pi1/locallang.xml
+		# cat=Social Bookmarks/settings/1020; type=boolean; label=Force SSL: Force SSL for the links
+		forceSSL = 0
 
-	# cat=Social Bookmarks: General/settings/1030; type=options[None=, Prototype=prototype, jQuery=jquery]; label=Loaded Library: Load Prototype or jQuery library
-	loadLibrary = prototype
+		# cat=Social Bookmarks/settings/1030; type=boolean; label=Use Tiny URL: Make the links tiny
+		useTinyURL = 0
 
-	# cat=Social Bookmarks: General/settings/1040; type=boolean; label=Load Stylesheet: Load default stylesheet
-	loadStylesheet = 1
+		# cat=Social Bookmarks/settings/1040; type=string; label=Tiny Service URL: URL of the tiny service
+		tinyServiceURL = http://tinyurl.com/api-create.php?url=###URL###
 
-	# cat=Social Bookmarks: General/settings/1050; type=string; label=Link Target: Target for the bookmark links
-	linkTarget = _blank
+		chart {
+			# cat=Social Bookmarks/settings/2000; type=int; label=Chart Image Width: Width of the images in chart
+			imageWidth = 14
 
-	# cat=Social Bookmarks: General/settings/1060; type=boolean; label=Use Stats: Record all clicks in frontend for the backend stats
-	useStats = 1
+			# cat=Social Bookmarks/settings/2010; type=int; label=Chart Image Height: Height of the images in chart
+			imageHeight = 15
 
-	# cat=Social Bookmarks: General/settings/1070; type=boolean; label=Use TypoScript Title: Generate the page title via TypoScript (alternative use JavaScript to read it in frontend)
-	useTSTitle = 1
+			# cat=Social Bookmarks/settings/2020; type=int; label=Chart Space Between Bars: Space between the bars in chart
+			spaceBetween = 15
 
-	# cat=Social Bookmarks: General/settings/1080; type=boolean; label=Force SSL: Force SSL for the links
-	forceSSL = 0
+			# cat=Social Bookmarks/settings/2030; type=string; label=Chart Bar Color: Color of the bars
+			barColor = #6F9AE3
 
-	# cat=Social Bookmarks: General/settings/1090; type=boolean; label=Use Tiny URL: Make the links tiny
-	useTinyURL = 0
+			# cat=Social Bookmarks/settings/2040; type=string; label=Chart Color: Background color of the charts
+			chartColor = #E6EBFA
+		}
+	}
 
-	# cat=Social Bookmarks: General/settings/1100; type=string; label=Tiny Service URL: URL of the tiny service
-	tinyServiceURL = http://tinyurl.com/api-create.php?url=###URL###
+	persistence {
+		# cat=Social Bookmarks/persistence/3000; type=int+; label=Storage PID: Storage PID for new visits
+		storagePid = 0
+	}
 
-	chart {
-		# cat=Social Bookmarks: General/settings/2000; type=int; label=Chart Image Width: Width of the images in chart
-		imageWidth = 14
+	view {
+		# cat=Social Bookmarks/view/4000; type=string; label=Template root path: Path to template root
+		templateRootPath = EXT:sp_socialbookmarks/Resources/Private/Templates/
 
-		# cat=Social Bookmarks: General/settings/2010; type=int; label=Chart Image Height: Height of the images in chart
-		imageHeight = 15
+		# cat=Social Bookmarks/view/4010; type=string; label=Partial root path: Path to template partials
+		partialRootPath = EXT:sp_socialbookmarks/Resources/Private/Partials/
 
-		# cat=Social Bookmarks: General/settings/2020; type=int; label=Chart Space Between Bars: Space between the bars in chart
-		spaceBetween = 15
-
-		# cat=Social Bookmarks: General/settings/2030; type=string; label=Chart Bar Color: Color of the bars
-		barColor = #6F9AE3
-
-		# cat=Social Bookmarks: General/settings/2040; type=string; label=Chart Color: Background color of the charts
-		chartColor = #E6EBFA
+		# cat=Social Bookmarks/view/4020; type=string; label=Layout root path: Path to template layouts
+		layoutRootPath = EXT:sp_socialbookmarks/Resources/Private/Layouts/
 	}
 }
