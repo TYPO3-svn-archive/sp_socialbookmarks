@@ -71,7 +71,7 @@ plugin.tx_spsocialbookmarks.settings {
 # ======================================================================
 # Include stylesheet
 # ======================================================================
-page.includeCSS.sp_socialbookmarks = EXT:sp_socialbookmarks/Resources/Public/Stylesheet/Default.css
+page.includeCSS.sp_socialbookmarks = EXT:sp_socialbookmarks/Resources/Public/Stylesheet/Bookmarks.css
 
 
 # ======================================================================
