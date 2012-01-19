@@ -23,17 +23,10 @@
 	 *  This copyright notice MUST APPEAR in all copies of the script!
 	 ********************************************************************/
 
-
-
-	// !!!!!!!!!!!! BACKEND VIEW HELPER !!!!!!!!!!!!!!!
-	// http://moc.net/tutorials/writing-backend-modules-with-extbase/
-
-
-
 	/**
 	 * Controller for the visits chart
 	 */
-	class Tx_SpSocialbookmarks_Backend_Controller_ChartController extends Tx_Extbase_MVC_Controller_ActionController {
+	class Tx_SpSocialbookmarks_Controller_ChartController extends Tx_Extbase_MVC_Controller_ActionController {
 
 		/**
 		 * @var string
@@ -103,11 +96,10 @@
 		 */
 		protected function initializeAction() {
 				// Pre-parse TypoScript setup
-			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::getSetup('plugin.tx_spsocialbookmarks');
-			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($this->settings);
-
 			$this->pageId = Tx_SpSocialbookmarks_Utility_Backend::getPageId();
-			//$this->pageRenderer->addInlineLanguageLabelFile('EXT:workspaces/Resources/Private/Language/locallang.xml');
+			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::getSetupForPid($this->pageId, 'plugin.tx_spsocialbookmarks');
+			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($this->settings);
+			$this->pageRenderer->addInlineLanguageLabelFile('EXT:sp_socialbookmarks/Resources/Private/Language/locallang_mod.xml');
 		}
 
 

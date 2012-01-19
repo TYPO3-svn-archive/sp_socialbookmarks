@@ -141,17 +141,17 @@
 
 				// Redirect to service URL
 			$serviceUrl = $this->buildServiceUrl($service);
-			$this->redirectToUri($serviceUrl);
+			$this->redirectToURI($serviceUrl);
 		}
 
 
 		/**
 		 * Build service url
 		 *
-		 * @param array $service The service
+		 * @param Tx_SpSocialbookmarks_Domain_Model_Service $service The service
 		 * @return string Service url
 		 */
-		protected function buildServiceUrl(array $service) {
+		protected function buildServiceUrl(Tx_SpSocialbookmarks_Domain_Model_Service $service) {
 				// Get current page url
 			$pageUrl = '';
 			if (!empty($this->settings['pageUrl'])) {
@@ -170,13 +170,13 @@
 			}
 
 				// Build final url
-			$url = $this->settings['services'][$serviceId]['url'];
+			$url = $service->getUrl();
 			$url = str_replace(array('###URL###', '###TITLE###'), array($pageUrl, $pageTitle), $url);
 
 				// Use tiny url service
 			if (!empty($this->settings['useTinyURL']) && !empty($this->settings['tinyServiceURL'])) {
-				$serviceUrl = $this->settings['tinyServiceURL'];
-				$url = t3lib_div::getURL(str_replace('###URL###', $url, $serviceUrl));
+				$tinyUrl = $this->settings['tinyServiceURL'];
+				$url = t3lib_div::getURL(str_replace('###URL###', $url, $tinyUrl));
 			}
 
 			return $url;

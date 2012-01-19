@@ -5,241 +5,241 @@ plugin.tx_spsocialbookmarks.settings.services {
 	addthis {
 		name    = Add This
 		url     = http://www.addthis.com/bookmark.php?pub=geotek&amp;url=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/addthis.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/addthis.png
 	}
 	allevz {
 		name    = alleVZ
 		url     = http://www.studivz.net/Link/Selection/Url/?u=###URL###&desc=###TITLE###&prov=
-		image   = EXT:sp_socialbookmarks/res/images/services/studivz.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/studivz.png
 	}
 	ask {
 		name    = Ask.com
 		url     = http://myjeeves.ask.com/mysearch/BookmarkIt?v=1.2&amp;t=webpages&amp;url=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/ask.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/ask.png
 	}
 	backflip {
 		name    = Backflip
 		url     = http://www.backflip.com/add_page_pop.ihtml?url=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/backflip.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/backflip.png
 	}
 	blinkbits {
 		name    = BlinkBits
 		url     = http://www.blinkbits.com/bookmarklets/save.php?v=1&amp;source_url=###URL###&amp;title=###TITLE###&amp;body=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/blinkbits.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/blinkbits.png
 	}
 	blinklist {
 		name    = blinklist
 		url     = http://www.blinklist.com/index.php?Action=Blink/addblink.php&amp;Description=&amp;Url=###URL###&amp;Title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/blinklist.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/blinklist.png
 	}
 	blogmarks {
 		name    = BlogMarks
 		url     = http://blogmarks.net/my/new.php?mini=1&amp;simple=1&amp;url=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/blogmarks.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/blogmarks.png
 	}
 	bluedot {
 		name    = Bluedot
 		url     = http://bluedot.us/Authoring.aspx?u=###URL###&amp;t=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/bluedot.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/bluedot.png
 	}
 	connotea {
 		name    = Connotea
 		url     = http://www.connotea.org/addpopup?continue=confirm&amp;uri=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/connotea.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/connotea.png
 	}
 	delicious {
 		name    = del.icio.us
 		url     = http://del.icio.us/post?url=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/delicious.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/delicious.png
 	}
 	delirious {
 		name    = de.lirio.us
 		url     = http://de.lirio.us/rubric/post?uri=###URL###;title=###TITLE###;when_done=go_back
-		image   = EXT:sp_socialbookmarks/res/images/services/delirious.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/delirious.png
 	}
 	digg {
 		name    = digg.com
 		url     = http://digg.com/submit?phase=2&amp;url=###URL###
-		image   = EXT:sp_socialbookmarks/res/images/services/digg.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/digg.png
 	}
 	facebook {
 		name    = Facebook
 		url     = http://www.facebook.com/share.php?u=###URL###&t=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/facebook.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/facebook.png
 	}
 	fark {
 		name    = Fark.com
 		url     = http://cgi.fark.com/cgi/fark/edit.pl?new_url=###URL###&amp;new_comment=###TITLE###&amp;linktype=Misc
-		image   = EXT:sp_socialbookmarks/res/images/services/fark.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/fark.png
 	}
 	feedmelinks {
 		name    = Feed me links
 		url     = http://feedmelinks.com/categorize?from=toolbar&amp;op=submit&amp;url=###URL###name=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/feedmelinks.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/feedmelinks.png
 	}
 	folkd {
 		name    = Folkd
 		url     = http://www.folkd.com/submit/###URL###
-		image   = EXT:sp_socialbookmarks/res/images/services/folkd.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/folkd.png
 	}
 	furl {
 		name    = Furl
 		url     = http://www.furl.net/storeIt.jsp?u=###URL###&amp;t=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/furl.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/furl.png
 	}
 	google {
 		name    = google.com
 		url     = http://www.google.com/bookmarks/mark?op=add&amp;bkmk=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/google.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/google.png
 	}
 	hype {
 		name    = hype it!
 		url     = http://hype.yeebase.com/submit/###URL###
-		image   = EXT:sp_socialbookmarks/res/images/services/hype.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/hype.png
 	}
 	linkagogo {
 		name    = LinkaGoGo
 		url     = http://www.linkagogo.com/go/AddNoPopup?url=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/linkagogo.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/linkagogo.png
 	}
 	linkarena {
 		name    = LinkaARENA
 		url     = http://linkarena.com/bookmarks/addlink/?url=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/linkarena.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/linkarena.png
 	}
 	live {
 		name    = live.com
 		url     = https://favorites.live.com/quickadd.aspx?marklet=1&amp;mkt=en-us&amp;url=###URL###&amp;title=###TITLE###&amp;top=1
-		image   = EXT:sp_socialbookmarks/res/images/services/live.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/live.png
 	}
 	magnolia {
 		name    = Ma.gnolia
 		url     = http://ma.gnolia.com/beta/bookmarklet/add?url=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/magnolia.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/magnolia.png
 	}
 	meinvz {
 		name    = meinVZ
 		url     = http://www.meinvz.net/Link/ExternLink/Url/?u=###URL###&desc=###TITLE###&prov=
-		image   = EXT:sp_socialbookmarks/res/images/services/meinvz.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/meinvz.png
 	}
 	mylinkde {
 		name    = MyLink.de
 		url     = http://www.mylink.de/qa.asp?link=###URL###&amp;bez=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/mylinkde.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/mylinkde.png
 	}
 	netscape {
 		name    = Netscape
 		url     = http://www.netscape.com/submit/?U=###URL###&amp;T=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/netscape.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/netscape.png
 	}
 	netvouz {
 		name    = netvouz
 		url     = http://www.netvouz.com/action/submitBookmark?url=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/netvouz.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/netvouz.png
 	}
 	newsvine {
 		name    = newsvine.com
 		url     = http://www.newsvine.com/_tools/seed&amp;save?u=###URL###&amp;h=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/newsvine.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/newsvine.png
 	}
 	oneview {
 		name    = oneview
 		url     = http://www.oneview.de/quickadd/neu/addBookmark.jsf?URL=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/oneview.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/oneview.png
 	}
 	rawsugar {
 		name    = RawSugar
 		url     = http://www.rawsugar.com/tagger/?turl=###URL###&amp;tttl=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/rawsugar.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/rawsugar.png
 	}
 	reddit {
 		name    = Reddit
 		url     = http://reddit.com/submit?url=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/reddit.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/reddit.png
 	}
 	schuelervz {
 		name    = schülerVZ
 		url     = http://www.schuelervz.net/Link/ExternLink/Url/?u=###URL###&desc=###TITLE###&prov=
-		image   = EXT:sp_socialbookmarks/res/images/services/schuelervz.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/schuelervz.png
 	}
 	scuttle {
 		name    = Scuttle
 		url     = http://www.scuttle.org/bookmarks.php/maxpower?action=add&amp;address=###URL###&amp;title=###TITLE###&amp;description=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/scuttle.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/scuttle.png
 	}
 	simpy {
 		name    = Simpy
 		url     = http://www.simpy.com/simpy/LinkAdd.do?href=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/simpy.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/simpy.png
 	}
 	smarking {
 		name    = Smarking
 		url     = http://smarking.com/editbookmark/?url=###URL###&amp;description=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/smarking.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/smarking.png
 	}
 	spurl {
 		name    = Spurl
 		url     = http://www.spurl.net/spurl.php?url=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/spurl.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/spurl.png
 	}
 	studivz {
 		name    = studiVZ
 		url     = http://www.studivz.net/Link/ExternLink/Url/?u=###URL###&desc=###TITLE###&prov=
-		image   = EXT:sp_socialbookmarks/res/images/services/studivz.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/studivz.png
 	}
 	stumbleupon {
 		name    = stumbleupon.com
 		url     = http://www.stumbleupon.com/submit?url=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/su.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/su.png
 	}
 	tagthat {
 		name    = TagThat
 		url     = http://www.tagthat.de/bookmarken.php?action=neu&amp;url=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/tagthat.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/tagthat.png
 	}
 	tailrank {
 		name    = TailRank
 		url     = http://tailrank.com/share/?text=&amp;link_href=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/tailrank.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/tailrank.png
 	}
 	technorati {
 		name    = Technorati
 		url     = http://technorati.com/faves/?add=###URL###
-		image   = EXT:sp_socialbookmarks/res/images/services/technorati.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/technorati.png
 	}
 	twitter {
 		name    = Twitter
 		url     = http://twitter.com/intent/tweet?text=###TITLE###+-+&url=###URL###
-		image   = EXT:sp_socialbookmarks/res/images/services/twitter.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/twitter.png
 			}
 	webnews {
 		name    = Webnews
 		url     = http://www.webnews.de/einstellen?url=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/webnews.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/webnews.png
 	}
 	wink {
 		name    = Wink
 		url     = http://www.wink.com/_/tag?url=###URL###&amp;doctitle=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/wink.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/wink.png
 	}
 	wists {
 		name    = Wists
 		url     = http://wists.com/r.php?c=&amp;r=###URL###&amp;title=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/wists.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/wists.png
 	}
 	wong {
 		name    = Mister Wong
 		url     = http://www.mister-wong.de/index.php?action=addurl&amp;bm_url=###URL###&amp;bm_description=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/wong.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/wong.png
 	}
 	yahoomyweb {
 		name    = YahooMyWeb
 		url     = http://myweb.yahoo.com/myresults/bookmarklet?t=###TITLE###&amp;u=###URL###&amp;ei=UTF-8
-		image   = EXT:sp_socialbookmarks/res/images/services/yahoomyweb.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/yahoomyweb.png
 	}
 	yiggde {
 		name    = YiggIt
 		url     = http://yigg.de/neu?exturl=###URL###&amp;exttitle=###TITLE###&amp;extdesc=###TITLE###
-		image   = EXT:sp_socialbookmarks/res/images/services/yiggit.png
+		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/yiggit.png
 	}
 }

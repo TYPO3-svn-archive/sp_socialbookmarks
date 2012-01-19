@@ -41,8 +41,9 @@
 		 */
 		protected function getServiceRepository() {
 			if (empty($this->serviceRepository)) {
+				$pid = Tx_SpSocialbookmarks_Utility_Backend::getPageId();
 				$objectManager = t3lib_div::makeInstance('Tx_Extbase_Object_ObjectManager');
-				$configuration = Tx_SpGallery_Utility_TypoScript::getSetup('plugin.tx_spsocialbookmarks');
+				$configuration = Tx_SpSocialbookmarks_Utility_TypoScript::getSetupForPid($pid, 'plugin.tx_spsocialbookmarks');
 				$configurationManager = $objectManager->get('Tx_Extbase_Configuration_ConfigurationManager');
 				$configurationManager->setConfiguration($configuration);
 				$this->serviceRepository = $objectManager->get('Tx_SpSocialbookmarks_Domain_Repository_ServiceRepository');
@@ -68,7 +69,8 @@
 			$services = $serviceRepository->getAll();
 			foreach ($services as $id => $service) {
 				$id = strtolower(rtrim($id, '. '));
-				$name = ($service['name'] ? $service['name'] : $id);
+				$name = $service->getName();
+				$name = (!empty($name) ? $name : $id);
 				$setup['items'][] = array($name, $id);
 			}
 

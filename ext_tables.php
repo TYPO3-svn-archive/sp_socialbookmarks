@@ -67,24 +67,23 @@
 		}
 	");
 
-/*
-	if (TYPO3_MODE == 'BE' && !(TYPO3_REQUESTTYPE & TYPO3_REQUESTTYPE_INSTALL)) {
+		// Add charts module to backend
+	if (TYPO3_MODE == 'BE') {
 		Tx_Extbase_Utility_Extension::registerModule(
-				$_EXTKEY,
-				'web',    // Make module a submodule of 'web'
-				'mocdemo',    // Submodule key
-				'before:info', // Position
-				array(
-								// An array holding the controller-action-combinations that are accessible
-						'Test'        => 'list,single'
-				),
-				array(
-						'access' => 'user,group',
-						'icon'   => 'EXT:'.$_EXTKEY.'/Resources/Public/Images/moduleicon.gif',
-						'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_mod.xml',
-						'navigationComponentId' => 'typo3-pagetree',
-				)
+			$_EXTKEY,
+			'web',
+			$identifier,
+			'',
+			array(
+				'Chart' => 'show',
+			),
+			array(
+				'access' => 'user,group',
+				'icon'   => 'EXT:' . $_EXTKEY . '/ext_icon.gif',
+				'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_mod.xml',
+				'navigationComponentId' => 'typo3-pagetree',
+			)
 		);
 	}
-*/
+
 ?>

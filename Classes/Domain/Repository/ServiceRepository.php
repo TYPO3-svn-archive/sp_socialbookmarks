@@ -93,16 +93,15 @@
 		/**
 		 * Returns all services
 		 *
-		 * @return array All services
+		 * @return Tx_Extbase_Persistence_ObjectStorage
 		 */
 		public function getAll() {
-			$services = array();
 			if (!empty($this->services) && is_array($this->services)) {
 				foreach ($this->services as $id => $service) {
-					$services[$id] = $this->getById($id);
+					$this->getById($id);
 				}
 			}
-			return $services;
+			return $this->objects;
 		}
 
 	}
