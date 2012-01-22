@@ -88,6 +88,16 @@
 				// Get information about current plugin
 			$contentObject = $this->configurationManager->getContentObject();
 			$this->plugin = (!empty($contentObject->data) ? $contentObject->data : array());
+
+				// Check / set storagePid
+			$action = $this->request->getControllerActionName();
+			$pid = $GLOBALS['TSFE']->id;
+			if ($action === 'click') {
+				$extensionKey = $this->request->getControllerExtensionKey();
+				if (!Tx_SpSocialbookmarks_Utility_Persistence::hasStoragePage($extensionKey, 'visit', $pid)) {
+					$this->setStoragePid($pid);
+				}
+			}
 		}
 
 

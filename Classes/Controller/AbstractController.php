@@ -29,6 +29,22 @@
 	class Tx_SpSocialbookmarks_Controller_AbstractController extends Tx_Extbase_MVC_Controller_ActionController {
 
 		/**
+		 * Set storagePid for persisting objects
+		 *
+		 * @param integer $storagePid New storagePid
+		 * @return void
+		 */
+		protected function setStoragePid($storagePid) {
+			$configuration = $this->configurationManager->getConfiguration(
+				Tx_Extbase_Configuration_ConfigurationManager::CONFIGURATION_TYPE_FRAMEWORK
+			);
+			$configuration = Tx_Extbase_Utility_TypoScript::convertPlainArrayToTypoScriptArray($configuration);
+			$configuration['persistence.']['storagePid'] = (int) $storagePid;
+			$this->configurationManager->setConfiguration($configuration);
+		}
+
+
+		/**
 		 * Translate a label
 		 *
 		 * @param string $label Label to translate

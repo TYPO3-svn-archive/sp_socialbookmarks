@@ -12,6 +12,7 @@
 		'tx_spsocialbookmarks_object_objectbuilder'                    => $extensionClassesPath . 'Object/ObjectBuilder.php',
 		'tx_spsocialbookmarks_service_service'                         => $extensionClassesPath . 'Service/Service.php',
 		'tx_spsocialbookmarks_utility_backend'                         => $extensionClassesPath . 'Utility/Backend.php',
+		'tx_spsocialbookmarks_utility_persistence'                     => $extensionClassesPath . 'Utility/Persistence.php',
 		'tx_spsocialbookmarks_utility_typoscript'                      => $extensionClassesPath . 'Utility/TypoScript.php',
 		'tx_spsocialbookmarks_viewhelpers_be_actionmenuitemviewhelper' => $extensionClassesPath . 'ViewHelpers/Be/ActionMenuItemViewHelper.php',
 		'tx_spsocialbookmarks_viewhelpers_be_chartviewhelper'          => $extensionClassesPath . 'ViewHelpers/Be/ChartViewHelper.php',
