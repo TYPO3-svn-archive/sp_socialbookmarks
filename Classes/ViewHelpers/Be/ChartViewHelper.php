@@ -26,7 +26,7 @@
 	/**
 	 * View helper for charts
 	 */
-	class Tx_SpSocialbookmarks_ViewHelpers_Backend_ChartViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+	class Tx_SpSocialbookmarks_ViewHelpers_Be_ChartViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 	}
 ?>

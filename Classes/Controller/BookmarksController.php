@@ -26,7 +26,7 @@
 	/**
 	 * Controller for the bookmarks
 	 */
-	class Tx_SpSocialbookmarks_Controller_BookmarksController extends Tx_Extbase_MVC_Controller_ActionController {
+	class Tx_SpSocialbookmarks_Controller_BookmarksController extends Tx_SpSocialbookmarks_Controller_AbstractController {
 
 		/**
 		 * @var array

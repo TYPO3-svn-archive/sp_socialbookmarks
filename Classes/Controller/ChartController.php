@@ -26,7 +26,7 @@
 	/**
 	 * Controller for the visits chart
 	 */
-	class Tx_SpSocialbookmarks_Controller_ChartController extends Tx_Extbase_MVC_Controller_ActionController {
+	class Tx_SpSocialbookmarks_Controller_ChartController extends Tx_SpSocialbookmarks_Controller_AbstractController {
 
 		/**
 		 * @var string
@@ -78,14 +78,11 @@
 				}
 
 				parent::processRequest($request, $response);
-/*
-				$pageHeader = $this->template->startpage(
-						$GLOBALS['LANG']->sL('LLL:EXT:workspaces/Resources/Private/Language/locallang.xml:module.title')
-				);
+
+				$pageHeader = $this->template->startpage($this->translate('module.title'));
 				$pageEnd = $this->template->endPage();
 
 				$response->setContent($pageHeader . $response->getContent() . $pageEnd);
-*/
 		}
 
 
@@ -99,18 +96,53 @@
 			$this->pageId = Tx_SpSocialbookmarks_Utility_Backend::getPageId();
 			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::getSetupForPid($this->pageId, 'plugin.tx_spsocialbookmarks');
 			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($this->settings);
-			$this->pageRenderer->addInlineLanguageLabelFile('EXT:sp_socialbookmarks/Resources/Private/Language/locallang_mod.xml');
 		}
 
 
 		/**
 		 * Display the chart
 		 *
+		 * @param string $mode Show all or only current page
+		 * @param string $period Time period to show
 		 * @return void
 		 */
-		public function showAction() {
+		public function showAction($mode = '', $period = '') {
+			$pid = (int) ($mode === 'this' ? $this->pageId : 0);
+			$timestamp = $this->getTimestamp($period);
+			$visits = $this->visitRepository->getByPidAndCrdate($pid, $timestamp);
 			$this->view->assign('visits',   $visits);
 			$this->view->assign('settings', $this->settings);
+		}
+
+
+		/**
+		 * Get timestamp for current period
+		 *
+		 * @param string $period Time period
+		 * @return integer Timestamp
+		 */
+		protected function getTimestamp($period) {
+			if (empty($period)) {
+				return 0;
+			}
+
+			switch ($period) {
+				case 'day' :
+					return ((int) $GLOBALS['EXEC_TIME'] - 24*60*60);
+				break;
+				case 'week' :
+					return ((int) $GLOBALS['EXEC_TIME'] - 7*24*60*60);
+				break;
+				case 'month' :
+					return ((int) $GLOBALS['EXEC_TIME'] - 30*24*60*60);
+				break;
+				case 'year' :
+					return ((int) $GLOBALS['EXEC_TIME'] - 356*24*60*60);
+				break;
+				case 'all' :
+				default :
+					return 0;
+			}
 		}
 
 	}

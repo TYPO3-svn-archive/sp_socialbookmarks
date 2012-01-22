@@ -28,5 +28,34 @@
 	 */
 	class Tx_SpSocialbookmarks_Domain_Repository_VisitRepository extends Tx_Extbase_Persistence_Repository {
 
+		/**
+		 * Return visits by pid and crdate
+		 *
+		 * @param integer $pid Current page id
+		 * @param integer $timestamp Earliest timestamp
+		 * @return
+		 */
+		public function getByPidAndCrdate($pid = 0, $timestamp = 0) {
+			$query = $this->createQuery();
+
+				// Disable default storage page handling
+			$query->getQuerySettings()->setRespectStoragePage(FALSE);
+
+				// Set pid and timestamp
+			if (!empty($pid) && !empty($timestamp)) {
+				$query->matching($query->logicalAnd(
+					$query->equals('pid', $pid),
+					$query->greaterThanOrEqual('crdate', $timestamp)
+				));
+			} else if (!empty($pid)) {
+				$query->matching($query->equals('pid', $pid));
+			} else if (!empty($timestamp)) {
+				$query->matching($query->greaterThanOrEqual('crdate', $timestamp));
+			}
+
+			return $query->execute();
+		}
+
+
 	}
 ?>

@@ -1,3 +1,5 @@
+{namespace bookmarks=Tx_SpSocialbookmarks_ViewHelpers}
+
 <f:be.container>
 	<div class="typo3-fullDoc">
 		<div id="typo3-docheader">
@@ -12,16 +14,16 @@
 					<f:be.buttons.csh />
 					<!-- Pages -->
 					<f:be.menus.actionMenu>
-						<f:be.menus.actionMenuItem label="{f:translate(key:'mode_all')}" controller="Chart" action="show" arguments="{mode:'all'}" />
-						<f:be.menus.actionMenuItem label="{f:translate(key:'mode_this')}" controller="Chart" action="show" arguments="{mode:'this'}" />
+						<bookmarks:be.actionMenuItem label="{f:translate(key:'mode_all')}" controller="Chart" action="show" arguments="{mode:'all'}" parameter="mode" />
+						<bookmarks:be.actionMenuItem label="{f:translate(key:'mode_this')}" controller="Chart" action="show" arguments="{mode:'this'}" parameter="mode" />
 					</f:be.menus.actionMenu>
 					<!-- Period -->
 					<f:be.menus.actionMenu>
-						<f:be.menus.actionMenuItem label="{f:translate(key:'period_all')}" controller="Chart" action="show" arguments="{period:'all'}" />
-						<f:be.menus.actionMenuItem label="{f:translate(key:'period_year')}" controller="Chart" action="show" arguments="{period:'year'}" />
-						<f:be.menus.actionMenuItem label="{f:translate(key:'period_month')}" controller="Chart" action="show" arguments="{period:'month'}" />
-						<f:be.menus.actionMenuItem label="{f:translate(key:'period_week')}" controller="Chart" action="show" arguments="{period:'week'}" />
-						<f:be.menus.actionMenuItem label="{f:translate(key:'period_day')}" controller="Chart" action="show" arguments="{period:'day'}" />
+						<bookmarks:be.actionMenuItem label="{f:translate(key:'period_all')}" controller="Chart" action="show" arguments="{period:'all'}" parameter="period" />
+						<bookmarks:be.actionMenuItem label="{f:translate(key:'period_year')}" controller="Chart" action="show" arguments="{period:'year'}" parameter="period" />
+						<bookmarks:be.actionMenuItem label="{f:translate(key:'period_month')}" controller="Chart" action="show" arguments="{period:'month'}" parameter="period" />
+						<bookmarks:be.actionMenuItem label="{f:translate(key:'period_week')}" controller="Chart" action="show" arguments="{period:'week'}" parameter="period" />
+						<bookmarks:be.actionMenuItem label="{f:translate(key:'period_day')}" controller="Chart" action="show" arguments="{period:'day'}" parameter="period" />
 					</f:be.menus.actionMenu>
 				</div>
 				<div class="docheader-row2-right"></div>
