@@ -123,5 +123,34 @@
 			$this->redirectToUri($uri);
 		}
 
+
+		/**
+		 * Redirects the web request to another uri.
+		 *
+		 * This overrides the original method and disables the prepending
+		 * of the base uri if uri already starts with "http"
+		 *
+		 * @param mixed $uri A string representation of a URI
+		 * @param integer $delay The delay in seconds
+		 * @param integer $statusCode The HTTP status code for the redirect
+		 * @return void
+		 * @see Tx_Extbase_MVC_Controller_AbstractController::redirectToURI
+		 */
+		protected function redirectToURI($uri, $delay = 0, $statusCode = 303) {
+			if (!$this->request instanceof Tx_Extbase_MVC_Web_Request) {
+				return;
+			}
+
+			if (strpos($uri, 'http') !== 0) {
+				$uri = $this->addBaseUriIfNecessary($uri);
+			}
+
+			$escapedUri = htmlentities($uri, ENT_QUOTES, 'utf-8');
+			$this->response->setContent('<html><head><meta http-equiv="refresh" content="' . intval($delay) . ';url=' . $escapedUri . '"/></head></html>');
+			$this->response->setStatus($statusCode);
+			$this->response->setHeader('Location', (string) $uri);
+			throw new Tx_Extbase_MVC_Exception_StopAction();
+		}
+
 	}
 ?>

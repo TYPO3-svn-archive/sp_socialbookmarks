@@ -21,14 +21,17 @@ plugin.tx_spsocialbookmarks {
 
 		## Generate url
 		pageUrl = TEXT
-		pageUrl.typolink {
-			parameter.data = TSFE : id
-			returnLast     = url
-			addQueryString = 1
-			addQueryString  {
-				exclude = id,cHash,no_cache
-				method  = GET
+		pageUrl {
+			typolink {
+				parameter.data = TSFE : id
+				returnLast     = url
+				addQueryString = 1
+				addQueryString  {
+					exclude = id,cHash,no_cache
+					method  = GET
+				}
 			}
+			dataWrap = http://{getenv : HTTP_HOST}/|
 		}
 
 		## Generate title

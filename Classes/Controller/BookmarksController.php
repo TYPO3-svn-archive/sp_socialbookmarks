@@ -165,7 +165,7 @@
 				// Get current page url
 			$pageUrl = '';
 			if (!empty($this->settings['pageUrl'])) {
-				$pageUrl = urlencode(trim($this->settings['pageUrl']));
+				$pageUrl = trim($this->settings['pageUrl']);
 			}
 
 				// Force SSL
@@ -176,12 +176,12 @@
 				// Get current page title
 			$pageTitle = '';
 			if (!empty($this->settings['pageTitle'])) {
-				$pageTitle = urlencode(trim($this->settings['pageTitle']));
+				$pageTitle = trim($this->settings['pageTitle']);
 			}
 
 				// Build final url
 			$url = $service->getUrl();
-			$url = str_replace(array('###URL###', '###TITLE###'), array($pageUrl, $pageTitle), $url);
+			$url = str_replace(array('###URL###', '###TITLE###'), array(urlencode($pageUrl), urlencode($pageTitle)), $url);
 
 				// Use tiny url service
 			if (!empty($this->settings['useTinyURL']) && !empty($this->settings['tinyServiceURL'])) {
