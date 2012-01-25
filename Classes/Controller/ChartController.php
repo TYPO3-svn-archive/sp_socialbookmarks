@@ -67,22 +67,20 @@
 		 * @return void
 		 */
 		public function processRequest(Tx_Extbase_MVC_RequestInterface $request, Tx_Extbase_MVC_ResponseInterface $response) {
-				$this->template = t3lib_div::makeInstance('template');
-				$this->pageRenderer = $this->template->getPageRenderer();
+			$this->template = t3lib_div::makeInstance('template');
+			$this->pageRenderer = $this->template->getPageRenderer();
 
-				if (empty($GLOBALS['SOBE'])) {
-					$GLOBALS['SOBE'] = new stdClass();
-				}
-				if (empty($GLOBALS['SOBE']->doc)) {
-					$GLOBALS['SOBE']->doc = $this->template;
-				}
+			if (empty($GLOBALS['SOBE'])) {
+				$GLOBALS['SOBE'] = new stdClass();
+			}
+			if (empty($GLOBALS['SOBE']->doc)) {
+				$GLOBALS['SOBE']->doc = $this->template;
+			}
 
-				parent::processRequest($request, $response);
+			$uxPath = $this->doc->backpath . '../t3lib/js/extjs/ux/';
+			$this->pageRenderer->addJsFile($uxPath . 'Ext.ux.FitToParent.js');
 
-				$pageHeader = $this->template->startpage($this->translate('module.title'));
-				$pageEnd = $this->template->endPage();
-
-				$response->setContent($pageHeader . $response->getContent() . $pageEnd);
+			parent::processRequest($request, $response);
 		}
 
 
@@ -94,8 +92,25 @@
 		protected function initializeAction() {
 				// Pre-parse TypoScript setup
 			$this->pageId = Tx_SpSocialbookmarks_Utility_Backend::getPageId();
-			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::getSetupForPid($this->pageId, 'plugin.tx_spsocialbookmarks');
+			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::getSetupForPid($this->pageId, 'plugin.tx_spsocialbookmarks.settings');
 			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($this->settings);
+
+				// Add chart configuration to ExtJS settings
+			if (!empty($this->settings['charts']['options']) && is_array($this->settings['charts']['options'])) {
+				$this->pageRenderer->addInlineSettingArray('Socialbookmarks', $this->settings['charts']['options']);
+			}
+
+				// Add labels
+			if (!empty($this->settings['charts']['languageFile'])) {
+				$file = $this->getRelativePath($this->settings['charts']['languageFile']);
+				$this->pageRenderer->addInlineLanguageLabelFile($file);
+			}
+
+				// Add JS file
+			if (!empty($this->settings['charts']['javascriptFile'])) {
+				$file = $this->getRelativePath($this->settings['charts']['javascriptFile']);
+				$this->pageRenderer->addJsFile($file);
+			}
 		}
 
 
@@ -143,6 +158,24 @@
 				default :
 					return 0;
 			}
+		}
+
+
+		/**
+		 * Get relative path
+		 * 
+		 * @param string $fileName The file name
+		 * @return string Relative path
+		 */
+		protected function getRelativePath($fileName) {
+			if (empty($fileName)) {
+				return '';
+			}
+
+			$backPath = $this->doc->backpath . '../';
+			$fileName = t3lib_div::getFileAbsFileName($fileName);
+
+			return str_replace(PATH_site, $backPath, $fileName);
 		}
 
 	}

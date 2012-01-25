@@ -19,6 +19,13 @@ plugin.tx_spsocialbookmarks {
 			chartColor     = {$plugin.tx_spsocialbookmarks.settings.chart.chartColor}
 		}
 
+		## Charts configuration
+		charts {
+			test = 1
+			languageFile   = EXT:sp_socialbookmarks/Resources/Private/Language/locallang.xml
+			javascriptFile = EXT:sp_socialbookmarks/Resources/Public/Javascript/Chart.js
+		}
+
 		## Generate url
 		pageUrl = TEXT
 		pageUrl {
