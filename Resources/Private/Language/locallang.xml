@@ -10,7 +10,7 @@
 			<label index="plugin.description">Adds a Social Bookmars bar to this page.</label>
 
 			<label index="module.title">Social Bookmarks Statistic</label>
-			<label index="mlang_tabs_tab">Bookmarks Statistic</label>
+			<label index="mlang_tabs_tab">Bookmarks</label>
 			<label index="mlang_labels_tabdescr">Social Bookmarks Statistic</label>
 			<label index="title">Social Bookmarks Statistic</label>
 			<label index="title_chart_services">Services:</label>
@@ -39,7 +39,7 @@
 
 			<label index="module.title">Social Bookmarks Statistik</label>
 			<label index="module.title">Social Bookmarks Statistik</label>
-			<label index="mlang_tabs_tab">Bookmarks Statistic</label>
+			<label index="mlang_tabs_tab">Bookmarks</label>
 			<label index="mlang_labels_tabdescr">Social Bookmarks Statistik</label>
 			<label index="title">Social Bookmarks Statistik</label>
 			<label index="title_chart_services">Dienste:</label>

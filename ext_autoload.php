@@ -15,6 +15,6 @@
 		'tx_spsocialbookmarks_utility_persistence'                     => $extensionClassesPath . 'Utility/Persistence.php',
 		'tx_spsocialbookmarks_utility_typoscript'                      => $extensionClassesPath . 'Utility/TypoScript.php',
 		'tx_spsocialbookmarks_viewhelpers_be_actionmenuitemviewhelper' => $extensionClassesPath . 'ViewHelpers/Be/ActionMenuItemViewHelper.php',
-		'tx_spsocialbookmarks_viewhelpers_be_chartviewhelper'          => $extensionClassesPath . 'ViewHelpers/Be/ChartViewHelper.php',
+		'tx_spsocialbookmarks_viewhelpers_chartviewhelper'             => $extensionClassesPath . 'ViewHelpers/ChartViewHelper.php',
 	);
 ?>

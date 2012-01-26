@@ -24,9 +24,9 @@
 	 ********************************************************************/
 
 	/**
-	 * View helper for charts
+	 * Abstract bar based chart
 	 */
-	class Tx_SpSocialbookmarks_ViewHelpers_Be_ChartViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+	abstract class Tx_SpSocialbookmarks_Chart_AbstractBarBasedChart extends Tx_SpSocialbookmarks_Chart_AbstractChart {
 
 	}
 ?>

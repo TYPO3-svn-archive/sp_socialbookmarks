@@ -140,6 +140,10 @@
 				return;
 			}
 
+
+				// TODO: See t3lib_utility_Client !!!
+
+
 				// Add visit to storage
 			$attributes = array(
 				'ip'      => t3lib_div::getIndpEnv('REMOTE_ADDR'),

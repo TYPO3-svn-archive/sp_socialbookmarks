@@ -4,13 +4,19 @@
 
 <f:section name="main">
 
-	<ul>
-		<li><a href="http://moc.net/tutorials/writing-backend-modules-with-extbase/" target="_blank">Tutorial 1</a></li>
-		<li><a href="http://tinyurl.com/89amyfj" target="_blank">Tutorial 2</a></li>
-		<li><a href="http://www.quizzpot.com/2009/07/charts-with-extjs/" target="_blank">Charts in ExtJS 1</a></li>
-		<li><a href="http://www.objis.com/formationextjs/lib/extjs-4.0.0/docs/api/Ext.chart.series.Pie.html" target="_blank">Charts in ExtJS 2</a></li>
-	</ul>
+	<h3>Services</h3>
+	<div id="socialbookmarks-services">
+		<bookmarks:chart x="name" y="count" xLabel="Service" yLabel="Clicks" showLegend="1">{services}</bookmarks:chart>
+	</div>
 
-	<div id="socialbookmarks-container"></div>
+	<h3>Browsers</h3>
+	<div id="socialbookmarks-browsers">
+		<bookmarks:chart x="name" y="count" xLabel="Browser" yLabel="Clicks" showLegend="1">{browsers}</bookmarks:chart>
+	</div>
+
+	<h3>Systems</h3>
+	<div id="socialbookmarks-systems">
+		<bookmarks:chart x="name" y="count" xLabel="System" yLabel="Clicks" showLegend="1">{systems}</bookmarks:chart>
+	</div>
 
 </f:section>

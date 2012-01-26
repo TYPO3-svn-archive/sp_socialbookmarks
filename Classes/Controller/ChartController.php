@@ -125,7 +125,9 @@
 			$pid = (int) ($mode === 'this' ? $this->pageId : 0);
 			$timestamp = $this->getTimestamp($period);
 			$visits = $this->visitRepository->getByPidAndCrdate($pid, $timestamp);
-			$this->view->assign('visits',   $visits);
+			$this->view->assign('services', array());
+			$this->view->assign('systems',  array());
+			$this->view->assign('browsers', array());
 			$this->view->assign('settings', $this->settings);
 		}
 
