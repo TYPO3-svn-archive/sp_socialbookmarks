@@ -36,12 +36,24 @@
 
 		/**
 		 * Set configuration
-		 * 
+		 *
 		 * @param array $settings The TypoScript settings
 		 * @return void
 		 */
 		public function setConfiguration(array $settings) {
 			$this->settings = $settings;
+		}
+
+
+		/**
+		 * Render a legend
+		 *
+		 * TODO !!!
+		 *
+		 * @return void
+		 */
+		public function renderLegend() {
+			return '';
 		}
 
 	}

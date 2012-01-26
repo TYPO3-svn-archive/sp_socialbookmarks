@@ -1,0 +1,66 @@
+div.chart-grid-area-vertical,
+div.chart-grid-area-horizontal {
+	border: 1px solid #4D4D4D;
+	padding: 0 0 2% 2%;
+	height: 190px;
+	width: 98%;
+	position: relative;
+	overflow: hidden;
+}
+
+div.chart-grid-area-inner {
+	height: 100%;
+	position: relative;
+	border-left: 1px solid #BFBFBF;
+	border-bottom: 1px solid #BFBFBF;
+	margin-top: -1px;
+}
+
+div.chart-grid-vertical-line,
+div.chart-grid-vertical-edge,
+div.chart-grid-horizontal-line,
+div.chart-grid-horizontal-edge {
+	position: absolute;
+}
+
+div.chart-grid-vertical-line {
+	border-right: 1px solid #BFBFBF;
+}
+
+div.chart-grid-area-horizontal div.chart-grid-vertical-line {
+	border-right: 1px dashed #BFBFBF;
+}
+
+div.chart-grid-vertical-edge {
+	border-left: 1px solid #BFBFBF;
+}
+
+div.chart-grid-horizontal-line {
+	border-bottom: 1px solid #BFBFBF;
+}
+
+div.chart-grid-area-vertical div.chart-grid-horizontal-line {
+	border-bottom: 1px dashed #BFBFBF;
+}
+
+div.chart-grid-horizontal-edge {
+	border-top: 1px solid #BFBFBF;
+}
+
+div.chart-grid-vertical-line {
+	height: 100%;
+}
+
+div.chart-grid-horizontal-line {
+	width: 100%;
+}
+
+div.chart-grid-vertical-edge,
+div.chart-grid-horizontal-edge {
+	height: 200px;
+	width: 200px;
+	-moz-transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
+	-o-transform: rotate(45deg);
+	transform: rotate(45deg);
+}

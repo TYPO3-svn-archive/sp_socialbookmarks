@@ -4,19 +4,24 @@
 
 <f:section name="main">
 
-	<h3>Services</h3>
+	<h2>Social Bookmarks Click Stats</h2>
+	<div style="padding-top: 5px;"></div>
+
+	<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-service" />&nbsp;Services</h3>
 	<div id="socialbookmarks-services">
-		<bookmarks:chart x="name" y="count" xLabel="Service" yLabel="Clicks" showLegend="1">{services}</bookmarks:chart>
+		<bookmarks:chart x="count" y="name" xLabel="Service" yLabel="Clicks" showLegend="1">{services}</bookmarks:chart>
 	</div>
 
-	<h3>Browsers</h3>
+	<div style="padding-top: 20px;"></div>
+	<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-browser" />&nbsp;Browsers</h3>
 	<div id="socialbookmarks-browsers">
-		<bookmarks:chart x="name" y="count" xLabel="Browser" yLabel="Clicks" showLegend="1">{browsers}</bookmarks:chart>
+		<bookmarks:chart x="count" y="name" xLabel="Browser" yLabel="Clicks" showLegend="1">{browsers}</bookmarks:chart>
 	</div>
 
-	<h3>Systems</h3>
+	<div style="padding-top: 20px;"></div>
+	<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-system" />&nbsp;Systems</h3>
 	<div id="socialbookmarks-systems">
-		<bookmarks:chart x="name" y="count" xLabel="System" yLabel="Clicks" showLegend="1">{systems}</bookmarks:chart>
+		<bookmarks:chart x="count" y="name" xLabel="System" yLabel="Clicks" showLegend="1">{systems}</bookmarks:chart>
 	</div>
 
 </f:section>

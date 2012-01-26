@@ -73,12 +73,10 @@
 			if (empty($GLOBALS['SOBE'])) {
 				$GLOBALS['SOBE'] = new stdClass();
 			}
+
 			if (empty($GLOBALS['SOBE']->doc)) {
 				$GLOBALS['SOBE']->doc = $this->template;
 			}
-
-			$uxPath = $this->doc->backpath . '../t3lib/js/extjs/ux/';
-			$this->pageRenderer->addJsFile($uxPath . 'Ext.ux.FitToParent.js');
 
 			parent::processRequest($request, $response);
 		}
@@ -91,25 +89,14 @@
 		 */
 		protected function initializeAction() {
 				// Pre-parse TypoScript setup
-			$this->pageId = Tx_SpSocialbookmarks_Utility_Backend::getPageId();
+			$this->pageId   = Tx_SpSocialbookmarks_Utility_Backend::getPageId();
 			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::getSetupForPid($this->pageId, 'plugin.tx_spsocialbookmarks.settings');
 			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($this->settings);
 
-				// Add chart configuration to ExtJS settings
-			if (!empty($this->settings['charts']['options']) && is_array($this->settings['charts']['options'])) {
-				$this->pageRenderer->addInlineSettingArray('Socialbookmarks', $this->settings['charts']['options']);
-			}
-
-				// Add labels
-			if (!empty($this->settings['charts']['languageFile'])) {
-				$file = $this->getRelativePath($this->settings['charts']['languageFile']);
-				$this->pageRenderer->addInlineLanguageLabelFile($file);
-			}
-
-				// Add JS file
-			if (!empty($this->settings['charts']['javascriptFile'])) {
-				$file = $this->getRelativePath($this->settings['charts']['javascriptFile']);
-				$this->pageRenderer->addJsFile($file);
+				// Add stylesheet
+			if (!empty($this->settings['chart']['stylesheetFile'])) {
+				$file = $this->getRelativePath($this->settings['chart']['stylesheetFile']);
+				$this->pageRenderer->addCssFile($file);
 			}
 		}
 
@@ -124,8 +111,16 @@
 		public function showAction($mode = '', $period = '') {
 			$pid = (int) ($mode === 'this' ? $this->pageId : 0);
 			$timestamp = $this->getTimestamp($period);
-			$visits = $this->visitRepository->getByPidAndCrdate($pid, $timestamp);
-			$this->view->assign('services', array());
+			//$visits = $this->visitRepository->getByPidAndCrdate($pid, $timestamp);
+
+			$testData = array(
+				array('name' => 'addthis',   'count' => 180),
+				array('name' => 'ask',       'count' => 684),
+				array('name' => 'bluedot',   'count' => 84),
+				array('name' => 'delicious', 'count' => 480),
+			);
+
+			$this->view->assign('services', $testData);
 			$this->view->assign('systems',  array());
 			$this->view->assign('browsers', array());
 			$this->view->assign('settings', $this->settings);
@@ -165,7 +160,7 @@
 
 		/**
 		 * Get relative path
-		 * 
+		 *
 		 * @param string $fileName The file name
 		 * @return string Relative path
 		 */

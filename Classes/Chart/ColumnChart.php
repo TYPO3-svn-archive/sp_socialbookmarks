@@ -26,11 +26,11 @@
 	/**
 	 * Renderer for column chart
 	 */
-	class Tx_SpSocialbookmarks_Chart_ColumnChart extends Tx_SpSocialbookmarks_Chart_AbstractBarBasedChart {
+	class Tx_SpSocialbookmarks_Chart_ColumnChart extends Tx_SpSocialbookmarks_Chart_AbstractGridBasedChart {
 
 		/**
 		 * Render the chart
-		 * 
+		 *
 		 * @param array $values The rows and cols to show
 		 * @param string $x The attribute name for the X axis
 		 * @param string $y The attribtue name for the Y axis
@@ -40,7 +40,7 @@
 		 * @return string The rendered chart
 		 */
 		public function render($values, $x = NULL, $y = NULL, $xLabel = '', $yLabel = '', $showLegend = FALSE) {
-			
+
 		}
 
 	}

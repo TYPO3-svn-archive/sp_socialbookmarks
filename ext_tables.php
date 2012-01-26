@@ -67,8 +67,8 @@
 		}
 	");
 
-		// Add charts module to backend
 	if (TYPO3_MODE == 'BE') {
+			// Add charts module to backend
 		Tx_Extbase_Utility_Extension::registerModule(
 			$_EXTKEY,
 			'web',
@@ -84,6 +84,10 @@
 				'navigationComponentId' => 'typo3-pagetree',
 			)
 		);
+
+			// Add sprite icons
+		$icons = require(t3lib_extMgm::extPath($_EXTKEY)  . 'ext_icons.php');
+		t3lib_SpriteManager::addSingleIcons($icons, str_replace('_', '', $_EXTKEY));
 	}
 
 ?>

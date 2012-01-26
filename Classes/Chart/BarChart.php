@@ -26,11 +26,11 @@
 	/**
 	 * Renderer for bar chart
 	 */
-	class Tx_SpSocialbookmarks_Chart_BarChart extends Tx_SpSocialbookmarks_Chart_AbstractBarBasedChart {
+	class Tx_SpSocialbookmarks_Chart_BarChart extends Tx_SpSocialbookmarks_Chart_AbstractGridBasedChart {
 
 		/**
 		 * Render the chart
-		 * 
+		 *
 		 * @param array $values The rows and cols to show
 		 * @param string $x The attribute name for the X axis
 		 * @param string $y The attribtue name for the Y axis
@@ -40,7 +40,48 @@
 		 * @return string The rendered chart
 		 */
 		public function render($values, $x = NULL, $y = NULL, $xLabel = '', $yLabel = '', $showLegend = FALSE) {
-			
+				// Get X and Y axis keys
+			if (empty($x) || empty($y)) {
+				$first = reset($values);
+				$y = (empty($x) ? $first[0] : $y);
+				$x = (empty($x) ? $first[1] : $x);
+			}
+
+				// Get bars
+			$bars = array();
+			foreach ($values as $value) {
+				if (!isset($bars[$value[$y]])) {
+					$bars[$value[$y]] = (int) $value[$x];
+				} else {
+					$bars[$value[$y]] += (int) $value[$x];
+				}
+			}
+
+				// Build grid area
+			$columns = 10;
+			$rows = 5;
+			$content = $this->renderHorizontalGrid($columns, $rows);
+
+				// Build legend
+			if (!empty($showLegend)) {
+				$content .= $this->renderLegend();
+			}
+
+				// Build bars
+			$content .= $this->renderBars($bars);
+
+			return $content;
+		}
+
+
+		/**
+		 * Render the bars of the chart
+		 *
+		 * @param array $bars The bars to render
+		 * @return string Rendered HTML content
+		 */
+		protected function renderBars(array $bars) {
+			return '';
 		}
 
 	}

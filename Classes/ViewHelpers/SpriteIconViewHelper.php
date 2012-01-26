@@ -24,9 +24,28 @@
 	 ********************************************************************/
 
 	/**
-	 * Abstract bar based chart
+	 * View helper for sprite icons
 	 */
-	abstract class Tx_SpSocialbookmarks_Chart_AbstractBarBasedChart extends Tx_SpSocialbookmarks_Chart_AbstractChart {
+	class Tx_SpSocialbookmarks_ViewHelpers_SpriteIconViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
+
+		/**
+		 * Renders a sprite icon
+		 *
+		 * @param string $name The name of the sprite icon
+		 * @param string $prefix An optional prefix
+		 * @return string The rendered icon
+		 */
+		public function render($name = NULL, $prefix = 'extensions-') {
+			if ($name === NULL) {
+				$name = $this->renderChildren();
+			}
+
+			if (empty($name)) {
+				throw new Exception('Given name is not valid');
+			}
+
+			return t3lib_iconWorks::getSpriteIcon($prefix . $name);
+		}
 
 	}
 ?>
