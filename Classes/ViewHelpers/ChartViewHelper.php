@@ -70,21 +70,16 @@
 		/**
 		 * Renders a chart
 		 *
-		 * @param array $values The rows and cols to show
-		 * @param string $x The attribute name for the X axis
-		 * @param string $y The attribtue name for the Y axis
-		 * @param string $xLabel Label for the X axis
-		 * @param string $yLabel Label for the Y axis
-		 * @param boolean $showLegend Show legend beside chart
+		 * @param array $data The rows and cols to show
 		 * @param string $type The type of chart to render
 		 * @return string The rendered chart
 		 */
-		public function render($values = NULL, $x = NULL, $y = NULL, $xLabel = '', $yLabel = '', $showLegend = FALSE, $type = 'bar') {
-			if ($values === NULL) {
-				$values = $this->renderChildren();
+		public function render($data = NULL, $type = 'bar') {
+			if ($data === NULL) {
+				$data = $this->renderChildren();
 			}
-			if (!is_array($values) && !$values instanceof ArrayAccess) {
-				throw new Exception('Given values are not an array');
+			if (!is_array($data) && !$data instanceof ArrayAccess) {
+				throw new Exception('Given data is not an array');
 			}
 
 				// Find renderers
@@ -107,7 +102,7 @@
 			$renderer->setConfiguration($this->settings);
 
 				// Render...
-			return $renderer->render($values, $x, $y, $xLabel, $yLabel, $showLegend);
+			return $renderer->render($data);
 		}
 
 	}

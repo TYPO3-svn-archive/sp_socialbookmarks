@@ -26,21 +26,55 @@
 	/**
 	 * Renderer for column chart
 	 */
-	class Tx_SpSocialbookmarks_Chart_ColumnChart extends Tx_SpSocialbookmarks_Chart_AbstractGridBasedChart {
+	class Tx_SpSocialbookmarks_Chart_ColumnChart extends Tx_SpSocialbookmarks_Chart_AbstractChart {
+
+		/**
+		 * @var string
+		 */
+		protected $options = '
+			seriesDefaults:{
+				renderer: jQuery.jqplot.BarRenderer,
+				pointLabels: {
+					show: true,
+					location: \'e\',
+					edgeTolerance: -15
+				},
+				shadowAngle: 135,
+				rendererOptions: {
+					fillToZero: true,
+					barDirection: \'horizontal\'
+				}
+			},
+			axes: {
+				yaxis: {
+					renderer: jQuery.jqplot.CategoryAxisRenderer,
+					ticks: %1$s
+				}
+			}
+		';
+
 
 		/**
 		 * Render the chart
 		 *
-		 * @param array $values The rows and cols to show
-		 * @param string $x The attribute name for the X axis
-		 * @param string $y The attribtue name for the Y axis
-		 * @param string $xLabel Label for the X axis
-		 * @param string $yLabel Label for the Y axis
-		 * @param boolean $showLegend Show legend beside chart
+		 * @param array $values The data to show
 		 * @return string The rendered chart
 		 */
-		public function render($values, $x = NULL, $y = NULL, $xLabel = '', $yLabel = '', $showLegend = FALSE) {
+		public function render($data) {
+				// Get bars
+			$bars = array();
+			foreach ($data as $value) {
+				if (!isset($bars[$value[0]])) {
+					$bars[$value[0]] = (int) $value[1];
+				} else {
+					$bars[$value[0]] += (int) $value[1];
+				}
+			}
 
+			$data = array(array_values($bars));
+			$options = sprintf($this->options, json_encode(array_keys($bars)));
+
+			return $this->renderChart($data, $options);
 		}
 
 	}

@@ -1,66 +1,78 @@
-div.chart-grid-area-vertical,
-div.chart-grid-area-horizontal {
-	border: 1px solid #4D4D4D;
-	padding: 0 0 2% 2%;
-	height: 190px;
-	width: 98%;
+/**
+ * Grid
+ */
+div.chart-grid-area {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+div.chart-grid-area table {
+	height: 100%;
+	width: 100%;
+	border-collapse: collapse;
+}
+
+div.chart-grid-area td {
+	height: 24px;
+	border-right: 1px solid #CDCDCD;
+	border-bottom: 1px solid #CDCDCD;
+	overflow: visible;
+}
+
+div.chart-grid-area td.chart-grid-area-label-column {
+	border: none;
+	text-align: center;
+	vertical-align: middle;
+	padding-top: 6px;
+	cursor: default;
+}
+
+div.chart-grid-area td.chart-grid-area-label-row {
+	border: none;
+	text-align: right;
+	vertical-align: middle;
+	padding-right: 6px;
+	width: 5%;
+	cursor: default;
+}
+
+div.chart-grid-area td.chart-grid-area-first-column {
+	border-left: 1px solid #555555;
+}
+
+div.chart-grid-area td.chart-grid-area-last-column {
+	border-right: 1px solid #555555;
+}
+
+div.chart-grid-area td.chart-grid-area-first-row {
+	border-top: 1px solid #555555;
+}
+
+div.chart-grid-area td.chart-grid-area-last-row {
+	border-bottom: 1px solid #555555;
+}
+
+
+
+
+/*
+div.chart-grid-area-inner {
+	width: 100%;
+	height: 160px;
+	border: 1px solid #555555;
 	position: relative;
+	cursor: default;
 	overflow: hidden;
 }
 
-div.chart-grid-area-inner {
-	height: 100%;
-	position: relative;
-	border-left: 1px solid #BFBFBF;
-	border-bottom: 1px solid #BFBFBF;
-	margin-top: -1px;
-}
-
-div.chart-grid-vertical-line,
-div.chart-grid-vertical-edge,
-div.chart-grid-horizontal-line,
-div.chart-grid-horizontal-edge {
-	position: absolute;
-}
-
-div.chart-grid-vertical-line {
-	border-right: 1px solid #BFBFBF;
-}
-
-div.chart-grid-area-horizontal div.chart-grid-vertical-line {
-	border-right: 1px dashed #BFBFBF;
-}
-
-div.chart-grid-vertical-edge {
-	border-left: 1px solid #BFBFBF;
-}
-
-div.chart-grid-horizontal-line {
-	border-bottom: 1px solid #BFBFBF;
-}
-
-div.chart-grid-area-vertical div.chart-grid-horizontal-line {
-	border-bottom: 1px dashed #BFBFBF;
-}
-
-div.chart-grid-horizontal-edge {
-	border-top: 1px solid #BFBFBF;
-}
-
-div.chart-grid-vertical-line {
-	height: 100%;
-}
-
-div.chart-grid-horizontal-line {
+div.chart-grid-area-inner table {
 	width: 100%;
+	height: 162px;
+	margin: -1px;
 }
 
-div.chart-grid-vertical-edge,
-div.chart-grid-horizontal-edge {
-	height: 200px;
-	width: 200px;
-	-moz-transform: rotate(45deg);
-	-webkit-transform: rotate(45deg);
-	-o-transform: rotate(45deg);
-	transform: rotate(45deg);
+div.chart-grid-area-inner td {
+	border-right: 1px dashed #CDCDCD;
 }
+*/

@@ -92,11 +92,22 @@
 			$this->pageId   = Tx_SpSocialbookmarks_Utility_Backend::getPageId();
 			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::getSetupForPid($this->pageId, 'plugin.tx_spsocialbookmarks.settings');
 			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($this->settings);
+			$chartSettings  = (!empty($this->settings['charts']) ? $this->settings['charts'] : array());
 
-				// Add stylesheet
-			if (!empty($this->settings['chart']['stylesheetFile'])) {
-				$file = $this->getRelativePath($this->settings['chart']['stylesheetFile']);
-				$this->pageRenderer->addCssFile($file);
+				// Add stylesheets
+			if (!empty($chartSettings['stylesheet']) && is_array($chartSettings['stylesheet'])) {
+				foreach($chartSettings['stylesheet'] as $file) {
+					$this->pageRenderer->addCssFile($this->getRelativePath($file));
+				}
+			}
+
+				// Add javascript libraries
+			if (!empty($chartSettings['javascript']) && is_array($chartSettings['javascript'])) {
+				$libraries = array_reverse($chartSettings['javascript']);
+				foreach($libraries as $key => $file) {
+					$file = $this->getRelativePath($file);
+					$this->pageRenderer->addJsLibrary($key, $file, 'text/javascript', FALSE, TRUE);
+				}
 			}
 		}
 
@@ -114,15 +125,17 @@
 			//$visits = $this->visitRepository->getByPidAndCrdate($pid, $timestamp);
 
 			$testData = array(
-				array('name' => 'addthis',   'count' => 180),
-				array('name' => 'ask',       'count' => 684),
-				array('name' => 'bluedot',   'count' => 84),
-				array('name' => 'delicious', 'count' => 480),
+				array('AddThis',   180),
+				array('AddThis',   112),
+				array('Ask',       684),
+				array('Bluedot',   84),
+				array('Bluedot',   200),
+				array('Delicious', 480),
 			);
 
 			$this->view->assign('services', $testData);
-			$this->view->assign('systems',  array());
-			$this->view->assign('browsers', array());
+			$this->view->assign('systems',  $testData);
+			$this->view->assign('browsers', $testData);
 			$this->view->assign('settings', $this->settings);
 		}
 

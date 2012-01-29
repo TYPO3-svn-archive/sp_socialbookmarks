@@ -19,23 +19,7 @@ plugin.tx_spsocialbookmarks {
 		tinyServiceURL = http://tinyurl.com/api-create.php?url=###URL###
 
 		chart {
-			# cat=Social Bookmarks/settings/2000; type=int; label=Chart Image Width: Width of the images in chart
-			imageWidth = 14
 
-			# cat=Social Bookmarks/settings/2010; type=int; label=Chart Image Height: Height of the images in chart
-			imageHeight = 15
-
-			# cat=Social Bookmarks/settings/2020; type=int; label=Chart Space Between Bars: Space between the bars in chart
-			spaceBetween = 15
-
-			# cat=Social Bookmarks/settings/2030; type=string; label=Chart Bar Color: Color of the bars
-			barColor = #6F9AE3
-
-			# cat=Social Bookmarks/settings/2040; type=string; label=Chart Color: Background color of the charts
-			chartColor = #E6EBFA
-
-			# cat=Social Bookmarks/settings/2050; type=string; label=Stylesheet file: Stylesheet for the backend charts
-			stylesheetFile = EXT:sp_socialbookmarks/Resources/Public/Stylesheet/Charts.css
 		}
 	}
 

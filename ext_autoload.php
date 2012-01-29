@@ -3,7 +3,6 @@
 
 	return array(
 		'tx_spsocialbookmarks_chart_abstractchart'                     => $extensionClassesPath . 'Chart/AbstractChart.php',
-		'tx_spsocialbookmarks_chart_abstractgridbasedchart'            => $extensionClassesPath . 'Chart/AbstractGridBasedChart.php',
 		'tx_spsocialbookmarks_chart_barchart'                          => $extensionClassesPath . 'Chart/BarChart.php',
 		'tx_spsocialbookmarks_chart_chartinterface'                    => $extensionClassesPath . 'Chart/ChartInterface.php',
 		'tx_spsocialbookmarks_chart_columnchart'                       => $extensionClassesPath . 'Chart/ColumnChart.php',

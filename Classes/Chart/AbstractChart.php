@@ -33,6 +33,24 @@
 		 */
 		protected $settings = array();
 
+		/**
+		 * @var string
+		 */
+		protected $defaultChartTag = '
+			<div class="spsocialbookmarks-chart" id="%1$s"></div>
+			<script type="text/javascript">
+				charts[\'%1$s\'] = {
+					data:    %2$s,
+					options: {%3$s}
+				};
+			</script>
+		';
+
+		/**
+		 * @var string
+		 */
+		protected $defaultChartId = 'spsocialbookmarks-chart-%s';
+
 
 		/**
 		 * Set configuration
@@ -46,14 +64,21 @@
 
 
 		/**
-		 * Render a legend
+		 * Build the chart code
 		 *
-		 * TODO !!!
-		 *
-		 * @return void
+		 * @param array $data The chart data
+		 * @param string $options Additional options
+		 * @return string Rendered chart code
 		 */
-		public function renderLegend() {
-			return '';
+		protected function renderChart(array $data, $options = '') {
+			if (empty($data)) {
+				return '';
+			}
+
+			$id = sprintf($this->defaultChartId, uniqid());
+			$data = json_encode($data);
+
+			return sprintf($this->defaultChartTag, $id, $data, $options);
 		}
 
 	}

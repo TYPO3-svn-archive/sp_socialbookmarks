@@ -30,7 +30,7 @@
 
 		/**
 		 * Set configuration
-		 * 
+		 *
 		 * @param array $settings The TypoScript settings
 		 * @return void
 		 */
@@ -39,16 +39,11 @@
 
 		/**
 		 * Render the chart
-		 * 
-		 * @param array $values The rows and cols to show
-		 * @param string $x The attribute name for the X axis
-		 * @param string $y The attribtue name for the Y axis
-		 * @param string $xLabel Label for the X axis
-		 * @param string $yLabel Label for the Y axis
-		 * @param boolean $showLegend Show legend beside chart
+		 *
+		 * @param array $data The data to show
 		 * @return string The rendered chart
 		 */
-		public function render($values, $x = NULL, $y = NULL, $xLabel = '', $yLabel = '', $showLegend = FALSE);
+		public function render($data);
 
 	}
 ?>

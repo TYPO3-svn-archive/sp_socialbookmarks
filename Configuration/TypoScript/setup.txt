@@ -11,11 +11,20 @@ plugin.tx_spsocialbookmarks {
 		tinyServiceURL   = {$plugin.tx_spsocialbookmarks.settings.tinyServiceURL}
 
 		## Backend chart configuration
-		chart {
-			imageWidth     = {$plugin.tx_spsocialbookmarks.settings.chart.imageWidth}
-			imageHeight    = {$plugin.tx_spsocialbookmarks.settings.chart.imageHeight}
-			spaceBetween   = {$plugin.tx_spsocialbookmarks.settings.chart.spaceBetween}
-			stylesheetFile = {$plugin.tx_spsocialbookmarks.settings.chart.stylesheetFile}
+		charts {
+			stylesheet {
+				jqplot       = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/jquery.jqplot.css
+				bookmarks    = EXT:sp_socialbookmarks/Resources/Public/Stylesheet/Charts.css
+			}
+
+			javascript {
+				jquery       = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/jquery.min.js
+				jqplot1      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/jquery.jqplot.min.js
+				jqplot2      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/plugins/jqplot.barRenderer.min.js
+				jqplot3      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/plugins/jqplot.categoryAxisRenderer.min.js
+				jqplot4      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/plugins/jqplot.pointLabels.min.js
+				chart        = EXT:sp_socialbookmarks/Resources/Public/Javascript/Chart.js
+			}
 		}
 
 		## Generate url
