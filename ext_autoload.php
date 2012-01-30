@@ -5,7 +5,7 @@
 		'tx_spsocialbookmarks_chart_abstractchart'                     => $extensionClassesPath . 'Chart/AbstractChart.php',
 		'tx_spsocialbookmarks_chart_barchart'                          => $extensionClassesPath . 'Chart/BarChart.php',
 		'tx_spsocialbookmarks_chart_chartinterface'                    => $extensionClassesPath . 'Chart/ChartInterface.php',
-		'tx_spsocialbookmarks_chart_columnchart'                       => $extensionClassesPath . 'Chart/ColumnChart.php',
+		'tx_spsocialbookmarks_chart_piechart'                          => $extensionClassesPath . 'Chart/PieChart.php',
 		'tx_spsocialbookmarks_controller_abstractcontroller'           => $extensionClassesPath . 'Controller/AbstractController.php',
 		'tx_spsocialbookmarks_controller_chartcontroller'              => $extensionClassesPath . 'Controller/ChartController.php',
 		'tx_spsocialbookmarks_controller_bookmarkscontroller'          => $extensionClassesPath . 'Controller/BookmarksController.php',

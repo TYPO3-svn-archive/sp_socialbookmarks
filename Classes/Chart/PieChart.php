@@ -24,32 +24,23 @@
 	 ********************************************************************/
 
 	/**
-	 * Renderer for column chart
+	 * Renderer for pis chart
 	 */
-	class Tx_SpSocialbookmarks_Chart_ColumnChart extends Tx_SpSocialbookmarks_Chart_AbstractChart {
+	class Tx_SpSocialbookmarks_Chart_PieChart extends Tx_SpSocialbookmarks_Chart_AbstractChart {
 
 		/**
 		 * @var string
 		 */
 		protected $options = '
 			seriesDefaults:{
-				renderer: jQuery.jqplot.BarRenderer,
-				pointLabels: {
-					show: true,
-					location: \'e\',
-					edgeTolerance: -15
-				},
-				shadowAngle: 135,
+				renderer: jQuery.jqplot.PieRenderer,
 				rendererOptions: {
-					fillToZero: true,
-					barDirection: \'horizontal\'
+					showDataLabels: true
 				}
 			},
-			axes: {
-				yaxis: {
-					renderer: jQuery.jqplot.CategoryAxisRenderer,
-					ticks: %1$s
-				}
+			legend: {
+				show:true,
+				location: \'e\'
 			}
 		';
 
@@ -71,10 +62,12 @@
 				}
 			}
 
-			$data = array(array_values($bars));
-			$options = sprintf($this->options, json_encode(array_keys($bars)));
+			$data = array();
+			foreach ($bars as $key => $value) {
+				$data[] = array($key, $value);
+			}
 
-			return $this->renderChart($data, $options);
+			return $this->renderChart(array($data), $this->options);
 		}
 
 	}
