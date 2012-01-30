@@ -8,59 +8,45 @@
 		<languageKey index="default" type="array">
 			<label index="plugin.title">Social Bookmarks</label>
 			<label index="plugin.description">Adds a Social Bookmars bar to this page.</label>
-
 			<label index="module.title">Social Bookmarks Statistic</label>
 			<label index="mlang_tabs_tab">Bookmarks</label>
 			<label index="mlang_labels_tabdescr">Social Bookmarks Statistic</label>
-			<label index="title">Social Bookmarks Statistic</label>
-			<label index="title_chart_services">Services:</label>
-			<label index="title_chart_browsers">Browsers:</label>
-			<label index="title_chart_systems">Systems:</label>
+
 			<label index="period_all">All clicks ever made</label>
 			<label index="period_year">Clicks in last 365 days</label>
 			<label index="period_month">Clicks in last 30 days</label>
 			<label index="period_week">Clicks in last 7 days</label>
 			<label index="period_day">Clicks in last 24 hours</label>
-			<label index="error_page">Please select a page in pagetree first...</label>
 			<label index="mode_all">All pages</label>
 			<label index="mode_this">This page</label>
-			<label index="mode_additional">Additional information</label>
-			<label index="clicks">Clicks</label>
-			<label index="table_name">Name</label>
-			<label index="table_count">Clicks</label>
-			<label index="table_browsers">Browsers</label>
-			<label index="table_systems">Systems</label>
-			<label index="showBrowsers">Show browsers</label>
-			<label index="showSystems">Show systems</label>
+
+			<label index="title">Social Bookmarks</label>
+			<label index="title_services">Services</label>
+			<label index="title_browsers">Browsers</label>
+			<label index="title_systems">Systems</label>
+			<label index="select_page">Please select a page...</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="plugin.title">Social Bookmarks</label>
 			<label index="plugin.description">Fügt der aktuellen Seite ein Social-Bookmarks Leiste hinzu.</label>
-
 			<label index="module.title">Social Bookmarks Statistik</label>
 			<label index="module.title">Social Bookmarks Statistik</label>
 			<label index="mlang_tabs_tab">Bookmarks</label>
 			<label index="mlang_labels_tabdescr">Social Bookmarks Statistik</label>
-			<label index="title">Social Bookmarks Statistik</label>
-			<label index="title_chart_services">Dienste:</label>
-			<label index="title_chart_browsers">Browser:</label>
-			<label index="title_chart_systems">Systeme:</label>
+
 			<label index="period_all">Alle bisher gemachten Klicks</label>
 			<label index="period_year">Klicks in den letzten 356 Tagen</label>
 			<label index="period_month">Klicks in den letzten 30 Tagen</label>
 			<label index="period_week">Klicks in den letzten 7 Tagen</label>
 			<label index="period_day">Klicks in den letzten 24 Stunden</label>
-			<label index="error_page">Bitte wählen Sie zuvor eine Seite im Seitenbaum aus...</label>'
 			<label index="mode_all">Alle Seiten</label>
 			<label index="mode_this">Diese Seite</label>
-			<label index="mode_additional">Weitere Informationen</label>
-			<label index="clicks">Klicks</label>
-			<label index="table_name">Name</label>
-			<label index="table_count">Klicks</label>
-			<label index="table_browsers">Browser</label>
-			<label index="table_systems">Systeme</label>
-			<label index="showBrowsers">Browser anzeigen</label>
-			<label index="showSystems">Systeme anzeigen</label>
+
+			<label index="title">Social Bookmarks</label>
+			<label index="title_services">Dienste</label>
+			<label index="title_browsers">Browser</label>
+			<label index="title_systems">Systeme</label>
+			<label index="select_page">Bitte eine Seite auswählen...</label>
 		</languageKey>
 	</data>
 </T3locallang>

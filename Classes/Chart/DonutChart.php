@@ -24,16 +24,16 @@
 	 ********************************************************************/
 
 	/**
-	 * Renderer for pie chart
+	 * Renderer for donut chart
 	 */
-	class Tx_SpSocialbookmarks_Chart_PieChart extends Tx_SpSocialbookmarks_Chart_AbstractChart {
+	class Tx_SpSocialbookmarks_Chart_DonutChart extends Tx_SpSocialbookmarks_Chart_AbstractChart {
 
 		/**
 		 * @var string
 		 */
 		protected $options = '
 			seriesDefaults:{
-				renderer: jQuery.jqplot.PieRenderer,
+				renderer: jQuery.jqplot.DonutRenderer,
 				rendererOptions: {
 					showDataLabels: true,
 					fill: true,
@@ -42,7 +42,7 @@
 					lineWidth: 1,
 					padding: 15,
 					dataLabels: \'value\',
-					dataLabelPositionFactor: 1.1
+					dataLabelPositionFactor: 1.2
 				}
 			},
 			legend: {

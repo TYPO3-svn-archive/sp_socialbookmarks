@@ -24,37 +24,45 @@
 	 ********************************************************************/
 
 	/**
-	 * Renderer for pie chart
+	 * Renderer for column chart
 	 */
-	class Tx_SpSocialbookmarks_Chart_PieChart extends Tx_SpSocialbookmarks_Chart_AbstractChart {
+	class Tx_SpSocialbookmarks_Chart_ColumnChart extends Tx_SpSocialbookmarks_Chart_AbstractChart {
 
 		/**
 		 * @var string
 		 */
 		protected $options = '
-			seriesDefaults:{
-				renderer: jQuery.jqplot.PieRenderer,
+			seriesColors: [\'#69A550\'],
+			seriesDefaults: {
+				renderer: jQuery.jqplot.BarRenderer,
+				pointLabels: {
+					show: false
+				},
 				rendererOptions: {
-					showDataLabels: true,
-					fill: true,
-					startAngle: -90,
-					sliceMargin: 5,
-					lineWidth: 1,
-					padding: 15,
-					dataLabels: \'value\',
-					dataLabelPositionFactor: 1.1
+					fillToZero: true,
+					barWidth: 25,
+					shadowDepth: 3
 				}
 			},
-			legend: {
-				show:true,
-				location: \'e\'
+			axes: {
+				xaxis: {
+					renderer: jQuery.jqplot.CategoryAxisRenderer,
+					ticks: %1$s
+				}
 			},
 			grid: {
-				drawGridLines: false,
+				gridLineColor: \'#B9B9B9\',
 				background: \'#F8F8F8\',
-				borderColor: \'#F8F8F8\',
-				borderWidth: 0,
+				borderColor: \'#515151\',
+				borderWidth: 0.5,
 				shadow: false
+			},
+			highlighter: {
+				show: true,
+				showMarker: false,
+				sizeAdjust: 7.5,
+				tooltipLocation: \'n\',
+				tooltipAxes: \'y\'
 			}
 		';
 
@@ -76,12 +84,12 @@
 				}
 			}
 
-			$data = array();
-			foreach ($bars as $key => $value) {
-				$data[] = array($key, $value);
-			}
+			arsort($bars);
 
-			return $this->renderChart(array($data), $this->options);
+			$data = array(array_values($bars));
+			$options = sprintf($this->options, json_encode(array_keys($bars)));
+
+			return $this->renderChart($data, $options);
 		}
 
 	}

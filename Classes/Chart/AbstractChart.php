@@ -37,11 +37,11 @@
 		 * @var string
 		 */
 		protected $defaultChartTag = '
-			<div class="spsocialbookmarks-chart" id="%1$s"></div>
+			<div class="spsocialbookmarks-chart spsocialbookmarks-chart-%1$s" id="%2$s"></div>
 			<script type="text/javascript">
-				charts[\'%1$s\'] = {
-					data:    %2$s,
-					options: {%3$s}
+				charts[\'%2$s\'] = {
+					data: %3$s,
+					options: {%4$s}
 				};
 			</script>
 		';
@@ -75,10 +75,11 @@
 				return '';
 			}
 
+			$type = str_replace(array('Tx_SpSocialbookmarks_Chart_', 'Chart'), '', get_class($this));
 			$id = sprintf($this->defaultChartId, uniqid());
 			$data = json_encode($data);
 
-			return sprintf($this->defaultChartTag, $id, $data, $options);
+			return sprintf($this->defaultChartTag, strtolower($type), $id, $data, $options);
 		}
 
 	}

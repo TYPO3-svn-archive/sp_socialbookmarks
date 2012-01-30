@@ -22,7 +22,9 @@
 	if (empty($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][$_EXTKEY]['chartRenderers'])) {
 		$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][$_EXTKEY]['chartRenderers'] = array();
 	}
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][$_EXTKEY]['chartRenderers']['bar'] = 'Tx_SpSocialbookmarks_Chart_BarChart';
-	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][$_EXTKEY]['chartRenderers']['pie'] = 'Tx_SpSocialbookmarks_Chart_PieChart';
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][$_EXTKEY]['chartRenderers']['bar']    = 'Tx_SpSocialbookmarks_Chart_BarChart';
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][$_EXTKEY]['chartRenderers']['column'] = 'Tx_SpSocialbookmarks_Chart_ColumnChart';
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][$_EXTKEY]['chartRenderers']['donut']  = 'Tx_SpSocialbookmarks_Chart_DonutChart';
+	$GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][$_EXTKEY]['chartRenderers']['pie']    = 'Tx_SpSocialbookmarks_Chart_PieChart';
 
 ?>

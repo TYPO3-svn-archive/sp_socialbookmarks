@@ -4,18 +4,21 @@
 
 <f:section name="main">
 
-	<h2>Social Bookmarks Click Stats</h2>
+	<h2><f:translate key="title" /></h2>
 	<div style="padding-top: 5px;"></div>
 
-	<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-service" />&nbsp;Services</h3>
-	<bookmarks:chart type="pie">{services}</bookmarks:chart>
+	<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-service" />&nbsp;<f:translate key="title_services" /></h3>
+	<bookmarks:chart type="donut">{services}</bookmarks:chart>
+	<br class="clear" />
 
 	<div style="padding-top: 20px;"></div>
-	<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-browser" />&nbsp;Browsers</h3>
-	<bookmarks:chart type="bar">{browsers}</bookmarks:chart>
+	<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-browser" />&nbsp;<f:translate key="title_browsers" /></h3>
+	<bookmarks:chart type="pie">{browsers}</bookmarks:chart>
+	<br class="clear" />
 
 	<div style="padding-top: 20px;"></div>
-	<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-system" />&nbsp;Systems</h3>
-	<bookmarks:chart type="bar">{systems}</bookmarks:chart>
+	<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-system" />&nbsp;<f:translate key="title_systems" /></h3>
+	<bookmarks:chart type="column">{systems}</bookmarks:chart>
+	<br class="clear" />
 
 </f:section>

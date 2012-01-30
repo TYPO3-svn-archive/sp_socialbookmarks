@@ -32,25 +32,38 @@
 		 * @var string
 		 */
 		protected $options = '
-			seriesColors: [\'#69A550\'], 
-			seriesDefaults:{
+			seriesColors: [\'#69A550\'],
+			seriesDefaults: {
 				renderer: jQuery.jqplot.BarRenderer,
 				pointLabels: {
-					show: true,
-					location: \'n\',
-					edgeTolerance: -15
+					show: false
 				},
 				rendererOptions: {
+					barDirection: \'horizontal\',
 					fillToZero: true,
-					barWidth: 25,
+					barWidth: 15,
 					shadowDepth: 3
-				}
+				},
+				shadowAngle: 135
 			},
 			axes: {
-				xaxis: {
-					renderer: jQuery.jqplot.CategoryAxisRenderer,
-					ticks: %1$s
+				yaxis: {
+					renderer: jQuery.jqplot.CategoryAxisRenderer
 				}
+			},
+			grid: {
+				gridLineColor: \'#B9B9B9\',
+				background: \'#F8F8F8\',
+				borderColor: \'#515151\',
+				borderWidth: 0.5,
+				shadow: false
+			},
+			highlighter: {
+				show: true,
+				showMarker: false,
+				sizeAdjust: 7.5,
+				tooltipLocation: \'e\',
+				tooltipAxes: \'x\'
 			}
 		';
 
@@ -72,10 +85,15 @@
 				}
 			}
 
-			$data = array(array_values($bars));
-			$options = sprintf($this->options, json_encode(array_keys($bars)));
+			krsort($bars);
 
-			return $this->renderChart($data, $options);
+			$data = array();
+			foreach ($bars as $key => $value) {
+				$data[] = array($value, $key);
+			}
+			$data = array($data);
+
+			return $this->renderChart($data, $this->options);
 		}
 
 	}

@@ -120,7 +120,7 @@
 		 * @return void
 		 */
 		public function listAction() {
-			
+
 		}
 
 
@@ -143,6 +143,18 @@
 				array('Bluedot',   84),
 				array('Bluedot',   200),
 				array('Delicious', 480),
+				array('Delicidous', 480),
+				array('Deliscious', 480),
+				array('Delicdious', 480),
+				array('Delsicious', 480),
+				array('Delsicious', 480),
+				array('Delsicfious', 480),
+				array('Delicihous', 480),
+				array('Delficious', 480),
+				array('Delicious', 480),
+				array('Deliscious', 480),
+				array('Delgicious', 4860),
+				array('Deliecious', 4580),
 			);
 
 			$this->view->assign('services', $testData);
