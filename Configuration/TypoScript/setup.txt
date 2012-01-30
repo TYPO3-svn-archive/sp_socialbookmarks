@@ -1,5 +1,5 @@
 # ======================================================================
-# Default configuration
+# Frontend configuration
 # ======================================================================
 plugin.tx_spsocialbookmarks {
 	## General settings
@@ -9,24 +9,6 @@ plugin.tx_spsocialbookmarks {
 		forceSSL         = {$plugin.tx_spsocialbookmarks.settings.forceSSL}
 		useTinyURL       = {$plugin.tx_spsocialbookmarks.settings.useTinyURL}
 		tinyServiceURL   = {$plugin.tx_spsocialbookmarks.settings.tinyServiceURL}
-
-		## Backend chart configuration
-		charts {
-			stylesheet {
-				jqplot       = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/jquery.jqplot.css
-				bookmarks    = EXT:sp_socialbookmarks/Resources/Public/Stylesheet/Charts.css
-			}
-
-			javascript {
-				jquery       = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/jquery.min.js
-				jqplot1      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/jquery.jqplot.min.js
-				jqplot2      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/plugins/jqplot.barRenderer.min.js
-				jqplot3      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/plugins/jqplot.pieRenderer.min.js
-				jqplot4      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/plugins/jqplot.categoryAxisRenderer.min.js
-				jqplot5      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/plugins/jqplot.pointLabels.min.js
-				chart        = EXT:sp_socialbookmarks/Resources/Public/Javascript/Chart.js
-			}
-		}
 
 		## Generate url
 		pageUrl = TEXT
@@ -68,7 +50,39 @@ plugin.tx_spsocialbookmarks {
 
 
 # ======================================================================
-# Use tt_news title if we are in news detail view
+# Backend configuration
+# ======================================================================
+module.tx_spsocialbookmarks {
+	## General settings
+	settings {
+		## Stylesheets
+		stylesheet {
+			jqplot       = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/jquery.jqplot.css
+			bookmarks    = EXT:sp_socialbookmarks/Resources/Public/Stylesheet/Charts.css
+		}
+
+		## JavaScript libraries
+		javascript {
+			jquery       = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/jquery.min.js
+			jqplot1      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/jquery.jqplot.min.js
+			jqplot2      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/plugins/jqplot.barRenderer.min.js
+			jqplot3      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/plugins/jqplot.pieRenderer.min.js
+			jqplot4      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/plugins/jqplot.categoryAxisRenderer.min.js
+			jqplot5      = EXT:sp_socialbookmarks/Resources/Public/Javascript/jqPlot/plugins/jqplot.pointLabels.min.js
+			chart        = EXT:sp_socialbookmarks/Resources/Public/Javascript/Chart.js
+		}
+	}
+
+	## Storage settings
+	persistence < plugin.tx_spsocialbookmarks.persistence
+
+	## View specific settings
+	view < plugin.tx_spsocialbookmarks.view
+}
+
+
+# ======================================================================
+# Use news title in detail view
 # ======================================================================
 [globalVar = GP:tx_ttnews|tt_news > 0]
 	plugin.tx_spsocialbookmarks.settings.pageTitle >
@@ -91,7 +105,7 @@ plugin.tx_spsocialbookmarks {
 
 
 # ======================================================================
-# Include stylesheet
+# Include stylesheet for plugin
 # ======================================================================
 page.includeCSS.sp_socialbookmarks = EXT:sp_socialbookmarks/Resources/Public/Stylesheet/Bookmarks.css
 

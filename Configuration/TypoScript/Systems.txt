@@ -108,3 +108,6 @@ plugin.tx_spsocialbookmarks.settings.systems {
 		image   = EXT:sp_socialbookmarks/res/images/systems/sunos.png
 	}
 }
+
+## Module configuration
+module.tx_spsocialbookmarks.settings.systems < plugin.tx_spsocialbookmarks.settings.systems

@@ -39,11 +39,6 @@
 		protected $pageId = 0;
 
 		/**
-		 * @var array
-		 */
-		protected $settings = array();
-
-		/**
 		 * @var Tx_SpSocialbookmarks_Domain_Repository_VisitRepository
 		 */
 		protected $visitRepository;
@@ -89,21 +84,18 @@
 		 */
 		protected function initializeAction() {
 				// Pre-parse TypoScript setup
-			$this->pageId   = Tx_SpSocialbookmarks_Utility_Backend::getPageId();
-			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::getSetupForPid($this->pageId, 'plugin.tx_spsocialbookmarks.settings');
 			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($this->settings);
-			$chartSettings  = (!empty($this->settings['charts']) ? $this->settings['charts'] : array());
 
 				// Add stylesheets
-			if (!empty($chartSettings['stylesheet']) && is_array($chartSettings['stylesheet'])) {
-				foreach($chartSettings['stylesheet'] as $file) {
+			if (!empty($this->settings['stylesheet']) && is_array($this->settings['stylesheet'])) {
+				foreach($this->settings['stylesheet'] as $file) {
 					$this->pageRenderer->addCssFile($this->getRelativePath($file));
 				}
 			}
 
 				// Add javascript libraries
-			if (!empty($chartSettings['javascript']) && is_array($chartSettings['javascript'])) {
-				$libraries = array_reverse($chartSettings['javascript']);
+			if (!empty($this->settings['javascript']) && is_array($this->settings['javascript'])) {
+				$libraries = array_reverse($this->settings['javascript']);
 				foreach($libraries as $key => $file) {
 					$file = $this->getRelativePath($file);
 					$this->pageRenderer->addJsLibrary($key, $file, 'text/javascript', FALSE, TRUE);

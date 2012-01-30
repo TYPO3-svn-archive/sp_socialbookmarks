@@ -103,3 +103,6 @@ plugin.tx_spsocialbookmarks.settings.browsers {
 		image   = EXT:sp_socialbookmarks/res/images/browsers/crawler.png
 	}
 }
+
+## Module configuration
+module.tx_spsocialbookmarks.settings.browsers < plugin.tx_spsocialbookmarks.settings.browsers

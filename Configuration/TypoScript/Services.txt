@@ -243,3 +243,6 @@ plugin.tx_spsocialbookmarks.settings.services {
 		image   = EXT:sp_socialbookmarks/Resources/Public/Images/Services/yiggit.png
 	}
 }
+
+## Module configuration
+module.tx_spsocialbookmarks.settings.services < plugin.tx_spsocialbookmarks.settings.services
