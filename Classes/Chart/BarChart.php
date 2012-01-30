@@ -32,6 +32,7 @@
 		 * @var string
 		 */
 		protected $options = '
+			seriesColors: [\'#69A550\'], 
 			seriesDefaults:{
 				renderer: jQuery.jqplot.BarRenderer,
 				pointLabels: {
@@ -40,7 +41,9 @@
 					edgeTolerance: -15
 				},
 				rendererOptions: {
-					fillToZero: true
+					fillToZero: true,
+					barWidth: 25,
+					shadowDepth: 3
 				}
 			},
 			axes: {
