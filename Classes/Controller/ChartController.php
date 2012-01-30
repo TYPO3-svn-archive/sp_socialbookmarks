@@ -83,8 +83,18 @@
 		 * @return void
 		 */
 		protected function initializeAction() {
+			$this->pageId = Tx_SpSocialbookmarks_Utility_Backend::getPageId();
+
+				// Forward to list action if page id is empty
+			$action = $this->request->getControllerActionName();
+			if (empty($this->pageId) && $action !== 'list') {
+				$this->forward('list');
+			}
+
 				// Pre-parse TypoScript setup
-			$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($this->settings);
+			if (!empty($this->settings) && is_array($this->settings)) {
+				$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($this->settings);
+			}
 
 				// Add stylesheets
 			if (!empty($this->settings['stylesheet']) && is_array($this->settings['stylesheet'])) {
@@ -101,6 +111,16 @@
 					$this->pageRenderer->addJsLibrary($key, $file, 'text/javascript', FALSE, TRUE);
 				}
 			}
+		}
+
+
+		/**
+		 * Display a list of bookmarks pages
+		 *
+		 * @return void
+		 */
+		public function listAction() {
+			
 		}
 
 
