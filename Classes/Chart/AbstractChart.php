@@ -75,11 +75,12 @@
 				return '';
 			}
 
-			$type = str_replace(array('Tx_SpSocialbookmarks_Chart_', 'Chart'), '', get_class($this));
+			$type = substr(strtolower(get_class($this)), 0, -5);
+			$type = substr($type, strrpos($type, '_') + 1);
 			$id = sprintf($this->defaultChartId, uniqid());
 			$data = json_encode($data);
 
-			return sprintf($this->defaultChartTag, strtolower($type), $id, $data, $options);
+			return sprintf($this->defaultChartTag, $type, $id, $data, $options);
 		}
 
 	}
