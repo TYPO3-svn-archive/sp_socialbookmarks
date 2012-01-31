@@ -2,7 +2,7 @@
 <T3locallang>
 	<meta type="array">
 		<type>module</type>
-		<description>Language labels for the torr_template extension</description>
+		<description>Language labels for the sp_socialbookmarks extension</description>
 	</meta>
 	<data type="array">
 		<languageKey index="default" type="array">
