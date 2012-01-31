@@ -54,11 +54,10 @@
 
 
 		/**
-		 * Processes a general request. The result can be returned by altering the given response.
+		 * Process a request
 		 *
 		 * @param Tx_Extbase_MVC_RequestInterface $request The request object
-		 * @param Tx_Extbase_MVC_ResponseInterface $response The response, modified by this handler
-		 * @throws Tx_Extbase_MVC_Exception_UnsupportedRequestType if the controller doesn't support the current request type
+		 * @param Tx_Extbase_MVC_ResponseInterface $response The response
 		 * @return void
 		 */
 		public function processRequest(Tx_Extbase_MVC_RequestInterface $request, Tx_Extbase_MVC_ResponseInterface $response) {
