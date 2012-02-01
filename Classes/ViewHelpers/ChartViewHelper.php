@@ -29,33 +29,9 @@
 	class Tx_SpSocialbookmarks_ViewHelpers_ChartViewHelper extends Tx_Fluid_Core_ViewHelper_AbstractViewHelper {
 
 		/**
-		 * @var string
-		 */
-		protected $extensionKey = 'sp_socialbookmarks';
-
-		/**
-		 * @var array
-		 */
-		protected $settings = array();
-
-		/**
 		 * @var Tx_Extbase_Object_ObjectManager
 		 */
 		protected $objectManager;
-
-
-		/**
-		 * @param Tx_Extbase_Configuration_ConfigurationManager $configurationManager
-		 * @return void
-		 */
-		public function injectConfigurationManager(Tx_Extbase_Configuration_ConfigurationManager $configurationManager) {
-			$settings = $configurationManager->getConfiguration(
-				Tx_Extbase_Configuration_ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS
-			);
-			if (!empty($settings)) {
-				$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($settings);
-			}
-		}
 
 
 		/**
@@ -82,27 +58,13 @@
 				throw new Exception('Given data is not an array');
 			}
 
-				// Find renderers
-			if (empty($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][$this->extensionKey]['chartRenderers'])
-			 || !is_array($GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][$this->extensionKey]['chartRenderers'])) {
-				throw new Exception('No chart renderers definined');
-			}
-			$renderers = $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS'][$this->extensionKey]['chartRenderers'];
-
-				// Make an instance of the selected chart renderer
-			if (empty($type) || empty($renderers[$type])) {
-				throw new Exception('No chart renderer found for type "' . $type . '"');
-			}
-			$renderer = $this->objectManager->get($renderers[$type]);
-			if (empty($renderer) || !$renderer instanceof Tx_SpSocialbookmarks_Chart_ChartInterface) {
-				throw new Exception('Class "' . $renderers[$type] . '" is a not valid chart renderer');
+				// Use sp_charts to render
+			if (t3lib_extMgm::isLoaded('sp_charts')) {
+				$renderService = $this->objectManager->get('Tx_SpCharts_Service_ChartService');
+				return $renderService->renderChart($type, $data);
 			}
 
-				// Set configuration
-			$renderer->setConfiguration($this->settings);
-
-				// Render...
-			return $renderer->render($data);
+			return '';
 		}
 
 	}

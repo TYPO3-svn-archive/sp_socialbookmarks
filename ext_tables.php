@@ -75,7 +75,7 @@
 			$identifier,
 			'',
 			array(
-				'Chart' => 'show,list',
+				'Backend' => 'show,list',
 			),
 			array(
 				'access' => 'user,group',

@@ -24,9 +24,9 @@
 	 ********************************************************************/
 
 	/**
-	 * Controller for the visits chart
+	 * Controller for the backend module
 	 */
-	class Tx_SpSocialbookmarks_Controller_ChartController extends Tx_SpSocialbookmarks_Controller_AbstractController {
+	class Tx_SpSocialbookmarks_Controller_BackendController extends Tx_SpSocialbookmarks_Controller_AbstractController {
 
 		/**
 		 * @var string
@@ -95,21 +95,12 @@
 				$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($this->settings);
 			}
 
-				// Add stylesheets
-			if (!empty($this->settings['stylesheet']) && is_array($this->settings['stylesheet'])) {
-				foreach($this->settings['stylesheet'] as $file) {
-					$this->pageRenderer->addCssFile($this->getRelativePath($file));
-				}
-			}
 
-				// Add javascript libraries
-			if (!empty($this->settings['javascript']) && is_array($this->settings['javascript'])) {
-				$libraries = array_reverse($this->settings['javascript']);
-				foreach($libraries as $key => $file) {
-					$file = $this->getRelativePath($file);
-					$this->pageRenderer->addJsLibrary($key, $file, 'text/javascript', FALSE, TRUE);
-				}
-			}
+			//////////////////////////////////////////////////////////////////
+			// TODO: Load JS files (maybe a method in service)
+			//////////////////////////////////////////////////////////////////
+
+
 		}
 
 
@@ -135,31 +126,19 @@
 			$timestamp = $this->getTimestamp($period);
 			//$visits = $this->visitRepository->getByPidAndCrdate($pid, $timestamp);
 
-			$testData = array(
-				array('AddThis',   180),
-				array('AddThis',   112),
-				array('Ask',       684),
-				array('Bluedot',   84),
-				array('Bluedot',   200),
-				array('Delicious', 480),
-				array('Delicidous', 480),
-				array('Deliscious', 480),
-				array('Delicdious', 480),
-				array('Delsicious', 480),
-				array('Delsicious', 480),
-				array('Delsicfious', 480),
-				array('Delicihous', 480),
-				array('Delficious', 480),
-				array('Delicious', 480),
-				array('Deliscious', 480),
-				array('Delgicious', 4860),
-				array('Deliecious', 4580),
-			);
+			$testData = array(array(
+				array('Firefox',           380),
+				array('Internet Explorer', 312),
+				array('Google Chrome',     484),
+				array('Safari',            284),
+				array('Opera',             200),
+			));
 
 			$this->view->assign('services', $testData);
 			$this->view->assign('systems',  $testData);
 			$this->view->assign('browsers', $testData);
 			$this->view->assign('settings', $this->settings);
+			$this->view->assign('chartsLoaded', t3lib_extMgm::isLoaded('sp_charts'));
 		}
 
 
