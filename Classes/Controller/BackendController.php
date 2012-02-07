@@ -94,13 +94,6 @@
 			if (!empty($this->settings) && is_array($this->settings)) {
 				$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($this->settings);
 			}
-
-
-			//////////////////////////////////////////////////////////////////
-			// TODO: Load JS files (maybe a method in service)
-			//////////////////////////////////////////////////////////////////
-
-
 		}
 
 
@@ -127,18 +120,18 @@
 			//$visits = $this->visitRepository->getByPidAndCrdate($pid, $timestamp);
 
 			$testData = array(array(
-				array('Firefox',           380),
-				array('Internet Explorer', 312),
-				array('Google Chrome',     484),
-				array('Safari',            284),
-				array('Opera',             200),
+				'Firefox'           => 380,
+				'Internet Explorer' => 312,
+				'Google Chrome'     => 484,
+				'Safari'            => 284,
+				'Opera'             => 200,
 			));
 
 			$this->view->assign('services', $testData);
 			$this->view->assign('systems',  $testData);
 			$this->view->assign('browsers', $testData);
 			$this->view->assign('settings', $this->settings);
-			$this->view->assign('chartsLoaded', t3lib_extMgm::isLoaded('sp_charts'));
+			$this->view->assign('displayCharts', FALSE /*t3lib_extMgm::isLoaded('sp_charts')*/);
 		}
 
 
@@ -170,24 +163,6 @@
 				default :
 					return 0;
 			}
-		}
-
-
-		/**
-		 * Get relative path
-		 *
-		 * @param string $fileName The file name
-		 * @return string Relative path
-		 */
-		protected function getRelativePath($fileName) {
-			if (empty($fileName)) {
-				return '';
-			}
-
-			$backPath = $this->doc->backpath . '../';
-			$fileName = t3lib_div::getFileAbsFileName($fileName);
-
-			return str_replace(PATH_site, $backPath, $fileName);
 		}
 
 	}

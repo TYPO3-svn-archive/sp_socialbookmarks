@@ -17,10 +17,6 @@ plugin.tx_spsocialbookmarks {
 
 		# cat=Social Bookmarks/settings/1040; type=string; label=Tiny Service URL: URL of the tiny service
 		tinyServiceURL = http://tinyurl.com/api-create.php?url=###URL###
-
-		chart {
-
-		}
 	}
 
 	persistence {

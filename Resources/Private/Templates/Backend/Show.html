@@ -4,26 +4,42 @@
 
 <f:section name="main">
 
-	<h2><f:translate key="title" /></h2>
-	<div style="padding-top: 5px;"></div>
+	<!-- Services -->
+	<f:if condition="{displayCharts}">
+		<f:then>
+			<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-service" />&nbsp;<f:translate key="title_services" /></h3>
+			<bookmarks:chart type="column">{services}</bookmarks:chart>
+			<br class="clear" />
+		</f:then>
+		<f:else>
+			<f:render partial="Table" arguments="{data:services.0, title:'title_services', icon:'service'}" />
+		</f:else>
+	</f:if>
 
-	<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-service" />&nbsp;<f:translate key="title_services" /></h3>
-	<bookmarks:chart type="donut">{services}</bookmarks:chart>
-	<br class="clear" />
+	<!-- Browsers -->
+	<f:if condition="{displayCharts}">
+		<f:then>
+			<div style="padding-top: 20px;"></div>
+			<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-browser" />&nbsp;<f:translate key="title_browsers" /></h3>
+			<bookmarks:chart type="donut">{browsers}</bookmarks:chart>
+			<br class="clear" />
+		</f:then>
+		<f:else>
+			<f:render partial="Table" arguments="{data:browsers.0, title:'title_browsers', icon:'browser'}" />
+		</f:else>
+	</f:if>
 
-	<div style="padding-top: 20px;"></div>
-	<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-browser" />&nbsp;<f:translate key="title_browsers" /></h3>
-	<bookmarks:chart type="pie">{browsers}</bookmarks:chart>
-	<br class="clear" />
-
-	<div style="padding-top: 20px;"></div>
-	<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-system" />&nbsp;<f:translate key="title_systems" /></h3>
-	<bookmarks:chart type="column">{systems}</bookmarks:chart>
-	<br class="clear" />
-
-	<div style="padding-top: 20px;"></div>
-	<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-system" />&nbsp;<f:translate key="title_systems" /></h3>
-	<bookmarks:chart type="bar">{systems}</bookmarks:chart>
-	<br class="clear" />
+	<!-- Systems -->
+	<f:if condition="{displayCharts}">
+		<f:then>
+			<div style="padding-top: 20px;"></div>
+			<h3 class="uppercase"><bookmarks:spriteIcon name="spsocialbookmarks-system" />&nbsp;<f:translate key="title_systems" /></h3>
+			<bookmarks:chart type="donut">{systems}</bookmarks:chart>
+			<br class="clear" />
+		</f:then>
+		<f:else>
+			<f:render partial="Table" arguments="{data:systems.0, title:'title_systems', icon:'system'}" />
+		</f:else>
+	</f:if>
 
 </f:section>

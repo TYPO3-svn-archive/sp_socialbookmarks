@@ -46,22 +46,23 @@
 		/**
 		 * Renders a chart
 		 *
-		 * @param array $data The rows and cols to show
+		 * @param array $sets The sets of lines to render
 		 * @param string $type The type of chart to render
+		 * @param array $configuration Configuration for the chart renderer
 		 * @return string The rendered chart
 		 */
-		public function render($data = NULL, $type = 'bar') {
-			if ($data === NULL) {
-				$data = $this->renderChildren();
+		public function render($sets = NULL, $type = 'bar', $configuration = array()) {
+			if ($sets === NULL) {
+				$sets = $this->renderChildren();
 			}
-			if (!is_array($data) && !$data instanceof ArrayAccess) {
-				throw new Exception('Given data is not an array');
+			if (!is_array($configuration)) {
+				$configuration = array();
 			}
 
 				// Use sp_charts to render
 			if (t3lib_extMgm::isLoaded('sp_charts')) {
-				$renderService = $this->objectManager->get('Tx_SpCharts_Service_ChartService');
-				return $renderService->renderChart($type, $data);
+				$chartService = $this->objectManager->get('Tx_SpCharts_Service_ChartService');
+				return $chartService->renderChart($sets, $type, $configuration);
 			}
 
 			return '';

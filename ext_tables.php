@@ -67,27 +67,21 @@
 		}
 	");
 
-	if (TYPO3_MODE == 'BE') {
-			// Add charts module to backend
-		Tx_Extbase_Utility_Extension::registerModule(
-			$_EXTKEY,
-			'web',
-			$identifier,
-			'',
-			array(
-				'Backend' => 'show,list',
-			),
-			array(
-				'access' => 'user,group',
-				'icon'   => 'EXT:' . $_EXTKEY . '/ext_icon.gif',
-				'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang.xml',
-				'navigationComponentId' => 'typo3-pagetree',
-			)
-		);
-
-			// Add sprite icons
-		$icons = require(t3lib_extMgm::extPath($_EXTKEY)  . 'ext_icons.php');
-		t3lib_SpriteManager::addSingleIcons($icons, str_replace('_', '', $_EXTKEY));
-	}
+		// Add module to backend list
+	Tx_Extbase_Utility_Extension::registerModule(
+		$_EXTKEY,
+		'web',
+		$identifier,
+		'',
+		array(
+			'Backend' => 'show,list',
+		),
+		array(
+			'access' => 'user,group',
+			'icon'   => 'EXT:' . $_EXTKEY . '/ext_icon.gif',
+			'labels' => 'LLL:EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang.xml',
+			'navigationComponentId' => 'typo3-pagetree',
+		)
+	);
 
 ?>

@@ -25,6 +25,9 @@
 			<label index="title_browsers">Browsers</label>
 			<label index="title_systems">Systems</label>
 			<label index="select_page">Please select a page...</label>
+
+			<label index="table_header_name">Name:</label>
+			<label index="table_header_count">Count:</label>
 		</languageKey>
 		<languageKey index="de" type="array">
 			<label index="plugin.title">Social Bookmarks</label>
@@ -47,6 +50,9 @@
 			<label index="title_browsers">Browser</label>
 			<label index="title_systems">Systeme</label>
 			<label index="select_page">Bitte eine Seite auswählen...</label>
+
+			<label index="table_header_name">Name:</label>
+			<label index="table_header_count">Anzahl:</label>
 		</languageKey>
 	</data>
 </T3locallang>

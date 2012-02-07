@@ -1,0 +1,32 @@
+{namespace bookmarks=Tx_SpSocialbookmarks_ViewHelpers}
+
+<f:if condition="{data}">
+	<table border="0" cellpadding="0" cellspacing="0" class="typo3-dblist">
+		<tbody>
+			<tr class="c-table-row-spacer">
+				<td nowrap="nowrap" class="col-icon" width="20"><img src="clear.gif" width="1" height="8" alt=""></td>
+				<td nowrap="nowrap" class="" width="40%"></td>
+				<td nowrap="nowrap" class=""></td>
+				<td nowrap="nowrap" class=""></td>
+			</tr>
+			<tr class="t3-row-header">
+				<td nowrap="nowrap" class="col-icon"></td>
+				<td nowrap="nowrap" class="" colspan="3"><span class="c-table"><f:translate key="{title}" /></span> (<f:count subject="{data}" />)</td>
+			</tr>
+			<tr class="c-headLine">
+				<td nowrap="nowrap" class="col-icon"></td>
+				<td nowrap="nowrap" class="col-title"><strong><f:translate key="table_header_name" /></strong></td>
+				<td nowrap="nowrap" class="col-title"><strong><f:translate key="table_header_count" /></strong></td>
+				<td nowrap="nowrap" class=""></td>
+			</tr>
+			<f:for each="{data}" as="value" key="key" iteration="iterator">
+				<tr class="db_list_normal {f:if(condition: iterator.isFirst, then: 'firstcol')}{f:if(condition: iterator.isLast, then: 'lastcol')}">
+					<td nowrap="nowrap" class="col-icon"><bookmarks:spriteIcon name="spsocialbookmarks-{icon}" /></td>
+					<td nowrap="nowrap" class="col-title">{key}</td>
+					<td nowrap="nowrap" class="col-title">{value}</td>
+					<td nowrap="nowrap" class=""></td>
+				</tr>
+			</f:for>
+		</tbody>
+	</table>
+</f:if>
