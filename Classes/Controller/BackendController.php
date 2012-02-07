@@ -100,6 +100,19 @@
 			if (!empty($this->settings['disableCharts'])) {
 				$this->displayCharts = FALSE;
 			}
+
+				// Override default attributes in chart service (singleton)
+			if ($this->displayCharts) {
+				$chartService = $this->objectManager->get('Tx_SpCharts_Service_ChartService');
+				$chartService->setPageRenderer($this->pageRenderer);
+				$chartService->setConfiguration($this->settings);
+			}
+
+				// Set default styles
+			$setup = Tx_SpCharts_Utility_TypoScript::getSetupForPid($pageId, 'module.tx_spsocialbookmarks');
+			if (!empty($setup['_CSS_DEFAULT_STYLE'])) {
+				$this->pageRenderer->addCssInlineBlock('spsocialbookmarks', $setup['_CSS_DEFAULT_STYLE'], TRUE);
+			}
 		}
 
 

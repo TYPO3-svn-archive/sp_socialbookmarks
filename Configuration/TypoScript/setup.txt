@@ -66,12 +66,14 @@ module.tx_spsocialbookmarks {
 	persistence < plugin.tx_spsocialbookmarks.persistence
 
 	## View specific settings
-	## View specific settings
 	view {
 		templateRootPath = {$module.tx_spsocialbookmarks.view.templateRootPath}
 		partialRootPath  = {$module.tx_spsocialbookmarks.view.partialRootPath}
 		layoutRootPath   = {$module.tx_spsocialbookmarks.view.layoutRootPath}
 	}
+
+	## Default styles
+	_CSS_DEFAULT_STYLE < module.tx_spcharts._CSS_DEFAULT_STYLE
 }
 
 
