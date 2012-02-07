@@ -94,6 +94,12 @@
 			if (!empty($this->settings) && is_array($this->settings)) {
 				$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($this->settings);
 			}
+
+				// Check if charts can be rendered
+			$this->displayCharts = t3lib_extMgm::isLoaded('sp_charts');
+			if (!empty($this->settings['disableCharts'])) {
+				$this->displayCharts = FALSE;
+			}
 		}
 
 
@@ -131,7 +137,7 @@
 			$this->view->assign('systems',  $testData);
 			$this->view->assign('browsers', $testData);
 			$this->view->assign('settings', $this->settings);
-			$this->view->assign('displayCharts', FALSE /*t3lib_extMgm::isLoaded('sp_charts')*/);
+			$this->view->assign('displayCharts', $this->displayCharts);
 		}
 
 

@@ -1,37 +1,59 @@
 # ======================================================================
-# Default configuration for sp_socialbookmarks
+# Frontend configuration
 # ======================================================================
 plugin.tx_spsocialbookmarks {
 	settings {
-		# cat=Social Bookmarks/settings/1000; type=string; label=Service List: List of services to show
+		# cat=Social Bookmarks: Frontend/settings/1000; type=string; label=Service List: List of services to show
 		serviceList =
 
-		# cat=Social Bookmarks/settings/1010; type=boolean; label=Use Stats: Record all clicks in frontend for the backend stats
+		# cat=Social Bookmarks: Frontend/settings/1010; type=boolean; label=Use Stats: Record all clicks in frontend for the backend stats
 		useStats = 1
 
-		# cat=Social Bookmarks/settings/1020; type=boolean; label=Force SSL: Force SSL for the links
+		# cat=Social Bookmarks: Frontend/settings/1020; type=boolean; label=Force SSL: Force SSL for the links
 		forceSSL = 0
 
-		# cat=Social Bookmarks/settings/1030; type=boolean; label=Use Tiny URL: Make the links tiny
+		# cat=Social Bookmarks: Frontend/settings/1030; type=boolean; label=Use Tiny URL: Make the links tiny
 		useTinyURL = 0
 
-		# cat=Social Bookmarks/settings/1040; type=string; label=Tiny Service URL: URL of the tiny service
+		# cat=Social Bookmarks: Frontend/settings/1040; type=string; label=Tiny Service URL: URL of the tiny service
 		tinyServiceURL = http://tinyurl.com/api-create.php?url=###URL###
 	}
 
 	persistence {
-		# cat=Social Bookmarks/persistence/3000; type=int+; label=Storage PID: Storage PID for new visits
+		# cat=Social Bookmarks: Frontend/persistence/2000; type=int+; label=Storage PID: Storage PID for new visits
 		storagePid = 0
 	}
 
 	view {
-		# cat=Social Bookmarks/view/4000; type=string; label=Template root path: Path to template root
+		# cat=Social Bookmarks: Frontend/view/3000; type=string; label=Template root path: Path to template root
 		templateRootPath = EXT:sp_socialbookmarks/Resources/Private/Templates/
 
-		# cat=Social Bookmarks/view/4010; type=string; label=Partial root path: Path to template partials
+		# cat=Social Bookmarks: Frontend/view/3010; type=string; label=Partial root path: Path to template partials
 		partialRootPath = EXT:sp_socialbookmarks/Resources/Private/Partials/
 
-		# cat=Social Bookmarks/view/4020; type=string; label=Layout root path: Path to template layouts
+		# cat=Social Bookmarks: Frontend/view/3020; type=string; label=Layout root path: Path to template layouts
+		layoutRootPath = EXT:sp_socialbookmarks/Resources/Private/Layouts/
+	}
+}
+
+
+# ======================================================================
+# Backend configuration
+# ======================================================================
+module.tx_spsocialbookmarks {
+	settings {
+		# cat=Social Bookmarks: Backend/settings/1000; type=boolean; label=Disable Charts: Disable the rendering of charts in backend module
+		disableCharts = 0
+	}
+
+	view {
+		# cat=Social Bookmarks: Backend/view/2000; type=string; label=Template root path: Path to template root
+		templateRootPath = EXT:sp_socialbookmarks/Resources/Private/Templates/
+
+		# cat=Social Bookmarks: Backend/view/2010; type=string; label=Partial root path: Path to template partials
+		partialRootPath = EXT:sp_socialbookmarks/Resources/Private/Partials/
+
+		# cat=Social Bookmarks: Backend/view/2020; type=string; label=Layout root path: Path to template layouts
 		layoutRootPath = EXT:sp_socialbookmarks/Resources/Private/Layouts/
 	}
 }

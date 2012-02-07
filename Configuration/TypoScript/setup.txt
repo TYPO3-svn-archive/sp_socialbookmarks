@@ -54,7 +54,11 @@ plugin.tx_spsocialbookmarks {
 # ======================================================================
 module.tx_spsocialbookmarks {
 	## General settings
+	settings < module.tx_spcharts.settings
 	settings {
+		disableCharts = {$module.tx_spsocialbookmarks.settings.disableCharts}
+
+		## See sp_charts module setup for additional chart settings
 
 	}
 
@@ -62,7 +66,12 @@ module.tx_spsocialbookmarks {
 	persistence < plugin.tx_spsocialbookmarks.persistence
 
 	## View specific settings
-	view < plugin.tx_spsocialbookmarks.view
+	## View specific settings
+	view {
+		templateRootPath = {$module.tx_spsocialbookmarks.view.templateRootPath}
+		partialRootPath  = {$module.tx_spsocialbookmarks.view.partialRootPath}
+		layoutRootPath   = {$module.tx_spsocialbookmarks.view.layoutRootPath}
+	}
 }
 
 
@@ -92,7 +101,9 @@ module.tx_spsocialbookmarks {
 # ======================================================================
 # Include stylesheet for plugin
 # ======================================================================
-page.includeCSS.sp_socialbookmarks = EXT:sp_socialbookmarks/Resources/Public/Stylesheet/Bookmarks.css
+page.includeCSS {
+	sp_socialbookmarks = EXT:sp_socialbookmarks/Resources/Public/Stylesheet/Bookmarks.css
+}
 
 
 # ======================================================================

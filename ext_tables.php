@@ -3,6 +3,7 @@
 		die ('Access denied.');
 	}
 
+
 		// Add plugin to list
 	Tx_Extbase_Utility_Extension::registerPlugin(
 		$_EXTKEY,
@@ -10,20 +11,25 @@
 		'Social Bookmarks'
 	);
 
+
 		// Add flexform field
 	$identifier = str_replace('_', '', $_EXTKEY) . '_bookmarks';
 	$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_excludelist'][$identifier] = 'layout,select_key,recursive,pages';
 	$GLOBALS['TCA']['tt_content']['types']['list']['subtypes_addlist'][$identifier] = 'pi_flexform';
 	t3lib_extMgm::addPiFlexFormValue($identifier, 'FILE:EXT:' . $_EXTKEY . '/Configuration/FlexForms/Bookmarks.xml');
 
+
 		// Add static TypoScript files
 	t3lib_extMgm::addStaticFile($_EXTKEY, 'Configuration/TypoScript/', 'Social Bookmarks Configuration');
+
 
 		// Add help text to the backend form
 	t3lib_extMgm::addLLrefForTCAdescr('tx_spsocialbookmarks_domain_model_visit', 'EXT:' . $_EXTKEY . '/Resources/Private/Language/locallang_csh_visit.xml');
 
+
 		// Allow datasets on standard pages
 	t3lib_extMgm::allowTableOnStandardPages('tx_spsocialbookmarks_domain_model_visit');
+
 
 		// Add table configuration
 	$TCA['tx_spsocialbookmarks_domain_model_visit'] = array(
@@ -51,6 +57,7 @@
 		),
 	);
 
+
 		// Add plugin to new content element wizard
 	t3lib_extMgm::addPageTSConfig("
 		mod.wizards.newContentElement.wizardItems.special {\n
@@ -66,6 +73,7 @@
 			show := addToList(" . $identifier . ")\n
 		}
 	");
+
 
 		// Add module to backend list
 	Tx_Extbase_Utility_Extension::registerModule(
@@ -83,5 +91,10 @@
 			'navigationComponentId' => 'typo3-pagetree',
 		)
 	);
+
+
+		// Add sprite icons
+	$icons = require(t3lib_extMgm::extPath($_EXTKEY)  . 'ext_icons.php');
+	t3lib_SpriteManager::addSingleIcons($icons, str_replace('_', '', $_EXTKEY));
 
 ?>
