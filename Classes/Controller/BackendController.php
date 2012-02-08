@@ -93,6 +93,8 @@
 				// Pre-parse TypoScript setup
 			if (!empty($this->settings) && is_array($this->settings)) {
 				$this->settings = Tx_SpSocialbookmarks_Utility_TypoScript::parse($this->settings);
+			} else {
+				$this->settings = array();
 			}
 
 				// Check if charts can be rendered
