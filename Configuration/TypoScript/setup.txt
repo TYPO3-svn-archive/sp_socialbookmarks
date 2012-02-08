@@ -54,12 +54,11 @@ plugin.tx_spsocialbookmarks {
 # ======================================================================
 module.tx_spsocialbookmarks {
 	## General settings
-	settings < module.tx_spcharts.settings
 	settings {
 		disableCharts = {$module.tx_spsocialbookmarks.settings.disableCharts}
 
 		## See sp_charts module setup for additional chart settings
-
+		chartSetup < module.tx_spcharts.settings
 	}
 
 	## Storage settings

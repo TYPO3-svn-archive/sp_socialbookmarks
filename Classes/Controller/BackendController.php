@@ -105,9 +105,10 @@
 
 				// Override default attributes in chart service (singleton)
 			if ($this->displayCharts) {
+				$chartSetup = (!empty($this->settings['chartSetup']) ? $this->settings['chartSetup'] : array());
 				$chartService = $this->objectManager->get('Tx_SpCharts_Service_ChartService');
 				$chartService->setPageRenderer($this->pageRenderer);
-				$chartService->setConfiguration($this->settings);
+				$chartService->setConfiguration($chartSetup);
 			}
 
 				// Set default styles
